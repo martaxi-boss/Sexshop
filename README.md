@@ -1,6 +1,6 @@
 # Sexshop — projeto de loja de afiliados
 
-> Estado: **preparacao**. Nome de trabalho **Sevelora** aceite pelo titular em 16-11-2026; utilizacao comercial ainda depende de verificacao de marca e dominio.
+> Estado: **prototipo tecnicamente montado numa branch de integracao**, com identidade Sevelora e catalogo editorial. Ainda nao foi publicado na VPS nem tem ofertas reais. Nome de trabalho aceite em 16-11-2026; uso comercial depende de verificacao de marca e dominio.
 > Este repositorio e publico. Nao guardar segredos, tokens Awin, credenciais VPS ou dados pessoais.
 
 ## Objetivo
@@ -50,9 +50,13 @@ Nao importar esses conteudos para uma publicacao comercial.
 - [x] Modelo de afiliacao e base de design escolhidos
 - [x] Nome de trabalho Sevelora aprovado pelo titular
 - [ ] Disponibilidade da marca e dominio definitivo verificados
-- [ ] Codigo DemoShop Nuvi importado e adaptado
+- [x] Codigo DemoShop Nuvi MIT importado na branch de integracao e adaptado com paginas originais (fonte pinada 6edcafc)
+- [x] Pipeline configura build Next.js e testes HTTP/noindex antes de publicar o commit importado
+- [ ] Inspecao visual final das capturas desktop/mobile
 - [ ] Build e testes de seguranca concluidos
 - [ ] Parcerias Awin e catalogos autorizados
 - [ ] Publicacao na VPS / HTTPS testados
 
-Este README e uma especificacao inicial, **nao** uma loja ja instalada ou publicada.
+A versao da branch integra uma montra de categorias com filtros, sem inventar fornecedores. **Nao** esta instalada na VPS, nao tem pagamentos, catalogos aprovados ou links Awin ativos.
+
+[Branch de integracao](https://github.com/martaxi-boss/Sexshop/tree/integration/sevelora-nuvi-v1) · [PR de revisao](https://github.com/martaxi-boss/Sexshop/pull/1) · [Workflow de montagem](https://github.com/martaxi-boss/Sexshop/actions/workflows/assemble-sevelora.yml).
