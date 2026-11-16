@@ -1,0 +1,3 @@
+import Link from "next/link";
+export const metadata={title:"Sobre a Sevelora"};
+export default function SobrePage(){return <div className="shell info-page"><span className="eyebrow">A NOSSA IDEIA</span><h1>Bem-estar íntimo,<br/><em>sem complicações.</em></h1><p>A Sevelora nasce como um projeto editorial de afiliação para maiores de 18 anos. Queremos tornar a descoberta de categorias de bem-estar íntimo mais simples, clara e discreta.</p><p>Organizamos informação, categorias e guias; as compras, os pagamentos, as entregas e as devoluções são realizados pelos parceiros comerciais. O projeto encontra-se em preparação e ainda não apresenta ofertas de parceiros aprovados.</p><Link className="button button-dark" href="/catalogo">Explorar catálogo ↗</Link></div>}
