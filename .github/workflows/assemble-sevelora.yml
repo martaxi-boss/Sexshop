@@ -56,11 +56,11 @@ jobs:
             sleep 1
           done
           node scripts/smoke.mjs
-          mkdir -p qa
+          mkdir -p qa docs/previews
           cp /tmp/sevelora-app.log qa/server.log
           if command -v google-chrome >/dev/null; then
-            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1366,900 --screenshot=qa/home-desktop.png http://127.0.0.1:3001/ || true
-            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=qa/home-mobile.png http://127.0.0.1:3001/ || true
+            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1366,900 --screenshot=docs/previews/home-desktop.png http://127.0.0.1:3001/ || true
+            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=docs/previews/home-mobile.png http://127.0.0.1:3001/ || true
           fi
       - name: Guardar evidencias do build
         uses: actions/upload-artifact@v4
@@ -72,7 +72,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A apps packages package.json pnpm-workspace.yaml pnpm-lock.yaml LICENSE.upstream
+          git add -A apps packages package.json pnpm-workspace.yaml pnpm-lock.yaml LICENSE.upstream docs/previews
           for file in turbo.json .npmrc .node-version .gitignore; do
             if [ -e "$file" ]; then git add -- "$file"; fi
           done
