@@ -1,6 +1,6 @@
 # Sexshop — projeto de loja de afiliados
 
-> Estado: **preparacao**. A marca sugerida **Sevelora** e provisoria ate aprovacao do titular.
+> Estado: **preparacao**. Nome de trabalho **Sevelora** aceite pelo titular em 16-11-2026; utilizacao comercial ainda depende de verificacao de marca e dominio.
 > Este repositorio e publico. Nao guardar segredos, tokens Awin, credenciais VPS ou dados pessoais.
 
 ## Objetivo
@@ -37,21 +37,19 @@ Nao importar esses conteudos para uma publicacao comercial.
 8. Nao publicar o catalogo ate aos programas dos anunciantes aprovarem a parceria.
 9. Validar em telemovel, acessibilidade, links, seguranca e deployment em isolamento.
 
-## Nomes candidatos (nao registados)
+## Identidade e referencias
 
-- **Sevelora** — preferido para o prototipo; discreto e internacional.
-- **Lusensia** — nome relacionado com sensacoes e bem-estar.
-- **Serevya** — nome curto e de tom premium.
-
-A pesquisa web inicial nao equivale a verificacao de dominio, marca comercial ou registo EUIPO.
-Antes de comprar um dominio definitivo, verificar disponibilidade e conflitos de marca.
+- **Sevelora**: nome de trabalho aprovado para preparar o prototipo, ainda nao validado comercialmente.
+- **Alerta**: [SELEVORA](https://selevora.com/) ja opera no segmento de beleza. Existe semelhanca relevante; consultar [EUIPO/TMview](https://www.euipo.europa.eu/pt/trade-marks/before-applying/availability) e INPI antes de escolher ou comprar dominio definitivo.
+- Analise concreta de UX/estrutura de duas lojas portuguesas: [Cupido Shop e Afrodisia](docs/REFERENCIAS_CUPIDO_AFRODISIA.md).
 
 ## Estado real
 
 - [x] Repositorio publico existente
 - [x] Dominio DuckDNS indicado pelo titular
 - [x] Modelo de afiliacao e base de design escolhidos
-- [ ] Marca e dominio definitivo aprovados
+- [x] Nome de trabalho Sevelora aprovado pelo titular
+- [ ] Disponibilidade da marca e dominio definitivo verificados
 - [ ] Codigo DemoShop Nuvi importado e adaptado
 - [ ] Build e testes de seguranca concluidos
 - [ ] Parcerias Awin e catalogos autorizados
