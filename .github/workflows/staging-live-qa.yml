@@ -1,0 +1,95 @@
+name: Sevelora - browser QA published staging
+on:
+  push:
+    branches: ["integration/sevelora-nuvi-v1"]
+    paths: [".github/workflows/staging-live-qa.yml"]
+permissions:
+  contents: read
+jobs:
+  live-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - name: Install browser test driver only on ephemeral runner
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/qa" --no-audit --no-fund --ignore-scripts puppeteer-core@24.25.0
+          CHROME_BIN="$(command -v google-chrome || command -v chromium)"
+          test -x "$CHROME_BIN"
+          echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
+          echo "QA_DRIVER=$RUNNER_TEMP/qa/node_modules/puppeteer-core" >> "$GITHUB_ENV"
+      - name: Test navigation, filters, search and visual layout
+        env:
+          TARGET: https://sexy-shop.duckdns.org
+        run: |
+          set -euo pipefail
+          mkdir -p qa
+          cat > "$RUNNER_TEMP/qa/test.cjs" <<'JS'
+          const assert = require("node:assert/strict");
+          const fs = require("node:fs");
+          const pup = require(process.env.QA_DRIVER);
+          (async () => {
+            const browser=await pup.launch({executablePath:process.env.CHROME_BIN,headless:true,args:["--no-sandbox","--disable-dev-shm-usage"]});
+            const report={target:process.env.TARGET,pages:[],checks:[],consoleErrors:[],pageErrors:[]};
+            try {
+              const page=await browser.newPage();
+              page.on("pageerror",e=>report.pageErrors.push(e.message));
+              const widths=[{name:"mobile",width:390,height:844,isMobile:true},{name:"desktop",width:1366,height:900,isMobile:false}];
+              for(const view of widths){
+                await page.setViewport({width:view.width,height:view.height,isMobile:view.isMobile,deviceScaleFactor:1});
+                const resp=await page.goto(process.env.TARGET+"/",{waitUntil:"networkidle2",timeout:30000});
+                assert.equal(resp.status(),200,"GET / "+view.name);
+                await page.screenshot({path:"qa/home-"+view.name+".png",fullPage:true});
+                const state=await page.evaluate(()=>({width:document.documentElement.scrollWidth,inner:innerWidth,title:document.title,meta:document.querySelector('meta[name="robots"]')?.content||"",brand:document.body.innerText.includes("sevelora")}));
+                assert.ok(state.brand,"brand not shown");
+                assert.ok(state.width<=state.inner+1,"horizontal overflow "+view.name+" "+JSON.stringify(state));
+                assert.ok(/noindex/i.test(state.meta),"staging must be noindex");
+                report.pages.push({path:"/",view:view.name,http:resp.status(),...state});
+                console.log("LIVE_HOMEPAGE_"+view.name.toUpperCase()+"=PASS");
+                if(view.name==="mobile"){
+                  await page.click(".mobile-menu summary");
+                  const visible=await page.$eval(".mobile-menu nav",e=>getComputedStyle(e).display!=="none" && e.getBoundingClientRect().width>0);
+                  assert.ok(visible,"mobile menu did not open");
+                  report.checks.push("mobile navigation: PASS");
+                }
+              }
+              await page.setViewport({width:390,height:844,isMobile:true,deviceScaleFactor:1});
+              let resp=await page.goto(process.env.TARGET+"/catalogo",{waitUntil:"networkidle2"});
+              assert.equal(resp.status(),200);
+              await page.screenshot({path:"qa/catalogo-mobile.png",fullPage:true});
+              await page.type("input[type=search]","massagem");
+              await new Promise(r=>setTimeout(r,350));
+              let html=await page.evaluate(()=>document.body.innerText);
+              assert.ok(html.includes("Óleos de massagem"),"search results failed");
+              report.checks.push("catalog search: PASS");
+              await page.click("input[type=search]",{clickCount:3});
+              await page.keyboard.press("Backspace");
+              await page.select("select[aria-label='Filtrar por categoria']","para-ela");
+              await new Promise(r=>setTimeout(r,350));
+              html=await page.evaluate(()=>document.body.innerText);
+              assert.ok(html.includes("Massajadores pessoais"),"category filter failed");
+              report.checks.push("mobile category filter: PASS");
+              resp=await page.goto(process.env.TARGET+"/categoria/para-casais",{waitUntil:"networkidle2"});
+              assert.equal(resp.status(),200);
+              assert.ok((await page.evaluate(()=>document.body.innerText)).includes("Para Casais"));
+              report.checks.push("category navigation: PASS");
+              assert.equal(report.pageErrors.length,0,"page runtime errors: "+report.pageErrors.join("|"));
+              console.log("LIVE_CATALOG_SEARCH=PASS");
+              console.log("LIVE_CATALOG_FILTER=PASS");
+              console.log("LIVE_CATEGORY_NAVIGATION=PASS");
+              console.log("LIVE_NO_JS_RUNTIME_ERRORS=PASS");
+            } finally {
+              fs.writeFileSync("qa/report.json",JSON.stringify(report,null,2));
+              await browser.close();
+            }
+          })().catch(e=>{console.error("LIVE_BROWSER_QA_FAILED",e);process.exit(1)});
+          JS
+          node "$RUNNER_TEMP/qa/test.cjs"
+      - name: Preserve desktop/mobile screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sevelora-staging-browser-qa
+          path: qa/
+          if-no-files-found: warn
+          retention-days: 7
