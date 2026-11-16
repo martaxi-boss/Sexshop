@@ -55,8 +55,9 @@ Nao importar esses conteudos para uma publicacao comercial.
 - [ ] Inspecao visual final das capturas desktop/mobile
 - [ ] Build e testes de seguranca concluidos
 - [ ] Parcerias Awin e catalogos autorizados
-- [ ] Publicacao na VPS / HTTPS testados
+- [x] Publicacao isolada na VPS / HTTPS testados (VPS Actions #43888022254)
+- [ ] Certificacao final de navegacao e interacoes mobile no dominio publico
 
-A versao da branch integra uma montra de categorias com filtros, sem inventar fornecedores. **Nao** esta instalada na VPS, nao tem pagamentos, catalogos aprovados ou links Awin ativos.
+A versao de testes esta **publicada na VPS** em https://sexy-shop.duckdns.org/, na pasta /srv/projects/Sexshop, com Node privado, Nginx HTTPS e systemd. O GitHub Actions [#43888022254](https://github.com/martaxi-boss/VPS/actions/runs/43888022254) registou HTTPS e rotas publicas PASS, confirmando tambem que o servico Low Cost Europa se manteve ativo. Fonte implantada: commit \`ee600b7538799ef26c7cfe4270514f460b1a1d8c\`. Continua em staging e **nao** tem pagamentos, catalogos de fornecedores aprovados ou links Awin ativos.
 
 [Branch de integracao](https://github.com/martaxi-boss/Sexshop/tree/integration/sevelora-nuvi-v1) · [PR de revisao](https://github.com/martaxi-boss/Sexshop/pull/1) · [Workflow de montagem](https://github.com/martaxi-boss/Sexshop/actions/workflows/assemble-sevelora.yml).
