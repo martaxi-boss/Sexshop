@@ -56,8 +56,13 @@ Nao importar esses conteudos para uma publicacao comercial.
 - [ ] Build e testes de seguranca concluidos
 - [ ] Parcerias Awin e catalogos autorizados
 - [x] Publicacao isolada na VPS / HTTPS testados (VPS Actions #43888022254)
-- [ ] Certificacao final de navegacao e interacoes mobile no dominio publico
+- [x] Validacao no browser real da homepage mobile/desktop, menu movel, pesquisa, filtros, rotas e erros JS (Actions #43888691025)
+- [ ] Publicacao dos produtos e links de afiliado apos aprovacoes Awin
 
 A versao de testes esta **publicada na VPS** em https://sexy-shop.duckdns.org/, na pasta /srv/projects/Sexshop, com Node privado, Nginx HTTPS e systemd. O GitHub Actions [#43888022254](https://github.com/martaxi-boss/VPS/actions/runs/43888022254) registou HTTPS e rotas publicas PASS, confirmando tambem que o servico Low Cost Europa se manteve ativo. Fonte implantada: commit \`ee600b7538799ef26c7cfe4270514f460b1a1d8c\`. Continua em staging e **nao** tem pagamentos, catalogos de fornecedores aprovados ou links Awin ativos.
 
 [Branch de integracao](https://github.com/martaxi-boss/Sexshop/tree/integration/sevelora-nuvi-v1) · [PR de revisao](https://github.com/martaxi-boss/Sexshop/pull/1) · [Workflow de montagem](https://github.com/martaxi-boss/Sexshop/actions/workflows/assemble-sevelora.yml).
+
+## Prova de navegacao no dominio publico
+
+Em 16-11-2026 o GitHub Actions [#43888691025](https://github.com/martaxi-boss/Sexshop/actions/runs/43888691025) executou Chromium/Puppeteer sobre o site real, com ecras 390px e 1366px: homepage, menu movel, pesquisa por "massagem", filtro Para Ela, pagina Para Casais e zero erros de runtime JavaScript. Os screenshots e o report.json estao no [artefacto](https://github.com/martaxi-boss/Sexshop/actions/runs/43888691025/artifacts/14234744145) (retencao limitada). Estao em staging, com noindex.
