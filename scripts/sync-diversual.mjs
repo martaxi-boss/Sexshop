@@ -42,7 +42,10 @@ export function normalize(rows, now=new Date()) {
     const id=r.aw_product_id; if(!/^\d+$/.test(id)||ids.has(id))throw Error('invalid_product_id');ids.add(id);
     const link=safeUrl(r.aw_deep_link,['www.awin1.com','awin1.com']);
     if(!link||link.pathname!=='/pclick.php'||link.searchParams.get('a')!=='3157353'||link.searchParams.get('m')!=='37722'||link.searchParams.get('p')!==id)throw Error('invalid_affiliate_link');
-    const image=safeUrl(r.merchant_image_url,['www.diversual.com','diversual.com']);if(!image)throw Error('invalid_image');
+    const directImage=safeUrl(r.merchant_image_url,['www.diversual.com','diversual.com']);if(!directImage)throw Error('invalid_image');
+    const awImage=safeUrl(r.aw_image_url,['images.productserve.com','images2.productserve.com']);
+    if(awImage&&(awImage.searchParams.get('feedId')!=='78949'||awImage.searchParams.get('url')!=='ssl:'+directImage.host+directImage.pathname))throw Error('invalid_awin_image');
+    const image=awImage||directImage;
     const amount=Number(r.search_price);const price=r.currency==='EUR'&&Number.isFinite(amount)&&amount>0?amount:null;
     if(price===null)suppressedPrices++;
     const name=plain(r.product_name).slice(0,200);if(!name)throw Error('missing_name');

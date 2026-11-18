@@ -14,7 +14,7 @@ export function proxy(request: NextRequest) {
     // nuvui: ScrollArea's one <style> element takes the nonce; components set style attributes.
     `style-src 'self' ${isDev ? "'unsafe-inline'" : `'nonce-${nonce}'`}`,
     "style-src-attr 'unsafe-inline'",
-    "img-src 'self' blob: data: https://www.diversual.com https://diversual.com",
+    "img-src 'self' blob: data: https://www.diversual.com https://diversual.com https://images.productserve.com https://images2.productserve.com",
     "font-src 'self'",
     "connect-src 'self'",
     "worker-src 'self' blob:",
