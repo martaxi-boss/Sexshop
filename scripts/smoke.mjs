@@ -1,12 +1,14 @@
 import assert from "node:assert/strict";
 const base = process.env.BASE_URL ?? "http://127.0.0.1:3001";
 const routes = [
-  ["/","O prazer de te"],
+  ["/","O TEU PRAZER."],
   ["/catalogo","Encontra o que procuras"],
   ["/categoria/para-ela","Para Ela"],
   ["/categoria/para-ele","Para Ele"],
   ["/categoria/para-casais","Para Casais"],
-  ["/categoria/bem-estar","Bem-estar"],
+  ["/categoria/bdsm","BDSM"],
+  ["/categoria/anal","Prazer Anal"],
+  ["/categoria/bem-estar","Lubrificantes"],
   ["/guias","Descobrir é natural"],
   ["/sobre","sem complicações"],
   ["/afiliacao","Como funciona"]

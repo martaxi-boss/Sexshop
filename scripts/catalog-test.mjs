@@ -11,4 +11,6 @@ assert.throws(()=>normalize([r,r]));
 assert.equal(normalize([{...r,in_stock:'0'}]).products[0].inStock,false);
 assert.ok(classify({product_name:'Lubricante',description:''}).includes('bem-estar'));
 assert.ok(!normalize([r]).products[0].description.includes('<b>'));
+assert.ok(classify({product_name:'Kit BDSM Bondage',description:''}).includes('bdsm'));
+assert.ok(classify({product_name:'Plug Anal',description:''}).includes('anal'));
 console.log('CATALOG_VALIDATION_TESTS=PASS');

@@ -30,6 +30,8 @@ export function classify(row) {
   if(/prostata|pene|masturbador masculino|anillo/.test(s))tags.add('para-ele');
   if(/clitoris|vulva|vaginal|kegel|succionador/.test(s))tags.add('para-ela');
   if(/vibrador|vibradora|estimulador|dildo|plug|succionador|bala|bolas anales/.test(s))tags.add('estimuladores');
+  if(/\banal\b|\banales\b|plug|enema|prostata|dilatador anal/.test(s))tags.add('anal');
+  if(/bdsm|bondage|esposas|latigo|arnes|mascara|fetiche|castidad|cuerda erotica/.test(s))tags.add('bdsm');
   if(/arnes|bolsa|neceser|accesorio|juego|kit/.test(s)||!tags.size)tags.add('jogos-acessorios');
   return [...tags];
 }

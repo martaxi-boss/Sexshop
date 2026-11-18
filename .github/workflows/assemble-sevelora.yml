@@ -2,10 +2,10 @@ name: Sevelora - montagem e verificacao do Nuvi MIT
 on:
   push:
     branches: ["integration/sevelora-nuvi-v1"]
-    paths: [".github/workflows/assemble-sevelora.yml"]
+    paths: [".github/workflows/assemble-sevelora.yml", "overrides/**", "scripts/**", "BOOTSTRAP.md"]
   pull_request:
     branches: ["main"]
-    paths: [".github/workflows/assemble-sevelora.yml"]
+    paths: [".github/workflows/assemble-sevelora.yml", "overrides/**", "scripts/**", "BOOTSTRAP.md"]
   workflow_dispatch:
 
 permissions:
