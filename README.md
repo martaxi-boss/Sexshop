@@ -1,3 +1,5 @@
+> Atualização 18/11/2026: integração do catálogo oficial Diversual ES aprovada. Fonte da aplicação: `integration/sevelora-nuvi-v1`; operação e limitações de preços em [docs/DIVERSUAL_CATALOG.md](docs/DIVERSUAL_CATALOG.md). A publicação depende da execução verificada do upgrade na VPS.
+
 # Sexshop — projeto de loja de afiliados
 
 > Estado: **prototipo tecnicamente montado numa branch de integracao**, com identidade Sevelora e catalogo editorial. Ainda nao foi publicado na VPS nem tem ofertas reais. Nome de trabalho aceite em 16-11-2026; uso comercial depende de verificacao de marca e dominio.

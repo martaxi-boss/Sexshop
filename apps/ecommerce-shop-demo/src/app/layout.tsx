@@ -45,7 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <div><Link className="footer-brand" href="/">sevelora</Link><p>Um espaço para descobrir bem-estar íntimo, com respeito, informação e discrição.</p><span className="footer-note">Uma montra editorial para maiores de 18 anos.</span></div>
           <div><h3>Explorar</h3><Link href="/catalogo">Catálogo</Link><Link href="/categoria/para-ela">Para Ela</Link><Link href="/categoria/para-ele">Para Ele</Link><Link href="/categoria/para-casais">Para Casais</Link></div>
           <div><h3>Informação</h3><Link href="/guias">Guias</Link><Link href="/sobre">Sobre a Sevelora</Link><Link href="/afiliacao">Transparência e afiliação</Link></div>
-          <div><h3>Como funciona</h3><p>Exploras as coleções aqui e efetuas a compra diretamente na loja parceira, quando os respetivos programas estiverem disponíveis.</p></div>
+          <div><h3>Como funciona</h3><p>Exploras os produtos aqui e efetuas a compra diretamente na Diversual através dos nossos links de afiliado.</p></div>
         </div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} Sevelora — Projeto em testes</span><span>18+ · Compra e envio realizados pelo parceiro · <Link href="/afiliacao">Informação de afiliação</Link></span></div>
       </footer>

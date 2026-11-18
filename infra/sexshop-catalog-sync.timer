@@ -1,0 +1,8 @@
+[Unit]
+Description=Refresh Sevelora Diversual catalog every six hours
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=6h
+RandomizedDelaySec=5min
+[Install]
+WantedBy=timers.target

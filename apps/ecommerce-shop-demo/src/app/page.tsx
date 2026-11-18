@@ -1,8 +1,11 @@
+import { getCatalog } from "@/lib/sevelora-catalog-server";
+import { ProductCard } from "@/components/sevelora-product-card";
 import Link from "next/link";
-import { categories, collections, guides } from "@/lib/sevelora-data";
-import { CollectionCard, DecorativeArt } from "@/components/sevelora-cards";
+import { categories, guides } from "@/lib/sevelora-data";
+import { DecorativeArt } from "@/components/sevelora-cards";
 
-export default function Home() {
+export default async function Home() {
+  const catalog=await getCatalog();
   return <>
     <section className="hero shell">
       <div className="hero-text">
@@ -26,8 +29,8 @@ export default function Home() {
     <section className="editorial-section"><div className="shell editorial-grid"><div className="editorial-illustration"><div className="editorial-orbit"/><span>YOUR PACE.<br/>YOUR WAY.</span></div><div className="editorial-copy"><span className="eyebrow">PEQUENOS MOMENTOS, GRANDES DESCOBERTAS</span><h2>Um universo íntimo,<br/><em>sem tabus.</em></h2><p>Não precisas de saber exatamente o que procuras. Organizámos as coleções por interesses e preparámos guias para te ajudar a escolher com tranquilidade.</p><Link className="button button-outline" href="/guias">Ler os nossos guias <span>↗</span></Link></div></div></section>
     <section className="shell section-block">
       <div className="heading-row"><div><span className="eyebrow">UM CATÁLOGO QUE FAZ SENTIDO</span><h2>Encontra o teu ponto de partida.</h2><p>Seleções por tipo de produto, organizadas de forma intuitiva.</p></div><Link className="text-link" href="/catalogo">Explorar catálogo <span>↗</span></Link></div>
-      <div className="collection-grid">{collections.slice(0,8).map((c,i)=><CollectionCard key={c.name} item={c} index={i}/>)}</div>
-      <p className="catalog-disclaimer">Estas são coleções editoriais de demonstração. Os artigos, preços e links de compra serão adicionados após aprovação dos parceiros de afiliação.</p>
+      <div className="real-product-grid">{catalog.products.slice(0,8).map(p=><ProductCard key={p.id} product={p}/>)}</div>
+      <p className="catalog-disclaimer">Fotografias e produtos do catálogo oficial Diversual. Os links são de afiliado; compra e condições finais na loja parceira.</p>
     </section>
     <section className="guides-section shell section-block"><div className="heading-row"><div><span className="eyebrow">BEM-ESTAR TAMBÉM É CONHECIMENTO</span><h2>O guia para te sentires à vontade.</h2></div><Link href="/guias" className="text-link">Todos os guias <span>↗</span></Link></div><div className="guide-grid">{guides.map((g,i)=><Link href={`/guias#${g.slug}`} key={g.slug} className="guide-card"><span className="guide-number">0{i+1} / GUIA DE COMPRA</span><h3>{g.title}</h3><p>{g.summary}</p><span className="guide-end">{g.read} de leitura <span>↗</span></span></Link>)}</div></section>
     <section className="closing"><div className="shell closing-inner"><div><span className="eyebrow">SEVELORA</span><h2>À tua maneira.<br/><em>Ao teu ritmo.</em></h2></div><div><p>Acreditamos que explorar o teu bem-estar deve ser simples, reservado e sem julgamentos.</p><Link className="button button-light" href="/catalogo">Começar a explorar ↗</Link></div></div></section>

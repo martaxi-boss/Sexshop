@@ -1,30 +1,18 @@
 "use client";
-import { useMemo, useState } from "react";
-import Link from "next/link";
-import { categories, collections } from "@/lib/sevelora-data";
-import { CollectionCard } from "@/components/sevelora-cards";
-export default function Catalogue() {
-  const [query,setQuery]=useState("");
-  const [category,setCategory]=useState("todos");
-  const [sort,setSort]=useState("original");
+import { useMemo, useState } from 'react';
+import Link from 'next/link';
+import { categories } from '@/lib/sevelora-data';
+import type { ProductCatalog } from '@/lib/sevelora-products';
+import { ProductCard } from './sevelora-product-card';
+export default function Catalogue({catalog,initialCategory='todos'}:{catalog:ProductCatalog;initialCategory?:string}){
+  const [query,setQuery]=useState('');const [category,setCategory]=useState(initialCategory);const [sort,setSort]=useState('original');const [limit,setLimit]=useState(24);
+  const fold=(s:string)=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-PT');
   const filtered=useMemo(()=>{
-    let items=collections.filter(c=>(category==="todos"||c.category===category) && [c.name,c.subtitle,c.categoryName].join(" ").toLocaleLowerCase("pt-PT").includes(query.trim().toLocaleLowerCase("pt-PT")));
-    if(sort==="az") items=[...items].sort((a,b)=>a.name.localeCompare(b.name,"pt-PT"));
+    let items=catalog.products.filter(p=>(category==='todos'||p.categories.includes(category))&&fold([p.name,p.description,p.brand].join(' ')).includes(fold(query.trim())));
+    if(sort==='az')items=[...items].sort((a,b)=>a.name.localeCompare(b.name,'pt-PT'));
+    if(sort==='price')items=[...items].sort((a,b)=>(a.price??Infinity)-(b.price??Infinity));
     return items;
-  },[category,query,sort]);
-  return <div className="shell catalog-layout">
-    <aside className="filter-sidebar" aria-label="Filtros do catálogo">
-      <h2>Explorar</h2><button onClick={()=>setCategory("todos")} className={category==="todos"?"active":""} aria-pressed={category==="todos"}>Todas as categorias <span>{collections.length}</span></button>
-      {categories.map(c=><button key={c.slug} onClick={()=>setCategory(c.slug)} className={category===c.slug?"active":""} aria-pressed={category===c.slug}>{c.name}<span>{collections.filter(x=>x.category===c.slug).length}</span></button>)}
-      <p className="sidebar-note">As fichas dos fornecedores e os preços serão adicionados após aprovação das parcerias.</p>
-    </aside>
-    <section className="catalog-content" aria-labelledby="catalog-title">
-      <div className="catalog-intro"><span className="eyebrow">DESCUBRA A SUA COLEÇÃO</span><h1 id="catalog-title">Encontra o que procuras.</h1><p>Explora as nossas seleções por interesse ou categoria. Sem complicações.</p></div>
-      <div className="catalog-toolbar"><label className="searchbox"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label="Pesquisar coleções" type="search" placeholder="Pesquisar coleções..." value={query} onChange={e=>setQuery(e.target.value)}/></label><label className="sortbox">Ordenar <select aria-label="Ordenar coleções" value={sort} onChange={e=>setSort(e.target.value)}><option value="original">Em destaque</option><option value="az">A — Z</option></select></label></div>
-      <div className="mobile-filters"><label>Categoria <select aria-label="Filtrar por categoria" value={category} onChange={e=>setCategory(e.target.value)}><option value="todos">Todas</option>{categories.map(c=><option key={c.slug} value={c.slug}>{c.name}</option>)}</select></label></div>
-      <p className="results-label">{filtered.length} {filtered.length===1?"seleção":"seleções"} encontradas</p>
-      {filtered.length ? <div className="collection-grid catalog-grid">{filtered.map((item,i)=><CollectionCard key={item.name} item={item} index={i}/>)}</div>:<div className="no-results"><h2>Não encontramos esta seleção.</h2><p>Experimenta outra palavra ou escolhe uma categoria.</p><button className="button button-dark" onClick={()=>{setQuery("");setCategory("todos");}}>Limpar pesquisa</button></div>}
-      <div className="catalog-bottom"><p>Este é um catálogo de demonstração por famílias de produtos. Não são ofertas de venda.</p><Link href="/afiliacao">Como funcionam os links de afiliados ↗</Link></div>
-    </section>
-  </div>;
+  },[catalog.products,category,query,sort]);
+  const changeCategory=(s:string)=>{setCategory(s);setLimit(24);};
+  return <div className="shell catalog-layout"><aside className="filter-sidebar" aria-label="Filtros do catálogo"><h2>Explorar</h2><button onClick={()=>changeCategory('todos')} aria-pressed={category==='todos'} className={category==='todos'?'active':''}>Todos os produtos <span>{catalog.products.length}</span></button>{categories.map(c=><button key={c.slug} onClick={()=>changeCategory(c.slug)} aria-pressed={category===c.slug} className={category===c.slug?'active':''}>{c.name}<span>{catalog.products.filter(p=>p.categories.includes(c.slug)).length}</span></button>)}<p className="sidebar-note">Fotografias e informação fornecidas pela Diversual. Compra, pagamento e entrega na loja parceira.</p></aside><section className="catalog-content" aria-labelledby="catalog-title"><div className="catalog-intro"><span className="eyebrow">CATÁLOGO DIVERSUAL</span><h1 id="catalog-title">Encontra o que procuras.</h1><p>Produtos reais para explorar ao teu ritmo. Os links de compra são de afiliado.</p></div><div className="catalog-toolbar"><label className="searchbox"><input type="search" aria-label="Pesquisar produtos" placeholder="Pesquisar produtos..." value={query} onChange={e=>{setQuery(e.target.value);setLimit(24);}}/></label><label className="sortbox">Ordenar <select aria-label="Ordenar produtos" value={sort} onChange={e=>setSort(e.target.value)}><option value="original">Ordem do catálogo</option><option value="az">A — Z</option>{catalog.products.some(p=>p.price!==null)&&<option value="price">Menor preço</option>}</select></label></div><div className="mobile-filters"><label>Categoria <select aria-label="Filtrar por categoria" value={category} onChange={e=>changeCategory(e.target.value)}><option value="todos">Todas</option>{categories.map(c=><option value={c.slug} key={c.slug}>{c.name}</option>)}</select></label></div><p className="results-label" role="status">{filtered.length} {filtered.length===1?'produto encontrado':'produtos encontrados'}</p>{catalog.stale?<div className="no-results"><h2>Catálogo em atualização.</h2><p>Estamos a confirmar a informação do parceiro. Volta a consultar em breve.</p></div>:filtered.length?<><div className="real-product-grid">{filtered.slice(0,limit).map(p=><ProductCard key={p.id} product={p}/>)}</div>{filtered.length>limit&&<button className="button button-outline load-more" onClick={()=>setLimit(n=>n+24)}>Mostrar mais produtos ({filtered.length-limit})</button>}</>:<div className="no-results"><h2>Não encontramos produtos nesta seleção.</h2><p>Experimenta outra palavra ou consulta todos os produtos disponíveis.</p><button className="button button-dark" onClick={()=>{setQuery('');changeCategory('todos');}}>Ver todos os produtos</button></div>}<div className="catalog-bottom"><p>{catalog.updatedAt&&<>Catálogo consultado em {new Date(catalog.updatedAt).toLocaleString('pt-PT',{timeZone:'Europe/Lisbon',dateStyle:'short',timeStyle:'short'})}. </>}Nomes e descrições originais do fornecedor em espanhol. Confirma preço, disponibilidade e envio para Portugal na loja.</p><Link href="/afiliacao">Como funcionam os links de afiliados ↗</Link></div></section></div>;
 }

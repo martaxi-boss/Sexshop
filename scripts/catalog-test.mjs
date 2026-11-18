@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {normalize,parseCsv,classify} from './sync-diversual.mjs';
+assert.deepEqual(parseCsv('a,b\r\n"x,y","one\n""two"""\r\n'),[{a:'x,y',b:'one\n"two"'}]);
+assert.throws(()=>parseCsv('a,b\n"bad'));
+const r={merchant_id:'37722',data_feed_id:'78949',aw_product_id:'123',product_name:'Produto de teste',description:'<b>Informação</b>',aw_deep_link:'https://www.awin1.com/pclick.php?p=123&a=3157353&m=37722',merchant_image_url:'https://www.diversual.com/test.jpg',search_price:'12.90',currency:'EUR',in_stock:'1'};
+assert.equal(normalize([r]).products[0].price,12.9);
+assert.equal(normalize([{...r,currency:'GBP'}]).products[0].price,null);
+assert.throws(()=>normalize([{...r,aw_deep_link:r.aw_deep_link.replace('3157353','999')} ]));
+assert.throws(()=>normalize([{...r,merchant_id:'999'}]));
+assert.throws(()=>normalize([r,r]));
+assert.equal(normalize([{...r,in_stock:'0'}]).products[0].inStock,false);
+assert.ok(classify({product_name:'Lubricante',description:''}).includes('bem-estar'));
+assert.ok(!normalize([r]).products[0].description.includes('<b>'));
+console.log('CATALOG_VALIDATION_TESTS=PASS');
