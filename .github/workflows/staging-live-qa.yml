@@ -98,7 +98,7 @@ jobs:
               report.checks.push("category navigation: PASS");
               resp=await page.goto(process.env.TARGET+availableProductPath,{waitUntil:"networkidle2"});
               assert.equal(resp.status(),200);
-              assert.ok((await page.$eval('a[rel~="sponsored"]',nodes=>nodes.length))>0,"product affiliate CTA missing");
+              assert.ok((await page.$$eval('a[rel~="sponsored"]',nodes=>nodes.length))>0,"product affiliate CTA missing");
               const detailPrice=await page.$eval(".product-detail .product-price",e=>e.textContent.trim());
               assert.match(detailPrice,/\d+[,.]\d{2}\s*€/,"product detail must show verified EUR price");
               report.checks.push("product EUR price visible: PASS");
