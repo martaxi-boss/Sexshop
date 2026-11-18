@@ -19,7 +19,7 @@ mkdir -p apps packages
 rsync -a --delete --exclude=public/ "$TMP/nuvi/apps/" "$ROOT/apps/"
 rsync -a --delete "$TMP/nuvi/packages/" "$ROOT/packages/"
 for file in package.json pnpm-workspace.yaml pnpm-lock.yaml turbo.json .npmrc .node-version .gitignore; do
-  [[ -f "$TMP/nuvi/$file" ]] && cp "$TMP/nuvi/$file" "$ROOT/$file"
+  if [[ -f "$TMP/nuvi/$file" && ! -e "$ROOT/$file" ]]; then cp "$TMP/nuvi/$file" "$ROOT/$file"; fi
 done
 cp "$TMP/nuvi/LICENSE" "$ROOT/LICENSE.upstream"
 # Elimina paginas, fotos e checkout do comercio de vestuario original.

@@ -1,4 +1,4 @@
-> Atualização 18/11/2026: integração do catálogo oficial Diversual ES aprovada. Fonte da aplicação: `integration/sevelora-nuvi-v1`; operação e limitações de preços em [docs/DIVERSUAL_CATALOG.md](docs/DIVERSUAL_CATALOG.md). A publicação depende da execução verificada do upgrade na VPS.
+> Atualização 18/11/2026: integração do catálogo oficial Diversual ES aprovada. Fonte da aplicação: `integration/sevelora-nuvi-v1`; operação e limitações de preços em [docs/DIVERSUAL_CATALOG.md](docs/DIVERSUAL_CATALOG.md). O catálogo usa fotografias oficiais e links Awin. A moeda não confirmada do feed é omitida até o fornecedor a corrigir.
 
 # Sexshop — projeto de loja de afiliados
 
