@@ -1,14 +1,15 @@
-// Sevelora: taxonomia editorial de DEMONSTRACAO. Nao inclui ofertas comerciais.
-// Os produtos e precos reais so entram com consentimento de parceiros Awin.
-export const categories = [
-  { slug: "para-ela", name: "Para Ela", short: "Explora ao teu ritmo", line: "Escolhas delicadas para diferentes momentos.", tone: "rose", symbol: "petal", sub: ["Estimuladores externos", "Massajadores pessoais", "Kits para iniciantes", "Cuidados íntimos"] },
-  { slug: "para-ele", name: "Para Ele", short: "Descobre novas sensações", line: "Conforto, descoberta e bem-estar.", tone: "stone", symbol: "wave", sub: ["Massajadores", "Estimuladores", "Acessórios", "Cuidados íntimos"] },
-  { slug: "para-casais", name: "Para Casais", short: "Momentos a dois", line: "Descobertas para partilhar com tranquilidade.", tone: "wine", symbol: "rings", sub: ["Kits para casais", "Jogos a dois", "Óleos de massagem", "Acessórios"] },
-  { slug: "estimuladores", name: "Estimuladores", short: "Escolhe o formato ideal", line: "Diferentes formatos, materiais e funcionalidades.", tone: "lilac", symbol: "ripple", sub: ["Compactos", "Com vibração", "Recarregáveis", "Para iniciantes"] },
-  { slug: "lingerie", name: "Lingerie", short: "Estilo e confiança", line: "Peças para te sentires bem contigo.", tone: "peach", symbol: "fabric", sub: ["Conjuntos", "Bodys", "Robes", "Acessórios de moda"] },
-  { slug: "bem-estar", name: "Bem-estar Íntimo", short: "Cuidado que faz sentido", line: "Produtos para conforto, higiene e prevenção.", tone: "sage", symbol: "leaf", sub: ["Lubrificantes", "Preservativos", "Higiene íntima", "Cuidados corporais"] },
-  { slug: "massagem", name: "Massagem & Relaxamento", short: "Rituais só teus", line: "Bem-estar e momentos sem pressa.", tone: "sand", symbol: "sun", sub: ["Óleos de massagem", "Velas de massagem", "Aromas", "Relaxamento"] },
-  { slug: "jogos-acessorios", name: "Jogos & Acessórios", short: "Um toque de descoberta", line: "Ideias para surpreender e explorar.", tone: "blue", symbol: "spark", sub: ["Jogos para casais", "Kits e ofertas", "Acessórios", "Armazenamento"] },
+// Categorias e atalhos para os produtos reais dos fornecedores autorizados.
+export const categories=[
+{slug:"para-ela",name:"Para Ela",short:"Sugadores, vibradores e massajadores",line:"Brinquedos e artigos íntimos para ela.",tone:"rose",symbol:"petal",sub:["Sugadores","Vibradores","Massajadores"],filters:[{label:"Sugadores",query:"succionador"},{label:"Vibradores",query:"vibrador"},{label:"Massajadores",query:"masajeador"}]},
+{slug:"para-ele",name:"Para Ele",short:"Masturbadores, próstata e anéis",line:"Descobre a seleção de produtos para ele.",tone:"stone",symbol:"wave",sub:["Masturbadores","Próstata","Anéis"],filters:[{label:"Masturbadores",query:"masturbador"},{label:"Próstata",query:"prostata"},{label:"Anéis",query:"anillo"}]},
+{slug:"para-casais",name:"Para Casais",short:"Jogos e brinquedos a dois",line:"Novas descobertas para casais.",tone:"wine",symbol:"rings",sub:["Jogos","Kits","Controlo remoto"],filters:[{label:"Jogos",query:"juego"},{label:"Kits",query:"kit"},{label:"Controlo remoto",query:"control remoto"}]},
+{slug:"estimuladores",name:"Vibradores & Dildos",short:"Vibradores, sugadores e dildos",line:"Encontra o tipo de estimulador que procuras.",tone:"lilac",symbol:"ripple",sub:["Vibradores","Sugadores","Dildos"],filters:[{label:"Vibradores",query:"vibrador"},{label:"Sugadores",query:"succionador"},{label:"Dildos",query:"dildo"}]},
+{slug:"anal",name:"Prazer Anal",short:"Plugs, acessórios e higiene",line:"Artigos e acessórios para prazer anal.",tone:"sand",symbol:"sun",sub:["Plugs","Acessórios","Higiene"],filters:[{label:"Plugs",query:"plug"},{label:"Acessórios",query:"anal"},{label:"Higiene",query:"enema"}]},
+{slug:"bdsm",name:"BDSM & Fetiche",short:"Bondage, acessórios e fetiche",line:"Explora a seleção BDSM e fetiche.",tone:"wine",symbol:"rings",sub:["Bondage","Algemas","Arneses"],filters:[{label:"Bondage",query:"bondage"},{label:"Algemas",query:"esposas"},{label:"Arneses",query:"arnes"}]},
+{slug:"lingerie",name:"Lingerie Sexy",short:"Bodys, conjuntos e moda íntima",line:"Peças de lingerie para diferentes estilos.",tone:"peach",symbol:"fabric",sub:["Bodys","Conjuntos","Tangas"],filters:[{label:"Bodys",query:"body"},{label:"Conjuntos",query:"conjunto"},{label:"Tangas",query:"tanga"}]},
+{slug:"bem-estar",name:"Lubrificantes & Cuidados",short:"Lubrificantes, higiene e proteção",line:"Cuidados e bem-estar íntimo.",tone:"sage",symbol:"leaf",sub:["Lubrificantes","Higiene","Preservativos"],filters:[{label:"Lubrificantes",query:"lubricante"},{label:"Higiene",query:"limpiador"},{label:"Preservativos",query:"preservativo"}]},
+{slug:"massagem",name:"Massagem Erótica",short:"Óleos, velas e massajadores",line:"Massagem e relaxamento íntimo.",tone:"blue",symbol:"spark",sub:["Óleos","Massajadores","Velas"],filters:[{label:"Óleos",query:"aceite"},{label:"Massajadores",query:"masajeador"},{label:"Velas",query:"vela"}]},
+{slug:"jogos-acessorios",name:"Jogos & Acessórios",short:"Jogos, kits e acessórios",line:"Jogos e acessórios para descobrir.",tone:"stone",symbol:"wave",sub:["Jogos","Acessórios","Kits"],filters:[{label:"Jogos",query:"juego"},{label:"Acessórios",query:"accesorio"},{label:"Kits",query:"kit"}]}
 ] as const;
 
 export type Category = (typeof categories)[number];
