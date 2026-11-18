@@ -41,7 +41,7 @@ jobs:
                 const resp=await page.goto(process.env.TARGET+"/",{waitUntil:"networkidle2",timeout:30000});
                 assert.ok([200,304].includes(resp.status()),"GET / "+view.name+" status="+resp.status());
                 await page.screenshot({path:"qa/home-"+view.name+".png",fullPage:true});
-                const state=await page.evaluate(()=>({width:document.documentElement.scrollWidth,inner:innerWidth,title:document.title,meta:document.querySelector('meta[name="robots"]')?.content||"",brand:document.body.innerText.includes("sevelora")}));
+                const state=await page.evaluate(()=>({width:document.documentElement.scrollWidth,inner:innerWidth,title:document.title,meta:document.querySelector('meta[name="robots"]')?.content||"",brand:document.body.innerText.toLocaleLowerCase("pt-PT").includes("sevelora")}));
                 assert.ok(state.brand,"brand not shown");
                 assert.ok(state.width<=state.inner+1,"horizontal overflow "+view.name+" "+JSON.stringify(state));
                 assert.ok(/noindex/i.test(state.meta),"staging must be noindex");
