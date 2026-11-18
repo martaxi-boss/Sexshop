@@ -80,6 +80,8 @@ jobs:
               assert.ok(count>0,"catalog search gave no results for first real product");
               const urls=await page.$$eval('a[rel~="sponsored"]',links=>links.map(a=>a.href));
               assert.ok(urls.some(url=>{const u=new URL(url);return u.hostname==="www.awin1.com"&&u.pathname==="/pclick.php"&&u.searchParams.get("a")==="3157353"&&u.searchParams.get("m")==="37722"}),"approved Awin affiliate links missing");
+              const availableProductPath=await page.$eval('article.real-product-card a[rel~="sponsored"]',el=>el.closest("article")?.querySelector("h3 a")?.getAttribute("href")||"");
+              assert.ok(availableProductPath.startsWith("/produto/"),"catalog must link to available product detail");
               report.checks.push("search and approved Awin links: PASS");
               await page.click(searchSelector,{clickCount:3});
               await page.keyboard.press("Backspace");
@@ -94,7 +96,7 @@ jobs:
               assert.equal(resp.status(),200);
               assert.ok((await page.evaluate(()=>document.body.innerText)).includes("Para Casais"));
               report.checks.push("category navigation: PASS");
-              resp=await page.goto(process.env.TARGET+"/produto/43428124436",{waitUntil:"networkidle2"});
+              resp=await page.goto(process.env.TARGET+availableProductPath,{waitUntil:"networkidle2"});
               assert.equal(resp.status(),200);
               assert.ok((await page.$eval('a[rel~="sponsored"]',nodes=>nodes.length))>0,"product affiliate CTA missing");
               const detailPrice=await page.$eval(".product-detail .product-price",e=>e.textContent.trim());
