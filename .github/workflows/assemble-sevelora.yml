@@ -44,6 +44,8 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
       - name: Dependencias do projeto (runner efemero)
         run: pnpm install --frozen-lockfile
+      - name: Testar validade dos precos, ligacoes Awin e importador
+        run: node scripts/catalog-test.mjs
       - name: Build Next.js real
         run: pnpm --dir apps/ecommerce-shop-demo build
       - name: Smoke test HTTP das nove paginas e SEO de testes
