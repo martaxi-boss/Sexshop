@@ -6,7 +6,7 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 
 ## UI vinculativa
 - Primeira dobra: SEX SHOP inequívoco, produtos reais quando disponíveis e acesso claro a catálogo/categorias.
-- Navegação por Para Ela, Para Ele, Para Casais, Vibradores/Dildos, Anal, BDSM, Lingerie, Cuidados, Massagem, Jogos. Pesquisa e filtros funcionais, subcategorias com resultados reais ou omitidas.
+- Navegação apenas por categorias de produto efetivas: Vibradores/Dildos, Prazer Anal, Masturbadores, Anéis, Brinquedos a Dois, BDSM, Cuidados, Massagem, Kits/Acessórios e Perfumes. Lingerie só quando existirem produtos; pesquisa e filtros sempre funcionais.
 - Identidade Sevelora própria com vinho escuro, rosa forte e contrastes de leitura. Fotografia dos produtos apenas de feeds autorizados. Mobile antes de tudo.
 - Awin: venda e pagamento no parceiro; sem carrinho local, sem preços EUR inventados, sem falsas promessas de stock, descontos, entrega, avaliação ou portes.
 - A marca e o domínio comercial definitivo ainda carecem de verificação.
@@ -36,8 +36,15 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 
 ## Correção de categorias e fotografias — 19/11/2026, segunda ronda
 - Cada produto tem UM tipo e UMA categoria principal. scripts/diversual-ptpt.mjs determina a categoria por tipo e a sincronização grava products[].categories com exatamente um elemento.
-- products[].audiences contém exclusivamente as seleções para-ela, para-ele e para-casais. São atalhos de descoberta e podem conter produtos de tipos diferentes, pelo que NÃO são apresentados como categorias de artigo.
+- O fornecedor ainda pode fornecer metadata técnica audiences, mas não surgem na interface nem na navegação; só mostramos categorias reais de artigos.
 - Vibradores & Dildos, Prazer Anal, Masturbadores, Anéis Penianos, Brinquedos a Dois, BDSM, Lubrificantes & Cuidados, Massagem, Kits & Acessórios, Perfumes & Feromonas são famílias exclusivas. Lingerie só aparece quando tiver catálogo aprovado.
 - As fotografias de categorias vêm de produtos expressamente associados a cada família (coverIds em sevelora-data.ts), com object-fit: contain, sem recortar, distorcer ou tapar com degradês.
 - Nenhuma alteração pode criar duplicação nos totais das famílias, trocar a imagem de um tipo por outro, ou transformar as seleções por público em categorias de produto.
 - Garantir pt-PT, preços EUR verificados, links Awin, mobile e rollback da VPS intactos.
+
+## Ordem do proprietário — remover módulo por destinatário (19/11/2026)
+- Remover integralmente a secção «Explora à tua maneira» e todas as opções «Para Ela», «Para Ele» e «Para Casais» da página inicial, cabeçalhos, menu móvel, catálogo, fichas e rodapé.
+- As rotas antigas `/categoria/para-ela`, `/categoria/para-ele` e `/categoria/para-casais` devem devolver 404 e não ser sugeridas no site.
+- Manter apenas as 10 famílias de artigos, respeitando uma categoria por produto; não apagar o catálogo aprovado, preços EUR ou links Awin.
+- Alinhar as categorias em 5 colunas no desktop (duas linhas iguais) e 2 colunas no telemóvel; em tablets, centrar a última categoria quando necessário. Fotografias inteiras e sem cortes.
+- Atualizar a fonte em overrides e o espelho de apps no mesmo commit. Publicar pelo workflow atual, com rollback preservado.

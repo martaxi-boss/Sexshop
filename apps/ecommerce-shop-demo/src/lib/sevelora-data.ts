@@ -1,9 +1,6 @@
-// Montra Sevelora: separar o QUE É (categoria única) de PARA QUEM (seleção transversal).
-// Fotografias das categorias: somente IDs concretos de produtos da categoria, nunca o primeiro aleatório.
+// Montra Sevelora: apenas categorias reais de produtos, uma categoria por artigo.
+// Fotografias das categorias: IDs concretos da família, nunca o primeiro produto aleatório.
 export const categories=[
- {slug:"para-ela",kind:"audience",name:"Para Ela",short:"Escolhas de prazer íntimo feminino",line:"Uma seleção por destinatário, reunindo diferentes tipos de produtos para ela.",tone:"rose",filters:[{label:"Vibradores tipo coelhinho",type:"rabbits"},{label:"Sugadores",type:"sugadores"},{label:"Vibradores compactos",type:"vibradores-compactos"},{label:"Bolas de Kegel",type:"kegel"}]},
- {slug:"para-ele",kind:"audience",name:"Para Ele",short:"Masturbadores, anéis e próstata",line:"Uma seleção por destinatário, com masturbadores, anéis e estimuladores prostáticos.",tone:"stone",filters:[{label:"Masturbadores",type:"masturbadores"},{label:"Anéis penianos",type:"aneis"},{label:"Estimuladores da próstata",type:"prostata"}]},
- {slug:"para-casais",kind:"audience",name:"Para Casais",short:"Brinquedos e experiências a dois",line:"Uma seleção para explorar a dois: acessórios, vibradores para casais e kits.",tone:"wine",filters:[{label:"Vibradores para casais",type:"vibradores-casais"},{label:"Strap-ons",type:"strap-ons"},{label:"Kits eróticos",type:"kits"},{label:"Ovos com comando",type:"ovos"}]},
  {slug:"estimuladores",kind:"product",name:"Vibradores & Dildos",short:"Coelhinhos, balas, sugadores e dildos",line:"Vibradores, dildos e estimuladores, agrupados pelo tipo de brinquedo.",tone:"lilac",coverIds:["34454438101","39096594352"],filters:[{label:"Coelhinhos",type:"rabbits"},{label:"Vibradores",type:"vibradores"},{label:"Vibradores compactos",type:"vibradores-compactos"},{label:"Sugadores",type:"sugadores"},{label:"Dildos",type:"dildos"},{label:"Ovos",type:"ovos"},{label:"Estimulação oral",type:"estimulacao-oral"}]},
  {slug:"anal",kind:"product",name:"Prazer Anal",short:"Plugs, bolas, próstata e higiene anal",line:"Apenas produtos específicos para prazer e higiene anal.",tone:"sand",coverIds:["43582237884","45279704377"],filters:[{label:"Plugs anais",type:"plugs"},{label:"Bolas anais",type:"bolas-anais"},{label:"Próstata",type:"prostata"},{label:"Higiene anal",type:"higiene-anal"},{label:"Kits anais",type:"kits-anal"},{label:"Vibradores anais",type:"vibradores-anais"}]},
  {slug:"masturbadores",kind:"product",name:"Masturbadores",short:"Modelos manuais e automáticos",line:"Masturbadores masculinos manuais e automáticos, sem produtos de outras famílias.",tone:"stone",coverIds:["43582237885","40148294052"],filters:[{label:"Masturbadores masculinos",type:"masturbadores"}]},
@@ -20,7 +17,6 @@ export const categories=[
 export type Category=(typeof categories)[number];
 export const categoryBySlug=(slug:string)=>categories.find(c=>c.slug===slug);
 export const productCategories=categories.filter(c=>c.kind==="product");
-export const audienceCategories=categories.filter(c=>c.kind==="audience");
 
 export const subcategoryLabels:Record<string,string>={
 "prostata":"Estimuladores da próstata","arneses":"Arneses","vibradores":"Vibradores",

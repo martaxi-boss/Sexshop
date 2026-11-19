@@ -1,16 +1,15 @@
 import Link from "next/link";
 import {getCatalog} from "@/lib/sevelora-catalog-server";
-import {productCategories,audienceCategories,guides} from "@/lib/sevelora-data";
+import {productCategories,guides} from "@/lib/sevelora-data";
 import {matchesCategory} from "@/lib/sevelora-products";
 import {ProductCard} from "@/components/sevelora-product-card";
 export default async function Home(){
  const catalog=await getCatalog(),available=catalog.products.filter(p=>p.inStock);
  const hero=available.slice(0,2),featured=available.slice(0,8);
  const shown=productCategories.filter(c=>!catalog.products.length||catalog.products.some(p=>matchesCategory(p,c.slug)));
- const audiences=audienceCategories.filter(c=>!catalog.products.length||catalog.products.some(p=>matchesCategory(p,c.slug)));
  return <>
  <section className="retail-hero"><div className="shell retail-hero-inner">
- <div className="retail-copy"><span className="retail-eyebrow">✦ SEX SHOP ONLINE · +18 · PORTUGAL</span><h1>O TEU PRAZER.<br/><strong>AS TUAS REGRAS<span>.</span></strong></h1><p>Vibradores, sugadores, brinquedos para casais, lubrificantes e muito mais. Uma sex shop com categorias claras, produtos reais e liberdade para explorar.</p>
+ <div className="retail-copy"><span className="retail-eyebrow">✦ SEX SHOP ONLINE · +18 · PORTUGAL</span><h1>O TEU PRAZER.<br/><strong>AS TUAS REGRAS<span>.</span></strong></h1><p>Vibradores, sugadores, masturbadores, lubrificantes e muito mais. Uma sex shop com categorias claras, produtos reais e liberdade para explorar.</p>
  <div className="retail-actions"><Link href="/catalogo" className="retail-cta">EXPLORAR SEX SHOP ↗</Link><Link href="#categorias" className="retail-cta-ghost">ESCOLHER CATEGORIA ↓</Link></div><div className="retail-hero-notes"><span>+18 / PARA ADULTOS</span><span>COMPRA NO PARCEIRO</span></div></div>
  <div className="retail-showcase"><div className="retail-showcase-head"><span>NA NOSSA MONTRA</span><strong>DIVERSUAL / AFILIADO</strong></div>
  {hero.length?<div className="retail-showcase-products">{hero.map(p=><Link key={p.id} href={"/produto/"+p.id} className="retail-showcase-item"><span><img src={p.image} width="350" height="350" alt={p.name}/></span><strong>{p.name}</strong><b>VER PRODUTO ↗</b></Link>)}</div>:<Link className="retail-showcase-fallback" href="/catalogo">VIBRADORES<br/>LUBRIFICANTES<br/>BDSM <small>EXPLORAR CATÁLOGO ↗</small></Link>}
@@ -38,18 +37,6 @@ export default async function Home(){
   })}
   </div>
  </section>
- <section className="retail-audiences"><div className="shell retail-section retail-audiences-inner">
- <div className="retail-section-head"><div><span>SELEÇÕES POR DESTINATÁRIO</span><h2>Explora <em>à tua maneira.</em></h2><p>Descobre sugestões para ti ou para partilhar, de forma simples e sem perderes tempo à procura.</p></div></div>
- <div className="retail-audience-grid">
- {audiences.map((c,i)=>{
-    const count=catalog.products.filter(p=>matchesCategory(p,c.slug)).length;
-    return <Link className={"retail-audience-card retail-audience-"+c.tone} href={"/categoria/"+c.slug} key={c.slug}>
-      <span className="retail-audience-index">SELEÇÃO {String(i+1).padStart(2,"0")}</span>
-      <strong>{c.name}</strong><small>{c.short}</small>
-      <span className="retail-audience-bottom"><b>{count} {count===1?"artigo":"artigos"}</b><span aria-hidden="true">↗</span></span>
-    </Link>;
- })}
- </div></div></section>
  <section className="retail-featured"><div className="shell retail-section"><div className="retail-section-head"><div><span>CATÁLOGO OFICIAL DIVERSUAL</span><h2>Produtos em <em>destaque.</em></h2><p>Seleção de produtos reais disponíveis no catálogo do parceiro.</p></div><Link href="/catalogo">VER CATÁLOGO COMPLETO ↗</Link></div>
  {featured.length?<div className="real-product-grid retail-featured-grid">{featured.map(p=><ProductCard key={p.id} product={p}/>)}</div>:<div className="retail-no-products">O catálogo está em atualização. Mostramos apenas artigos de parceiros autorizados.</div>}
  <p className="catalog-disclaimer">Links de afiliado. Preços finais, disponibilidade e envio são sempre confirmados na loja parceira.</p></div></section>
