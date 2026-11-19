@@ -46,6 +46,20 @@ jobs:
                 assert.ok(state.width<=state.inner+1,"horizontal overflow "+view.name+" "+JSON.stringify(state));
                 assert.ok(/noindex/i.test(state.meta),"staging must be noindex");
                 report.pages.push({path:"/",view:view.name,http:resp.status(),...state});
+                const homepageSections=await page.evaluate(()=>({
+                  removed:document.querySelectorAll(".retail-showcase,.retail-trust,.retail-hero-notes").length,
+                  next:document.querySelector(".retail-hero")?.nextElementSibling?.id,
+                  buttons:[...document.querySelectorAll(".retail-actions a")].map(el=>el.textContent.trim()),
+                  categories:document.querySelectorAll("#categorias .retail-photo-card").length,
+                  featured:document.querySelectorAll(".retail-featured .real-product-card").length
+                }));
+                assert.equal(homepageSections.removed,0,"crossed-out module not fully removed: "+view.name);
+                assert.equal(homepageSections.next,"categorias","homepage gap left after removing marked block: "+view.name);
+                assert.deepEqual(homepageSections.buttons,["EXPLORAR SEX SHOP ↗","ESCOLHER CATEGORIA ↓"],"hero action buttons changed: "+view.name);
+                assert.equal(homepageSections.categories,10,"real category cards changed: "+view.name);
+                assert.ok(homepageSections.featured>0,"other featured products section was removed: "+view.name);
+                report.checks.push("crossed-out section removed, other hero and category content preserved "+view.name+": PASS");
+                console.log("CROSSED_OUT_SECTION_"+view.name.toUpperCase()+"=PASS");
                 console.log("LIVE_HOMEPAGE_"+view.name.toUpperCase()+"=PASS");
                 if(view.name==="mobile"){
                   await page.click(".mobile-menu summary");
