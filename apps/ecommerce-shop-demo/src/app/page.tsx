@@ -22,7 +22,7 @@ export default async function Home(){
     const preview=found.find(p=>p.id===preferred)||found.find(p=>p.id===fallback)||found.find(p=>p.inStock)||found[0];
     return <Link key={c.slug} href={"/categoria/"+c.slug} className="retail-photo-card">
       <div className={"retail-photo-panel retail-photo-panel-"+c.tone}>
-      {preview?<img src={preview.image} alt={"Exemplo: "+preview.name} loading="lazy" width="320" height="280"/>:<span className="retail-photo-empty" aria-hidden="true">✦</span>}
+      {preview?<img src={preview.image} alt={"Exemplo: "+preview.name} loading="eager" decoding="async" width="320" height="280"/>:<span className="retail-photo-empty" aria-hidden="true">✦</span>}
       <span className="retail-photo-badge">CATEGORIA {String(i+1).padStart(2,"0")}</span>
       </div>
       <div className="retail-photo-details">
