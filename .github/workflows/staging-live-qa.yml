@@ -58,11 +58,11 @@ jobs:
                   assert.equal(cards.length,10,"expected ten available disjoint product categories");
                   assert.ok(cards.every(c=>c.image&&c.fit==="contain"),"category cover must use a real, uncropped supplier image");
                   assert.equal(new Set(cards.map(c=>c.image)).size,cards.length,"category cards must have distinct, curated cover photos");
-                  assert.equal(await page.$eval(".retail-audience-card,.retail-audiences",els=>els.length),0,"removed promotional selection module is still rendered");
-                  assert.equal(await page.$eval('a[href^="/categoria/para-"]',els=>els.length),0,"removed audience options remain in mobile menu, header or footer");
+                  assert.equal(await page.$$eval(".retail-audience-card,.retail-audiences",els=>els.length),0,"removed promotional selection module is still rendered");
+                  assert.equal(await page.$$eval('a[href^="/categoria/para-"]',els=>els.length),0,"removed audience options remain in mobile menu, header or footer");
                   const mobileCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\s+/).length);
                   assert.equal(mobileCols,2,"category cards should align in two mobile columns");
-                  const mobileRows=await page.$eval(".retail-photo-card",els=>els.map(el=>({top:Math.round(el.getBoundingClientRect().top),height:Math.round(el.getBoundingClientRect().height)})));
+                  const mobileRows=await page.$$eval(".retail-photo-card",els=>els.map(el=>({top:Math.round(el.getBoundingClientRect().top),height:Math.round(el.getBoundingClientRect().height)})));
                   for(let i=0;i<mobileRows.length;i+=2){
                     assert.equal(mobileRows[i].top,mobileRows[i+1].top,"mobile category row is misaligned");
                     assert.equal(mobileRows[i].height,mobileRows[i+1].height,"mobile category cards have unequal heights");
@@ -97,7 +97,7 @@ jobs:
               const shownPrice=await page.$eval("article.real-product-card .product-price",e=>e.textContent.trim());
               assert.match(shownPrice,/\d+[,.]\d{2}\s*€/,"catalog must show verified EUR prices");
               report.checks.push("catalog EUR prices visible: PASS");
-              assert.equal(await page.$eval('select[aria-label="Filtrar por categoria"] option[value^="para-"]',els=>els.length),0,"obsolete audience categories still in catalog filters");
+              assert.equal(await page.$$eval('select[aria-label="Filtrar por categoria"] option[value^="para-"]',els=>els.length),0,"obsolete audience categories still in catalog filters");
               report.checks.push("catalog filters contain only real product types: PASS");
               await page.screenshot({path:"qa/catalogo-mobile.png",fullPage:true});
               const mobileState=await page.evaluate(()=>({documentWidth:document.documentElement.scrollWidth,viewport:innerWidth}));
@@ -163,7 +163,7 @@ jobs:
               const detailPrice=await page.$eval(".product-detail .product-price",e=>e.textContent.trim());
               assert.match(detailPrice,/\d+[,.]\d{2}\s*€/,"product detail must show verified EUR price");
               report.checks.push("product EUR price visible: PASS");
-              assert.equal(await page.$eval('nav[aria-label="Seleções por destinatário"]',els=>els.length),0,"obsolete audience nav still on product detail");
+              assert.equal(await page.$$eval('nav[aria-label="Seleções por destinatário"]',els=>els.length),0,"obsolete audience nav still on product detail");
               const translated=await page.$eval('.product-detail p[lang="pt-PT"]',el=>el.textContent.trim());
               assert.ok(translated.length>35,"product must have a pt-PT description");
               assert.equal(await page.$$eval('.product-detail [lang="es"]',nodes=>nodes.length),0,"Spanish description must not render");
@@ -184,10 +184,10 @@ jobs:
               await page.screenshot({path:"qa/categories-desktop.png",fullPage:false});
               const desktopCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\s+/).length);
               assert.equal(desktopCols,5,"desktop must show five category cards per row");
-              assert.equal(await page.$eval(".retail-photo-card",els=>els.length),10,"expected ten actual product categories");
-              assert.equal(await page.$eval(".retail-audiences",els=>els.length),0,"removed home module must stay deleted");
+              assert.equal(await page.$$eval(".retail-photo-card",els=>els.length),10,"expected ten actual product categories");
+              assert.equal(await page.$$eval(".retail-audiences",els=>els.length),0,"removed home module must stay deleted");
               assert.ok(!(await page.evaluate(()=>document.body.innerText)).includes("Explora à tua maneira"),"removed heading still appears");
-              const desktopRows=await page.$eval(".retail-photo-card",els=>els.map(el=>({top:Math.round(el.getBoundingClientRect().top),height:Math.round(el.getBoundingClientRect().height)})));
+              const desktopRows=await page.$$eval(".retail-photo-card",els=>els.map(el=>({top:Math.round(el.getBoundingClientRect().top),height:Math.round(el.getBoundingClientRect().height)})));
               for(let i=0;i<desktopRows.length;i+=5){
                 const heights=desktopRows.slice(i,i+5).map(x=>x.height);
                 assert.ok(Math.max(...heights)-Math.min(...heights)<=1,"desktop category cards misaligned in row "+i);
