@@ -1,8 +1,9 @@
-name: Sevelora - browser QA published staging
+name: Sevelora - QA publica do dominio de producao
 on:
   push:
-    branches: ["integration/sevelora-nuvi-v1"]
+    branches: ["main"]
     paths: [".github/workflows/staging-live-qa.yml"]
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
