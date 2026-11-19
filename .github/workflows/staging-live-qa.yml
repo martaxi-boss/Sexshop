@@ -60,7 +60,7 @@ jobs:
                   assert.equal(new Set(cards.map(c=>c.image)).size,cards.length,"category cards must have distinct, curated cover photos");
                   assert.equal(await page.$eval(".retail-audience-card,.retail-audiences",els=>els.length),0,"removed promotional selection module is still rendered");
                   assert.equal(await page.$eval('a[href^="/categoria/para-"]',els=>els.length),0,"removed audience options remain in mobile menu, header or footer");
-                  const mobileCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\\s+/).length);
+                  const mobileCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\s+/).length);
                   assert.equal(mobileCols,2,"category cards should align in two mobile columns");
                   const mobileRows=await page.$eval(".retail-photo-card",els=>els.map(el=>({top:Math.round(el.getBoundingClientRect().top),height:Math.round(el.getBoundingClientRect().height)})));
                   for(let i=0;i<mobileRows.length;i+=2){
@@ -109,7 +109,7 @@ jobs:
               report.checks.push("home EUR prices visible: PASS");
               await page.goto(process.env.TARGET+"/catalogo",{waitUntil:"networkidle2"});
               const firstName=await page.$eval("article.real-product-card h3",e=>e.textContent.trim());
-              assert.ok(firstName.length>=5&&!/\\b(?:Juguete|Disfruta|Lubricante|Satisfacción)\\b/i.test(firstName),"product title must remain in Portuguese");
+              assert.ok(firstName.length>=5&&!/\b(?:Juguete|Disfruta|Lubricante|Satisfacción)\b/i.test(firstName),"product title must remain in Portuguese");
               report.checks.push("Portuguese product titles: PASS");
               const keyword=firstName.split(/\s+/)[0];
               assert.ok(keyword&&keyword.length>=2,"missing real product name");
@@ -182,7 +182,7 @@ jobs:
               await page.$eval("#categorias",e=>e.scrollIntoView({block:"start"}));
               await new Promise(r=>setTimeout(r,320));
               await page.screenshot({path:"qa/categories-desktop.png",fullPage:false});
-              const desktopCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\\s+/).length);
+              const desktopCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\s+/).length);
               assert.equal(desktopCols,5,"desktop must show five category cards per row");
               assert.equal(await page.$eval(".retail-photo-card",els=>els.length),10,"expected ten actual product categories");
               assert.equal(await page.$eval(".retail-audiences",els=>els.length),0,"removed home module must stay deleted");
