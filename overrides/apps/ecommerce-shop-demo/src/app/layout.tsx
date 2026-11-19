@@ -28,7 +28,7 @@ export default async function RootLayout({children}:Readonly<{children:React.Rea
     <div><Link href="/" className="footer-brand">SEVELORA ✦</Link><p>Uma sex shop para explorar sem tabus. Produtos reais de fornecedores parceiros aprovados, para maiores de 18 anos.</p><span className="footer-note">Montra de afiliação: não vendemos nem enviamos artigos diretamente.</span></div>
     <div><h3>SEX SHOP</h3><Link href="/catalogo">Todos os produtos</Link><Link href="/categoria/estimuladores">Vibradores & Dildos</Link><Link href="/categoria/masturbadores">Masturbadores</Link><Link href="/categoria/aneis">Anéis Penianos</Link><Link href="/categoria/casais">Brinquedos a Dois</Link></div>
     <div><h3>DESCOBRIR</h3><Link href="/categoria/anal">Prazer Anal</Link><Link href="/categoria/bdsm">BDSM & Fetiche</Link>{shownProducts.some(c=>c.slug==="feromonas")&&<Link href="/categoria/feromonas">Perfumes & Feromonas</Link>}<Link href="/categoria/bem-estar">Lubrificantes & Cuidados</Link><Link href="/guias">Guias</Link></div>
-    <div><h3>INFORMAÇÃO</h3><Link href="/sobre">Sobre a Sevelora</Link><Link href="/afiliacao">Como funciona a afiliação</Link><p>Preços finais, disponibilidade, portes e entregas são confirmados na loja parceira.</p></div>
+    <div><h3>INFORMAÇÃO</h3><a href="mailto:geral@sevelora.eu">geral@sevelora.eu</a><Link href="/sobre">Sobre a Sevelora</Link><Link href="/afiliacao">Como funciona a afiliação</Link><p>Preços finais, disponibilidade, portes e entregas são confirmados na loja parceira.</p></div>
   </div><div className="footer-bottom"><span>© {new Date().getFullYear()} Sevelora · Projeto em testes</span><span>+18 · Compra no parceiro · <Link href="/afiliacao">Transparência</Link></span></div></footer>
   </body></html>;
 }
