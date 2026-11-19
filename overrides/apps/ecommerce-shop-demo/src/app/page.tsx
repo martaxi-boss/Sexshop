@@ -17,7 +17,7 @@ export default async function Home(){
  <small>Fotografias oficiais do fornecedor parceiro.</small></div></div></section>
  <div className="retail-trust"><div className="shell"><span><b>01 /</b> ESCOLHE A CATEGORIA</span><span><b>02 /</b> EXPLORA OS PRODUTOS</span><span><b>03 /</b> COMPRA NA LOJA PARCEIRA</span></div></div>
  <section className="shell retail-section" id="categorias">
-  <div className="retail-section-head"><div><span>POR TIPO DE ARTIGO · SEM MISTURAS</span><h2>Encontra a categoria <em>certa.</em></h2><p>Um produto, uma categoria principal. Fotografias oficiais e uma navegação sem complicações.</p></div><Link href="/catalogo">TODOS OS ARTIGOS ↗</Link></div>
+  <div className="retail-section-head"><div><span>EXPLORA POR TIPO DE PRODUTO</span><h2>Encontra a categoria <em>certa.</em></h2><p>Escolhe a família certa: vibradores, plugs, masturbadores, lubrificantes e muito mais.</p></div><Link href="/catalogo">TODOS OS ARTIGOS ↗</Link></div>
   <div className="retail-categories retail-category-gallery">
   {shown.map((c,i)=>{
     const found=catalog.products.filter(p=>matchesCategory(p,c.slug));
@@ -39,7 +39,7 @@ export default async function Home(){
   </div>
  </section>
  <section className="retail-audiences"><div className="shell retail-section retail-audiences-inner">
- <div className="retail-section-head"><div><span>SELEÇÕES POR DESTINATÁRIO</span><h2>Explora <em>à tua maneira.</em></h2><p>Para Ela, Para Ele e Para Casais são percursos de descoberta; as categorias de produto mantêm-se organizadas por tipo.</p></div></div>
+ <div className="retail-section-head"><div><span>SELEÇÕES POR DESTINATÁRIO</span><h2>Explora <em>à tua maneira.</em></h2><p>Descobre sugestões para ti ou para partilhar, de forma simples e sem perderes tempo à procura.</p></div></div>
  <div className="retail-audience-grid">
  {audiences.map((c,i)=>{
     const count=catalog.products.filter(p=>matchesCategory(p,c.slug)).length;

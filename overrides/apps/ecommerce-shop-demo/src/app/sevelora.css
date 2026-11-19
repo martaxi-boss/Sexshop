@@ -387,3 +387,25 @@ body{background:var(--cream);font-family:var(--sans)}
 .mobile-nav-label{padding:10px 16px;background:#451a30;color:#ffc5de;font-size:9px;font-weight:950;letter-spacing:.12em}
 .detail-category-links{align-items:center}
 .detail-category-links strong{font-size:11px;margin-right:4px;color:#6d3752}
+
+
+/* QA visual: os produtos do fornecedor incluem fundo branco nas fotos.
+   A zona fotografica tambem fica branca, evitando quadrados brancos sobre fundos coloridos. */
+.retail-photo-panel,
+.retail-photo-panel-rose,
+.retail-photo-panel-wine,
+.retail-photo-panel-stone,
+.retail-photo-panel-lilac,
+.retail-photo-panel-sand,
+.retail-photo-panel-sage,
+.retail-photo-panel-blue,
+.retail-photo-panel-peach{background:#fff}
+.retail-photo-panel{box-shadow:inset 0 -3px 0 var(--photo-accent,#df6d9c)}
+.retail-photo-panel-rose{--photo-accent:#d35e93}
+.retail-photo-panel-wine{--photo-accent:#ab6089}
+.retail-photo-panel-stone{--photo-accent:#b5a2bd}
+.retail-photo-panel-lilac{--photo-accent:#aa8ec3}
+.retail-photo-panel-sand{--photo-accent:#e6b392}
+.retail-photo-panel-sage{--photo-accent:#9cc7af}
+.retail-photo-panel-blue{--photo-accent:#9eaacc}
+.retail-photo-panel-peach{--photo-accent:#e4a5bb}
