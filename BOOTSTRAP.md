@@ -71,7 +71,13 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 
 ## Domínio definitivo autorizado — 19/11/2026
 - O proprietário registou sevelora.eu e autorizou substituir sexy-shop.duckdns.org, atualizar o espaço promocional Awin e preparar indexação Google.
-- Canónico HTTPS sem www: https://sevelora.eu. www e domínio de teste redirecionam 301 preservando caminho e query.
+- Canónico HTTPS sem www: https://sevelora.eu. www redireciona 301 preservando caminho e query. O domínio de teste foi desativado por ordem expressa do proprietário; não recriar redirecionamentos nem publicar a Sevelora nesse endereço.
 - Publicação no domínio definitivo permite index/follow; sitemap inclui páginas, categorias com artigos e produtos do catálogo aprovado.
 - Contacto geral@sevelora.eu encaminha para o Gmail já verificado do proprietário; preservar a função durante mudanças DNS.
 - Low Cost Europa, comparador e restantes projetos permanecem inalterados.
+
+## Retirada do domínio de teste — 19/11/2026
+- O proprietário esclareceu que sexy-shop.duckdns.org era descartável e deve desaparecer, incluindo o redirecionamento.
+- Manter exclusivamente sevelora.eu e o redirecionamento de www.sevelora.eu. Bloquear o hostname retirado na VPS para impedir que caia noutro virtual host.
+- Retirar a renovação do certificado antigo após desativar HTTPS nesse hostname. A eliminação do registo no fornecedor DuckDNS depende de sessão autenticada.
+- Não retirar o domínio de teste do comparador: é outro projeto.
