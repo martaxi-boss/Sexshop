@@ -3,9 +3,10 @@ const base = process.env.BASE_URL ?? "http://127.0.0.1:3001";
 const routes = [
   ["/","O TEU PRAZER."],
   ["/catalogo","Encontra o que procuras"],
-  ["/categoria/para-ela","Para Ela"],
-  ["/categoria/para-ele","Para Ele"],
-  ["/categoria/para-casais","Para Casais"],
+  ["/categoria/estimuladores","Vibradores"],
+  ["/categoria/masturbadores","Masturbadores"],
+  ["/categoria/aneis","Anéis Penianos"],
+  ["/categoria/casais","Brinquedos a Dois"],
   ["/categoria/bdsm","BDSM"],
   ["/categoria/anal","Prazer Anal"],
   ["/categoria/bem-estar","Lubrificantes"],
@@ -22,8 +23,19 @@ for (const [path,needle] of routes) {
   assert.ok(!html.includes("Secure checkout"),"Checkout leaked in "+path);
   assert.ok(!html.includes("venturefield-jacket"),"Old product leaked in "+path);
   assert.ok(/noindex/i.test(html),"Staging page indexable: "+path);
+  if(path==="/"||path==="/catalogo"){
+    for(const label of ["Explora à tua maneira","Para Ela","Para Ele","Para Casais"]){
+      assert.ok(!html.includes(label),"Removed selection is still rendered: "+label);
+    }
+    assert.ok(!html.includes("/categoria/para-"),"Legacy audience links remain in site navigation");
+  }
   console.log("PASS "+path+" [200, Sevelora, noindex]");
 }
+for(const slug of ["para-ela","para-ele","para-casais"]){
+  const gone=await fetch(base+"/categoria/"+slug,{redirect:"manual"});
+  assert.equal(gone.status,404,"Removed selection route must return 404: "+slug);
+}
+console.log("PASS three removed selection routes return 404");
 const r404=await fetch(base+"/categorias/nao-existe");
 assert.equal(r404.status,404);
 console.log("PASS 404 invalid route");
