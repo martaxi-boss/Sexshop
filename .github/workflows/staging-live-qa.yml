@@ -59,6 +59,23 @@ jobs:
                 assert.equal(homepageSections.categories,10,"real category cards changed: "+view.name);
                 assert.ok(homepageSections.featured>0,"other featured products section was removed: "+view.name);
                 report.checks.push("crossed-out section removed, other hero and category content preserved "+view.name+": PASS");
+
+                const burgundyPalette=await page.evaluate(()=>{
+                  const sample=(sel)=>{const el=document.querySelector(sel);if(!el)return null;const x=getComputedStyle(el);return {bg:x.backgroundColor,gradient:x.backgroundImage,color:x.color,border:x.borderColor}};
+                  return {body:sample("body"),main:sample("main"),categoryStrip:sample(".category-strip"),featured:sample(".retail-featured"),card:sample(".retail-photo-card"),cta:sample(".retail-actions .retail-cta"),ctaSecondary:sample(".retail-actions .retail-cta-ghost"),footer:sample(".footer")};
+                });
+                assert.equal(burgundyPalette.body?.bg,"rgb(40, 10, 28)","site body must be dark burgundy");
+                assert.equal(burgundyPalette.main?.bg,"rgb(40, 10, 28)","site main must be burgundy");
+                assert.equal(burgundyPalette.categoryStrip?.bg,"rgb(54, 17, 38)","category navigation must not be white");
+                assert.equal(burgundyPalette.featured?.bg,"rgb(44, 12, 32)","product feature section must not be white");
+                assert.ok(burgundyPalette.card?.gradient.includes("linear-gradient"),"category cards need wine gradient");
+                assert.equal(burgundyPalette.cta?.bg,"rgb(255, 208, 227)","primary hero button should be blush pink");
+                assert.equal(burgundyPalette.cta?.color,"rgb(57, 16, 36)","light-pink CTA must use dark contrast text");
+                assert.equal(burgundyPalette.ctaSecondary?.bg,"rgb(231, 160, 193)","second hero button should also be pink, not white");
+                assert.equal(burgundyPalette.footer?.bg,"rgb(34, 8, 24)","footer should match burgundy palette");
+                report.checks.push("burgundy site-wide palette and blush CTAs "+view.name+": PASS");
+                console.log("BURGUNDY_THEME_"+view.name.toUpperCase()+"=PASS");
+
                 console.log("CROSSED_OUT_SECTION_"+view.name.toUpperCase()+"=PASS");
                 console.log("LIVE_HOMEPAGE_"+view.name.toUpperCase()+"=PASS");
                 if(view.name==="mobile"){
@@ -111,6 +128,19 @@ jobs:
               const shownPrice=await page.$eval("article.real-product-card .product-price",e=>e.textContent.trim());
               assert.match(shownPrice,/\d+[,.]\d{2}\s*€/,"catalog must show verified EUR prices");
               report.checks.push("catalog EUR prices visible: PASS");
+
+              const catalogPalette=await page.evaluate(()=>{
+                const sample=(sel)=>{const el=document.querySelector(sel);if(!el)return null;const s=getComputedStyle(el);return {bg:s.backgroundColor,color:s.color}};
+                return {body:sample("body"),toolbar:sample(".catalog-toolbar"),card:sample(".real-product-card"),cta:sample(".real-product-copy .button"),mobileFilter:sample(".mobile-filters select")};
+              });
+              assert.equal(catalogPalette.body?.bg,"rgb(40, 10, 28)","catalog background must be dark wine");
+              assert.equal(catalogPalette.toolbar?.bg,"rgb(64, 23, 46)","catalog filter bar must be wine");
+              assert.equal(catalogPalette.card?.bg,"rgb(65, 22, 46)","product cards must not be white");
+              assert.equal(catalogPalette.cta?.bg,"rgb(255, 208, 227)","affiliate buying button should be soft pink");
+              assert.equal(catalogPalette.mobileFilter?.bg,"rgb(72, 26, 52)","mobile filters must be burgundy");
+              report.checks.push("catalog wine background, card and filters with pink CTAs: PASS");
+              console.log("BURGUNDY_CATALOG=PASS");
+
               assert.equal(await page.$$eval('select[aria-label="Filtrar por categoria"] option[value^="para-"]',els=>els.length),0,"obsolete audience categories still in catalog filters");
               report.checks.push("catalog filters contain only real product types: PASS");
               await page.screenshot({path:"qa/catalogo-mobile.png",fullPage:true});
@@ -177,6 +207,18 @@ jobs:
               const detailPrice=await page.$eval(".product-detail .product-price",e=>e.textContent.trim());
               assert.match(detailPrice,/\d+[,.]\d{2}\s*€/,"product detail must show verified EUR price");
               report.checks.push("product EUR price visible: PASS");
+
+              const detailPalette=await page.evaluate(()=>{
+                const p=document.querySelector(".product-detail .button-dark");
+                const style=p?getComputedStyle(p):null;
+                return {pageBg:getComputedStyle(document.body).backgroundColor,buttonBg:style?.backgroundColor,buttonText:style?.color};
+              });
+              assert.equal(detailPalette.pageBg,"rgb(40, 10, 28)","detail background must remain wine");
+              assert.equal(detailPalette.buttonBg,"rgb(255, 208, 227)","affiliate detail CTA must be light-pink");
+              assert.equal(detailPalette.buttonText,"rgb(57, 16, 36)","affiliate detail CTA text contrast wrong");
+              report.checks.push("product page with wine background and blush affiliate CTA: PASS");
+              console.log("BURGUNDY_PRODUCT=PASS");
+
               assert.equal(await page.$$eval('nav[aria-label="Seleções por destinatário"]',els=>els.length),0,"obsolete audience nav still on product detail");
               const translated=await page.$eval('.product-detail p[lang="pt-PT"]',el=>el.textContent.trim());
               assert.ok(translated.length>35,"product must have a pt-PT description");
