@@ -7,7 +7,7 @@ import "./sevelora.css";
 const canonical=process.env.NEXT_PUBLIC_SITE_URL??"https://sexy-shop.duckdns.org";
 const launch=process.env.NEXT_PUBLIC_LAUNCH==="true";
 export const metadata:Metadata={metadataBase:new URL(canonical),title:{default:"Sevelora | Sex Shop Online",template:"%s | Sevelora"},description:"Sex shop para adultos em Portugal. Explora vibradores, sugadores, masturbadores, brinquedos a dois, BDSM e cuidados íntimos.",applicationName:"Sevelora",openGraph:{type:"website",locale:"pt_PT",siteName:"Sevelora"},robots:{index:launch,follow:launch},referrer:"strict-origin-when-cross-origin"};
-export const viewport:Viewport={width:"device-width",initialScale:1,themeColor:"#230e1b"};
+export const viewport:Viewport={width:"device-width",initialScale:1,themeColor:"#280a1c"};
 const navSlugs=["estimuladores","anal","masturbadores","aneis","casais","bem-estar"];
 export default async function RootLayout({children}:Readonly<{children:React.ReactNode}>){
   const catalog=await getCatalog();

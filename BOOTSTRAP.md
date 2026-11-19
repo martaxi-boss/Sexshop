@@ -53,3 +53,10 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 - Remover da página inicial exclusivamente o conteúdo do quadrado assinalado com X: legendas +18/compra no parceiro logo abaixo dos botões, montra de dois produtos «Na nossa montra / Diversual», e faixa numerada 01/02/03.
 - Conservar título e botões do hero, categorias, produtos em destaque noutro módulo, guias, navegação, textos e cores existentes. O pedido «o resto fica tudo» não autoriza uma mudança global de paleta.
 - Colapsar o espaço vazio do hero e manter a ligação ao #categorias. Não remover produtos do catálogo nem links de afiliado.
+
+## Rebrand visual bordô escuro — 19/11/2026 (pedido do proprietário)
+- Cor-base do fundo em todo o site: #280a1c (bordô vinho escuro), com painéis em #40152d/#41162e e variações da mesma família. Proibido regressar a grandes secções brancas e a botões com fundo branco.
+- Texto principal marfim-rosado #fff0f6, secundário #e6c0d1, destaques #ff99c5. Botões e chamadas de atenção em rosa-claro #ffd0e3 com texto escuro #391024; hover #f4a6c8.
+- Fotografia original de produto: área interna branca neutra para não destacar retângulos brancos da imagem do fornecedor, SEM tornar brancos os fundos das secções/catálogo/cartões.
+- Cabeçalho, barra de categorias, página inicial, catálogo, filtros, páginas de categoria/produto, guias, afiliação e rodapé partilham a identidade vinho escuro; preservar preços, rotas, artigos, noindex e links Awin.
+- Verificar visualmente 390px e 1366px; legibilidade, contraste e ausência de scroll horizontal; não chamar aprovação estética ao PASS de código.
