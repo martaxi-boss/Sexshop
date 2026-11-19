@@ -61,5 +61,11 @@ if(launch){
  const xml=await (await fetch(base+"/sitemap.xml")).text();
  assert.ok(xml.includes(siteUrl+"/catalogo"),"Sitemap lacks canonical routes");
  assert.ok(!xml.includes("duckdns.org"),"Staging domain in production sitemap");
+ const textMap=await fetch(base+"/sitemap.txt");
+ assert.equal(textMap.status,200);
+ assert.match(textMap.headers.get("content-type"),/^text\/plain; charset=utf-8$/i);
+ const textUrls=(await textMap.text()).trim().split("\n");
+ assert.deepEqual(textUrls,[...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]),"XML/TXT URL mismatch");
+ assert.ok(robots.includes(siteUrl+"/sitemap.txt"),"Missing alternative text sitemap declaration");
 }else assert.ok(robots.includes("Disallow: /"),"Staging robots must disallow indexing");
 console.log("PASS robots and sitemap launch="+launch);

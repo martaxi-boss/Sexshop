@@ -47,6 +47,22 @@ try{
     console.log("PAGINATION_CRAWL_PASS="+start+" pages="+pages.size+" products="+seen.size);
   }
   await crawl("/catalogo",products);
+  const xml=await (await fetch(base+"/sitemap.xml")).text();
+  const xmlUrls=[...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
+  const txtResponse=await fetch(base+"/sitemap.txt");
+  assert.equal(txtResponse.status,200);
+  assert.match(txtResponse.headers.get("content-type"),/^text\/plain; charset=utf-8$/i);
+  const txt=await txtResponse.text(),txtUrls=txt.trimEnd().split("\n");
+  assert.ok(!txt.startsWith("\uFEFF"),"Text sitemap must not contain a BOM");
+  assert.deepEqual(txtUrls,xmlUrls,"XML and TXT must expose the same live URLs in the same order");
+  assert.equal(new Set(txtUrls).size,products.length+15,"Every public fixture URL appears once");
+  assert.ok(txtUrls.every(url=>url===origin||url.startsWith(origin+"/")),"Only canonical public URLs");
+  const txtHead=await fetch(base+"/sitemap.txt",{method:"HEAD"});
+  assert.equal(txtHead.status,200);assert.equal(await txtHead.text(),"");
+  assert.equal((await fetch(base+"/sitemap.txt",{method:"POST"})).status,405);
+  const robots=await (await fetch(base+"/robots.txt")).text();
+  for(const extension of ["xml","txt"])assert.ok(robots.includes("Sitemap: "+origin+"/sitemap."+extension));
+  console.log("SITEMAP_XML_TXT_PARITY=PASS urls="+txtUrls.length);
   for(const category of new Set(products.map(p=>p.categories[0])))
     await crawl("/categoria/"+category,products.filter(p=>p.categories.includes(category)));
   for(const path of ["/catalogo?pagina=999999","/categoria/estimuladores?pagina=999999"])

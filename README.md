@@ -27,6 +27,7 @@
 - Publicação oficial com `NEXT_PUBLIC_SITE_URL=https://sevelora.eu` e `NEXT_PUBLIC_LAUNCH=true`, com `index, follow`, `robots.txt` e `sitemap.xml`.
 - O deploy de 19/11/2026 validou externamente **162 URLs no sitemap**, incluindo produtos, categorias com artigos e páginas institucionais. A inexistência de `noindex` foi validada em QA mobile/desktop.
 - **A indexação efetiva e o estado de submissão do sitemap só podem ser confirmados na propriedade `sevelora.eu` do Google Search Console.** Um sitemap válido não garante indexação nem ranking.
+- `/sitemap.txt` oferece as mesmas URLs do XML, uma por linha em UTF-8, a partir do mesmo catálogo e política de lançamento. Os dois formatos são anunciados em `robots.txt`; o TXT é uma alternativa de entrega suportada pelo Google, sem garantir processamento ou indexação.
 - O domínio de teste foi descontinuado; não o restaurar nem inserir como canonical, sitemap ou redirect.
 
 ## Testes e qualidade
