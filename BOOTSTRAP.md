@@ -79,5 +79,5 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 ## Retirada do domínio de teste — 19/11/2026
 - O proprietário esclareceu que sexy-shop.duckdns.org era descartável e deve desaparecer, incluindo o redirecionamento.
 - Manter exclusivamente sevelora.eu e o redirecionamento de www.sevelora.eu. Bloquear o hostname retirado na VPS para impedir que caia noutro virtual host.
-- Retirar a renovação do certificado antigo após desativar HTTPS nesse hostname. A eliminação do registo no fornecedor DuckDNS depende de sessão autenticada.
+- Retirar a renovação do certificado antigo após desativar HTTPS nesse hostname. O registo sexy-shop foi eliminado na conta DuckDNS autenticada; os restantes quatro registos foram preservados. Renovação antiga desativada e acesso HTTP 410/TLS rejeitado confirmados no run VPS 44554020362.
 - Não retirar o domínio de teste do comparador: é outro projeto.
