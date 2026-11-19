@@ -59,6 +59,7 @@ jobs:
                   assert.ok(cards.every(c=>c.image&&c.fit==="contain"),"category cover must use a real, uncropped supplier image");
                   assert.equal(new Set(cards.map(c=>c.image)).size,cards.length,"category cards must have distinct, curated cover photos");
                   assert.equal(await page.$eval(".retail-audience-card",els=>els.length),3,"audience selections must be separate from product categories");
+                  await page.screenshot({path:"qa/categories-mobile.png",fullPage:false});
                   report.checks.push("uncropped curated category covers and separate audiences: PASS");
                 }
               }
@@ -158,6 +159,12 @@ jobs:
               const desktopState=await page.evaluate(()=>({documentWidth:document.documentElement.scrollWidth,viewport:innerWidth}));
               assert.ok(desktopState.documentWidth<=desktopState.viewport+1,"catalog desktop overflow");
               report.checks.push("desktop catalog layout: PASS");
+              resp=await page.goto(process.env.TARGET+"/",{waitUntil:"networkidle2"});
+              assert.equal(resp.status(),200);
+              await page.$eval("#categorias",e=>e.scrollIntoView({block:"start"}));
+              await new Promise(r=>setTimeout(r,320));
+              await page.screenshot({path:"qa/categories-desktop.png",fullPage:false});
+              report.checks.push("real desktop category gallery screenshot: PASS");
               assert.equal(report.pageErrors.length,0,"page runtime errors: "+report.pageErrors.join("|"));
               console.log("LIVE_CATALOG_SEARCH=PASS");
               console.log("LIVE_CATALOG_FILTER=PASS");
