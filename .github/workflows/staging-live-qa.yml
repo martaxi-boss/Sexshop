@@ -54,11 +54,11 @@ jobs:
                   report.checks.push("mobile navigation: PASS");
                   await page.$eval("#categorias",e=>e.scrollIntoView({block:"start"}));
                   await new Promise(r=>setTimeout(r,400));
-                  const cards=await page.$eval(".retail-photo-card",els=>els.map(el=>({text:el.querySelector("h3")?.textContent?.trim(),image:el.querySelector("img")?.getAttribute("src"),fit:el.querySelector("img")?getComputedStyle(el.querySelector("img")).objectFit:null})));
+                  const cards=await page.$$eval(".retail-photo-card",els=>els.map(el=>({text:el.querySelector("h3")?.textContent?.trim(),image:el.querySelector("img")?.getAttribute("src"),fit:el.querySelector("img")?getComputedStyle(el.querySelector("img")).objectFit:null})));
                   assert.equal(cards.length,10,"expected ten available disjoint product categories");
                   assert.ok(cards.every(c=>c.image&&c.fit==="contain"),"category cover must use a real, uncropped supplier image");
                   assert.equal(new Set(cards.map(c=>c.image)).size,cards.length,"category cards must have distinct, curated cover photos");
-                  assert.equal(await page.$eval(".retail-audience-card",els=>els.length),3,"audience selections must be separate from product categories");
+                  assert.equal(await page.$$eval(".retail-audience-card",els=>els.length),3,"audience selections must be separate from product categories");
                   await page.screenshot({path:"qa/categories-mobile.png",fullPage:false});
                   report.checks.push("uncropped curated category covers and separate audiences: PASS");
                 }
@@ -72,7 +72,7 @@ jobs:
               const emptyLingerieLinks=await page.$$eval('nav.category-strip a[href="/categoria/lingerie"]',nodes=>nodes.length);
               assert.equal(emptyLingerieLinks,0,"empty lingerie category must be hidden from navigation");
               report.checks.push("148 curated Portuguese products and empty category hidden: PASS");
-              const catOptions=await page.$eval('select[aria-label="Filtrar por categoria"] optgroup[label="Por tipo de produto"] option',els=>els.map(e=>e.value));
+              const catOptions=await page.$$eval('select[aria-label="Filtrar por categoria"] optgroup[label="Por tipo de produto"] option',els=>els.map(e=>e.value));
               assert.equal(catOptions.length,10,"ten exclusive product categories expected");
               let categoryTotal=0;
               for(const cat of catOptions){
