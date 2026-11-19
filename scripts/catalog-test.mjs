@@ -68,7 +68,7 @@ assert.equal(byCategory.bdsm,1,'BDSM should contain only its specific kit');
 assert.equal(byCategory.anal,visibleCurated.filter(p=>['plugs','bolas-anais','prostata','vibradores-anais','higiene-anal','kits-anal'].includes(p.subcategories[0])).length);
 assert.ok(!curatedProducts.get('34454438095').categories.includes('anal'),'anal lubricant stays with lubricants');
 assert.ok(!curatedProducts.get('41402726495').audiences.includes('para-casais'),'generic dildo not automatically in couples');
-assert.ok(curatedProducts.get('43428124436').audiences.includes('para-ele'),'prostate product is visible in men's discovery');
+assert.ok(curatedProducts.get('43428124436').audiences.includes('para-ele'),'prostate product appears in para-ele discovery');
 console.log('CATEGORY_DISJOINT_PASS='+JSON.stringify(byCategory));
 
 console.log('CATALOG_VALIDATION_TESTS=PASS curated='+curatedProducts.size);
