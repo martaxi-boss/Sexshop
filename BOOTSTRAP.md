@@ -48,3 +48,8 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 - Manter apenas as 10 famílias de artigos, respeitando uma categoria por produto; não apagar o catálogo aprovado, preços EUR ou links Awin.
 - Alinhar as categorias em 5 colunas no desktop (duas linhas iguais) e 2 colunas no telemóvel; em tablets, centrar a última categoria quando necessário. Fotografias inteiras e sem cortes.
 - Atualizar a fonte em overrides e o espelho de apps no mesmo commit. Publicar pelo workflow atual, com rollback preservado.
+
+## Remoção estritamente delimitada pela imagem do proprietário — 19/11/2026
+- Remover da página inicial exclusivamente o conteúdo do quadrado assinalado com X: legendas +18/compra no parceiro logo abaixo dos botões, montra de dois produtos «Na nossa montra / Diversual», e faixa numerada 01/02/03.
+- Conservar título e botões do hero, categorias, produtos em destaque noutro módulo, guias, navegação, textos e cores existentes. O pedido «o resto fica tudo» não autoriza uma mudança global de paleta.
+- Colapsar o espaço vazio do hero e manter a ligação ao #categorias. Não remover produtos do catálogo nem links de afiliado.

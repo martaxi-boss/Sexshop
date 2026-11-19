@@ -23,6 +23,14 @@ for (const [path,needle] of routes) {
   assert.ok(!html.includes("Secure checkout"),"Checkout leaked in "+path);
   assert.ok(!html.includes("venturefield-jacket"),"Old product leaked in "+path);
   assert.ok(/noindex/i.test(html),"Staging page indexable: "+path);
+  if(path==="/"){
+    for(const snippet of ["NA NOSSA MONTRA","DIVERSUAL / AFILIADO","retail-showcase","retail-trust","EXPLORA OS PRODUTOS","COMPRA NA LOJA PARCEIRA"]){
+      assert.ok(!html.includes(snippet),"Crossed-out homepage module remains: "+snippet);
+    }
+    assert.ok(html.includes("ESCOLHER CATEGORIA"),"Hero category button should remain");
+    assert.ok(html.includes("EXPLORA POR TIPO DE PRODUTO"),"Category section should remain");
+    assert.ok(html.includes("CATÁLOGO OFICIAL DIVERSUAL"),"Other product section should remain");
+  }
   if(path==="/"||path==="/catalogo"){
     for(const label of ["Explora à tua maneira","Para Ela","Para Ele","Para Casais"]){
       assert.ok(!html.includes(label),"Removed selection is still rendered: "+label);

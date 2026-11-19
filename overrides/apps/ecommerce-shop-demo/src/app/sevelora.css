@@ -391,3 +391,8 @@ body{background:var(--cream);font-family:var(--sans)}
  .retail-section-head{align-items:flex-start;flex-direction:column;gap:13px}
  .retail-section-head>a{max-width:100%;white-space:normal}
 }
+
+/* Sevelora 2026-11-19 — remover apenas o quadrado riscado, sem mudar as cores */
+.retail-hero-inner{display:block;min-height:0;padding-top:clamp(35px,4vw,62px);padding-bottom:clamp(35px,4vw,62px)}
+.retail-copy{max-width:900px}
+.retail-copy p{max-width:690px}
