@@ -59,6 +59,8 @@ jobs:
                   assert.ok(cards.every(c=>c.image&&c.fit==="contain"),"category cover must use a real, uncropped supplier image");
                   assert.equal(new Set(cards.map(c=>c.image)).size,cards.length,"category cards must have distinct, curated cover photos");
                   assert.equal(await page.$$eval(".retail-audience-card",els=>els.length),3,"audience selections must be separate from product categories");
+                  const panelBg=await page.$eval(".retail-photo-panel",el=>getComputedStyle(el).backgroundColor);
+                  assert.equal(panelBg,"rgb(255, 255, 255)","real supplier photo backgrounds must blend into white cards");
                   await page.screenshot({path:"qa/categories-mobile.png",fullPage:false});
                   report.checks.push("uncropped curated category covers and separate audiences: PASS");
                 }
