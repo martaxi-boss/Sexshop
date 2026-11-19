@@ -271,9 +271,9 @@ jobs:
               const desktopCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\s+/).length);
               assert.equal(desktopCols,5,"desktop must show five category cards per row");
 
-              const badgeCount=await page.$eval("#categorias .retail-photo-badge",els=>els.length);
+              const badgeCount=await page.$$eval("#categorias .retail-photo-badge",els=>els.length);
               assert.equal(badgeCount,0,"numbered category tags must be absent on desktop");
-              const metaCount=await page.$eval("#categorias .retail-photo-meta",els=>els.length);
+              const metaCount=await page.$$eval("#categorias .retail-photo-meta",els=>els.length);
               assert.equal(metaCount,10,"each category must show one discreet item count");
               report.checks.push("compact category cards without numbered labels: PASS");
               assert.equal(await page.$$eval(".retail-photo-card",els=>els.length),10,"expected ten actual product categories");
