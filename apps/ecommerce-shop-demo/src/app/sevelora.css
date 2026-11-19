@@ -336,3 +336,16 @@ body{background:var(--cream);font-family:var(--sans)}
 .no-results{background:#fff2f7;border-color:#e8bcd0}
 .no-results h2{font-family:var(--sans);font-weight:900}
 @media(max-width:700px){.real-product-copy{padding:11px}.real-product-copy h3{font-size:15px}.real-product-copy .button{padding:10px 7px;font-size:10px}.catalog-toolbar{padding:10px}.searchbox{max-width:none}.retail-category-hero>.shell{padding-top:23px;padding-bottom:23px}.retail-category-hero h1{font-size:38px}.retail-category-hero p{font-size:12px}.retail-count{padding-left:12px}.retail-count strong{font-size:29px}.retail-count span{font-size:9px}.retail-subnav{padding-top:14px}}
+
+/* SEVELORA CATEGORY CURATION — filtros exatos, acessiveis e em pt-PT */
+.subfilter-panel{border-top:1px solid #dcb9ca;margin-top:19px;padding-top:19px}
+.subfilter-panel h3{font-size:11px;letter-spacing:.1em;font-weight:950;color:#af1957;margin:0 0 12px}
+.subfilter-panel button{padding:10px 8px;font-size:11px;line-height:1.4}
+.subfilter-panel button.active{background:#ffdeea;border-left:3px solid #bf1052;padding-left:8px}
+.mobile-filters{gap:11px}
+.mobile-filters label{display:flex;flex-direction:column;gap:7px;font-weight:850;font-size:11px}
+.mobile-filters select{background:white;border:1px solid #dcb8ca;padding:11px;color:#3a1325}
+.detail-translation-note{font-size:11px;color:#736371}
+.detail-type-label{font-size:13px}
+.detail-category-links{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0}
+.detail-category-links a{border:1px solid #e9c1d2;background:#fff1f7;color:#971747;padding:8px 10px;font-weight:800;font-size:11px}
