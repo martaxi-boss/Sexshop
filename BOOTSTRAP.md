@@ -12,12 +12,12 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 - A marca e o domínio comercial definitivo ainda carecem de verificação.
 
 ## Engenharia e higiene
-- Repositório existente martaxi-boss/Sexshop; trabalhar na branch integration/sevelora-nuvi-v1 e PR já abertas. Não criar branch extra para cada alteração.
+- Repositório martaxi-boss/Sexshop; após consolidação, usar main como fonte única e manter deploy por SHA fixo aprovado. Não criar branches desnecessárias.
 - Fonte de verdade do site: overrides/apps/ecommerce-shop-demo/src. apps/ecommerce-shop-demo/src é espelho gerado pelo scripts/assemble-nuvi.sh. Atualizar ambos no mesmo commit ou através do assembler, nunca só um.
 - Preservar o fornecedor Diversual aprovado, os links Awin, as credenciais privadas e os dados sincronizados. Não publicar segredos no GitHub.
 - VPS limitada a /srv/projects/Sexshop. Reutilizar Node privado e workflow de deploy existente. Proibido tocar nos outros projetos, serviços ou instalações globais.
 - Antes de qualquer limpeza: inventário read-only; preservar current, release anterior/rollback e dados; nunca apagar indiscriminadamente branches, releases ou logs.
-- Deploy via GitHub Actions existente, commit SHA fixo, testado e com rollback. Manter noindex na fase de staging.
+- Deploy via GitHub Actions existente, commit SHA fixo, testado e com rollback. O domínio de produção sevelora.eu usa index/follow; verificar estado efetivo no Search Console.
 
 ## Critérios de aceitação
 - Build Next.js e testes catalog-test + smoke PASS.
