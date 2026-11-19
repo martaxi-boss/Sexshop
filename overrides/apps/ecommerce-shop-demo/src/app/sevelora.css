@@ -711,3 +711,11 @@ body,main{background:var(--sevelora-bg);color:var(--sevelora-ink)}
  .catalog-toolbar{padding:10px}
  .footer-main{padding-top:35px;padding-bottom:35px}
 }
+
+/* Compact Sevelora identity: native vector, sized for the actual header. */
+.header .brand{gap:10px;font-size:25px;font-weight:800;letter-spacing:.035em;line-height:1;flex-shrink:0}
+.header .brand-mark{display:block;flex:0 0 36px;width:36px;height:36px;border:0;border-radius:0;background:none;object-fit:contain}
+.brand-wordmark{display:block;white-space:nowrap}
+.header .brand small{font-size:7px;line-height:1.15;letter-spacing:.16em;margin-top:7px}
+@media(max-width:700px){.header .brand{font-size:21px;gap:8px}.header .brand-mark{flex-basis:32px;width:32px;height:32px}.header .brand small{font-size:6.5px;letter-spacing:.13em;margin-top:6px}}
+@media(max-width:360px){.header .brand{font-size:19px;gap:7px}.header .brand-mark{flex-basis:30px;width:30px;height:30px}.header .brand small{font-size:6px}}

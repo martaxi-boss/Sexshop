@@ -17,7 +17,7 @@ export default async function RootLayout({children}:Readonly<{children:React.Rea
   <a className="skip" href="#conteudo">Saltar para conteúdo</a>
   <div className="topbar"><span>SEX SHOP ONLINE · PARA ADULTOS +18</span></div>
   <header className="header"><div className="header-inner">
-    <Link className="brand" href="/" aria-label="Sevelora Sex Shop início"><span className="brand-mark" aria-hidden="true">S</span><span>SEVELORA<small>SEX SHOP · PORTUGAL</small></span></Link>
+    <Link className="brand" href="/" aria-label="Sevelora Sex Shop início"><img className="brand-mark" src="/brand/sevelora-mark.svg" width="36" height="36" alt=""/><span className="brand-wordmark">SEVELORA<small>SEX SHOP · PORTUGAL</small></span></Link>
     <nav className="desktop-nav" aria-label="Categorias principais">{shown.filter(c=>navSlugs.includes(c.slug)).map(c=><Link key={c.slug} href={"/categoria/"+c.slug}>{c.name}</Link>)}<Link href="/catalogo" className="nav-all">Ver catálogo</Link></nav>
     <div className="header-actions"><form className="header-search" action="/catalogo" method="get" role="search"><label className="sr-only" htmlFor="header-search">Pesquisar produtos</label><input id="header-search" type="search" name="q" placeholder="O que procuras?"/><button type="submit" aria-label="Pesquisar">⌕</button></form>
       <details className="mobile-menu"><summary aria-label="Abrir menu de categorias">☰ <span>MENU</span></summary><nav aria-label="Categorias no telemóvel"><Link href="/catalogo">TODOS OS PRODUTOS →</Link>{shownProducts.map(c=><Link key={c.slug} href={"/categoria/"+c.slug}>{c.name} →</Link>)}<Link href="/guias">Guias →</Link></nav></details></div>
