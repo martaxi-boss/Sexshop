@@ -1,19 +1,35 @@
-// Categorias e atalhos para os produtos reais dos fornecedores autorizados.
+// Categorias visuais; a distribuição de cada produto é curada por ID em scripts/diversual-ptpt-*.
+// Nunca gerar categorias por palavras dispersas em descrições promocionais.
 export const categories=[
-{slug:"para-ela",name:"Para Ela",short:"Sugadores, vibradores e massajadores",line:"Brinquedos e artigos íntimos para ela.",tone:"rose",symbol:"petal",sub:["Sugadores","Vibradores","Massajadores"],filters:[{label:"Sugadores",query:"succionador"},{label:"Vibradores",query:"vibrador"},{label:"Massajadores",query:"masajeador"}]},
-{slug:"para-ele",name:"Para Ele",short:"Masturbadores, próstata e anéis",line:"Descobre a seleção de produtos para ele.",tone:"stone",symbol:"wave",sub:["Masturbadores","Próstata","Anéis"],filters:[{label:"Masturbadores",query:"masturbador"},{label:"Próstata",query:"prostata"},{label:"Anéis",query:"anillo"}]},
-{slug:"para-casais",name:"Para Casais",short:"Jogos e brinquedos a dois",line:"Novas descobertas para casais.",tone:"wine",symbol:"rings",sub:["Jogos","Kits","Controlo remoto"],filters:[{label:"Jogos",query:"juego"},{label:"Kits",query:"kit"},{label:"Controlo remoto",query:"control remoto"}]},
-{slug:"estimuladores",name:"Vibradores & Dildos",short:"Vibradores, sugadores e dildos",line:"Encontra o tipo de estimulador que procuras.",tone:"lilac",symbol:"ripple",sub:["Vibradores","Sugadores","Dildos"],filters:[{label:"Vibradores",query:"vibrador"},{label:"Sugadores",query:"succionador"},{label:"Dildos",query:"dildo"}]},
-{slug:"anal",name:"Prazer Anal",short:"Plugs, acessórios e higiene",line:"Artigos e acessórios para prazer anal.",tone:"sand",symbol:"sun",sub:["Plugs","Acessórios","Higiene"],filters:[{label:"Plugs",query:"plug"},{label:"Acessórios",query:"anal"},{label:"Higiene",query:"enema"}]},
-{slug:"bdsm",name:"BDSM & Fetiche",short:"Bondage, acessórios e fetiche",line:"Explora a seleção BDSM e fetiche.",tone:"wine",symbol:"rings",sub:["Bondage","Algemas","Arneses"],filters:[{label:"Bondage",query:"bondage"},{label:"Algemas",query:"esposas"},{label:"Arneses",query:"arnes"}]},
-{slug:"lingerie",name:"Lingerie Sexy",short:"Bodys, conjuntos e moda íntima",line:"Peças de lingerie para diferentes estilos.",tone:"peach",symbol:"fabric",sub:["Bodys","Conjuntos","Tangas"],filters:[{label:"Bodys",query:"body"},{label:"Conjuntos",query:"conjunto"},{label:"Tangas",query:"tanga"}]},
-{slug:"bem-estar",name:"Lubrificantes & Cuidados",short:"Lubrificantes, higiene e proteção",line:"Cuidados e bem-estar íntimo.",tone:"sage",symbol:"leaf",sub:["Lubrificantes","Higiene","Preservativos"],filters:[{label:"Lubrificantes",query:"lubricante"},{label:"Higiene",query:"limpiador"},{label:"Preservativos",query:"preservativo"}]},
-{slug:"massagem",name:"Massagem Erótica",short:"Óleos, velas e massajadores",line:"Massagem e relaxamento íntimo.",tone:"blue",symbol:"spark",sub:["Óleos","Massajadores","Velas"],filters:[{label:"Óleos",query:"aceite"},{label:"Massajadores",query:"masajeador"},{label:"Velas",query:"vela"}]},
-{slug:"jogos-acessorios",name:"Jogos & Acessórios",short:"Jogos, kits e acessórios",line:"Jogos e acessórios para descobrir.",tone:"stone",symbol:"wave",sub:["Jogos","Acessórios","Kits"],filters:[{label:"Jogos",query:"juego"},{label:"Acessórios",query:"accesorio"},{label:"Kits",query:"kit"}]}
+{slug:"para-ela",name:"Para Ela",short:"Vibradores, coelhinhos e acessórios íntimos",line:"Estimuladores, bolas de Kegel e brinquedos pensados para ela.",tone:"rose",symbol:"petal",filters:[{label:"Vibradores tipo coelhinho",type:"rabbits"},{label:"Vibradores compactos",type:"vibradores-compactos"},{label:"Sugadores",type:"sugadores"},{label:"Ovos com comando",type:"ovos"},{label:"Bolas de Kegel",type:"kegel"},{label:"Estimulação oral",type:"estimulacao-oral"}]},
+{slug:"para-ele",name:"Para Ele",short:"Masturbadores, próstata e anéis penianos",line:"Masturbadores manuais e automáticos, anéis e estimuladores prostáticos.",tone:"stone",symbol:"wave",filters:[{label:"Masturbadores",type:"masturbadores"},{label:"Estimuladores da próstata",type:"prostata"},{label:"Anéis penianos",type:"aneis"},{label:"Produtos de desempenho",type:"desempenho"}]},
+{slug:"para-casais",name:"Para Casais",short:"Vibradores a dois, kits e strap-ons",line:"Brinquedos para casais, jogos íntimos e acessórios para utilizar a dois.",tone:"wine",symbol:"rings",filters:[{label:"Vibradores para casais",type:"vibradores-casais"},{label:"Arnês e strap-ons",type:"arneses"},{label:"Strap-ons",type:"strap-ons"},{label:"Anéis",type:"aneis"},{label:"Kits eróticos",type:"kits"},{label:"Ovos com comando",type:"ovos"}]},
+{slug:"estimuladores",name:"Vibradores & Dildos",short:"Coelhinhos, balas, sugadores e dildos",line:"Escolhe o formato e o tipo de estimulação que procuras.",tone:"lilac",symbol:"ripple",filters:[{label:"Coelhinhos e dupla estimulação",type:"rabbits"},{label:"Balas e vibradores compactos",type:"vibradores-compactos"},{label:"Vibradores",type:"vibradores"},{label:"Sugadores",type:"sugadores"},{label:"Dildos",type:"dildos"},{label:"Ovos vibratórios",type:"ovos"},{label:"Estimulação oral",type:"estimulacao-oral"},{label:"Strap-ons",type:"strap-ons"}]},
+{slug:"anal",name:"Prazer Anal",short:"Plugs, bolas anais e higiene",line:"Plugs, estimuladores, lubrificantes e acessórios específicos para estimulação anal.",tone:"sand",symbol:"sun",filters:[{label:"Plugs anais",type:"plugs"},{label:"Estimuladores da próstata",type:"prostata"},{label:"Bolas anais",type:"bolas-anais"},{label:"Higiene anal",type:"higiene-anal"},{label:"Lubrificantes anais",type:"lubrificantes"},{label:"Kits anais",type:"kits-anal"},{label:"Vibradores anais",type:"vibradores-anais"}]},
+{slug:"bdsm",name:"BDSM & Fetiche",short:"Kits de acessórios BDSM",line:"Artigos de BDSM efetivamente disponíveis no catálogo do parceiro.",tone:"wine",symbol:"rings",filters:[{label:"Kits BDSM",type:"kits-bdsm"}]},
+{slug:"lingerie",name:"Lingerie Sexy",short:"Conjuntos e moda íntima",line:"Esta categoria aparece quando existirem produtos autorizados de lingerie.",tone:"peach",symbol:"fabric",filters:[{label:"Lingerie",type:"lingerie"}]},
+{slug:"bem-estar",name:"Lubrificantes & Cuidados",short:"Lubrificantes, géis e higiene íntima",line:"Produtos de higiene, lubrificação e cosmética íntima.",tone:"sage",symbol:"leaf",filters:[{label:"Lubrificantes",type:"lubrificantes"},{label:"Géis estimulantes",type:"geis-estimulantes"},{label:"Higiene",type:"higiene"},{label:"Bolas de Kegel",type:"kegel"},{label:"Cosmética",type:"cosmetica"},{label:"Produtos de desempenho",type:"desempenho"},{label:"Higiene anal",type:"higiene-anal"}]},
+{slug:"massagem",name:"Massagem Erótica",short:"Velas, óleos e kits de massagem",line:"Velas e óleos aromáticos para sessões de massagem íntima.",tone:"blue",symbol:"spark",filters:[{label:"Velas de massagem",type:"velas"},{label:"Óleos de massagem",type:"oleos"},{label:"Kits de massagem",type:"kits-massagem"}]},
+{slug:"jogos-acessorios",name:"Kits & Acessórios",short:"Kits, bolsas e carregadores",line:"Conjuntos eróticos e acessórios úteis para os teus brinquedos.",tone:"stone",symbol:"wave",filters:[{label:"Kits eróticos",type:"kits"},{label:"Kits anais",type:"kits-anal"},{label:"Kits BDSM",type:"kits-bdsm"},{label:"Bolsas de arrumação",type:"arrumacao"},{label:"Carregadores",type:"carregadores"},{label:"Livros",type:"livros"}]},
+{slug:"feromonas",name:"Perfumes & Feromonas",short:"Perfumes, óleos e incensos",line:"Perfumes, incensos e fragrâncias íntimas da linha Diversual.",tone:"peach",symbol:"fabric",filters:[{label:"Perfumes",type:"perfumes"},{label:"Incensos",type:"incensos"},{label:"Aromas para tecidos",type:"aromas"},{label:"Óleos com fragrância",type:"oleos"}]}
 ] as const;
 
-export type Category = (typeof categories)[number];
-export const categoryBySlug = (slug: string) => categories.find((c) => c.slug === slug);
+export const categoryBySlug=(slug:string)=>categories.find(c=>c.slug===slug);
+export type Category=(typeof categories)[number];
+
+export const subcategoryLabels:Record<string,string>={
+ "prostata":"Estimuladores da próstata","arneses":"Arneses","vibradores":"Vibradores","dildos":"Dildos",
+ "arrumacao":"Bolsas de arrumação","lubrificantes":"Lubrificantes","higiene":"Higiene íntima",
+ "aneis":"Anéis penianos","kegel":"Bolas de Kegel e pavimento pélvico","vibradores-compactos":"Vibradores compactos",
+ "bolas-anais":"Bolas anais","ovos":"Ovos vibratórios","higiene-anal":"Higiene anal","plugs":"Plugs anais",
+ "geis-estimulantes":"Géis estimulantes","velas":"Velas de massagem","vibradores-casais":"Vibradores para casais",
+ "masturbadores":"Masturbadores","kits":"Kits eróticos","sugadores":"Sugadores","strap-ons":"Strap-ons",
+ "perfumes":"Perfumes","incensos":"Incensos","aromas":"Aromas","oleos":"Óleos de massagem",
+ "kits-massagem":"Kits de massagem","carregadores":"Carregadores","livros":"Livros",
+ "desempenho":"Produtos de desempenho","cosmetica":"Cosmética íntima","kits-bdsm":"Kits BDSM",
+ "kits-anal":"Kits anais","vibradores-anais":"Vibradores anais","estimulacao-oral":"Estimuladores orais",
+ "rabbits":"Vibradores tipo coelhinho"
+};
 
 export const collections = [
   { name:"Estimuladores compactos", subtitle:"Formatos para uma descoberta tranquila", category:"estimuladores", categoryName:"Estimuladores", tone:"lilac", symbol:"ripple" },
