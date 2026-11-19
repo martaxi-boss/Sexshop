@@ -1,11 +1,13 @@
 import Link from "next/link";
 import {getCatalog} from "@/lib/sevelora-catalog-server";
-import {categories,guides} from "@/lib/sevelora-data";
+import {productCategories,audienceCategories,guides} from "@/lib/sevelora-data";
+import {matchesCategory} from "@/lib/sevelora-products";
 import {ProductCard} from "@/components/sevelora-product-card";
 export default async function Home(){
  const catalog=await getCatalog(),available=catalog.products.filter(p=>p.inStock);
  const hero=available.slice(0,2),featured=available.slice(0,8);
- const shown=catalog.products.length?categories.filter(c=>catalog.products.some(p=>p.categories.includes(c.slug))):categories.slice(0,8);
+ const shown=productCategories.filter(c=>!catalog.products.length||catalog.products.some(p=>matchesCategory(p,c.slug)));
+ const audiences=audienceCategories.filter(c=>!catalog.products.length||catalog.products.some(p=>matchesCategory(p,c.slug)));
  return <>
  <section className="retail-hero"><div className="shell retail-hero-inner">
  <div className="retail-copy"><span className="retail-eyebrow">✦ SEX SHOP ONLINE · +18 · PORTUGAL</span><h1>O TEU PRAZER.<br/><strong>AS TUAS REGRAS<span>.</span></strong></h1><p>Vibradores, sugadores, brinquedos para casais, lubrificantes e muito mais. Uma sex shop com categorias claras, produtos reais e liberdade para explorar.</p>
@@ -14,8 +16,40 @@ export default async function Home(){
  {hero.length?<div className="retail-showcase-products">{hero.map(p=><Link key={p.id} href={"/produto/"+p.id} className="retail-showcase-item"><span><img src={p.image} width="350" height="350" alt={p.name}/></span><strong>{p.name}</strong><b>VER PRODUTO ↗</b></Link>)}</div>:<Link className="retail-showcase-fallback" href="/catalogo">VIBRADORES<br/>LUBRIFICANTES<br/>BDSM <small>EXPLORAR CATÁLOGO ↗</small></Link>}
  <small>Fotografias oficiais do fornecedor parceiro.</small></div></div></section>
  <div className="retail-trust"><div className="shell"><span><b>01 /</b> ESCOLHE A CATEGORIA</span><span><b>02 /</b> EXPLORA OS PRODUTOS</span><span><b>03 /</b> COMPRA NA LOJA PARCEIRA</span></div></div>
- <section className="shell retail-section" id="categorias"><div className="retail-section-head"><div><span>EXPLORA POR TIPO DE PRODUTO</span><h2>O que te apetece <em>descobrir?</em></h2><p>Encontra rapidamente a categoria certa, sem te perderes no catálogo.</p></div><Link href="/catalogo">TODOS OS PRODUTOS ↗</Link></div>
- <div className="retail-categories">{shown.map((c,i)=>{const found=catalog.products.filter(p=>p.categories.includes(c.slug)),preview=found.find(p=>p.inStock)||found[0];return <Link key={c.slug} href={"/categoria/"+c.slug} className={"retail-category retail-category-"+c.tone}><span className="retail-category-number">{String(i+1).padStart(2,"0")} / CATEGORIA</span>{preview?<img src={preview.image} alt="" loading="lazy" width="280" height="280"/>:<span className="retail-category-symbol" aria-hidden="true">✳</span>}<span className="retail-category-text"><strong>{c.name}</strong><small>{c.short}</small>{catalog.products.length>0&&<b>{found.length} {found.length===1?"produto":"produtos"}</b>}</span><span className="retail-category-arrow">↗</span></Link>})}</div></section>
+ <section className="shell retail-section" id="categorias">
+  <div className="retail-section-head"><div><span>POR TIPO DE ARTIGO · SEM MISTURAS</span><h2>Encontra a categoria <em>certa.</em></h2><p>Um produto, uma categoria principal. Fotografias oficiais e uma navegação sem complicações.</p></div><Link href="/catalogo">TODOS OS ARTIGOS ↗</Link></div>
+  <div className="retail-categories retail-category-gallery">
+  {shown.map((c,i)=>{
+    const found=catalog.products.filter(p=>matchesCategory(p,c.slug));
+    const ids="coverIds" in c?c.coverIds:[];
+    const preferred=ids.find(id=>found.some(p=>p.id===id&&p.inStock));
+    const fallback=ids.find(id=>found.some(p=>p.id===id));
+    const preview=found.find(p=>p.id===preferred)||found.find(p=>p.id===fallback)||found.find(p=>p.inStock)||found[0];
+    return <Link key={c.slug} href={"/categoria/"+c.slug} className="retail-photo-card">
+      <div className={"retail-photo-panel retail-photo-panel-"+c.tone}>
+      {preview?<img src={preview.image} alt={"Exemplo: "+preview.name} loading="lazy" width="320" height="280"/>:<span className="retail-photo-empty" aria-hidden="true">✦</span>}
+      <span className="retail-photo-badge">CATEGORIA {String(i+1).padStart(2,"0")}</span>
+      </div>
+      <div className="retail-photo-details">
+      <span className="retail-photo-topline"><span>{found.length>0?found.length+" "+(found.length===1?"produto":"produtos"):"EM PREPARAÇÃO"}</span><span className="retail-photo-arrow" aria-hidden="true">↗</span></span>
+      <h3>{c.name}</h3><p>{c.short}</p>
+      </div>
+    </Link>;
+  })}
+  </div>
+ </section>
+ <section className="retail-audiences"><div className="shell retail-section retail-audiences-inner">
+ <div className="retail-section-head"><div><span>SELEÇÕES POR DESTINATÁRIO</span><h2>Explora <em>à tua maneira.</em></h2><p>Para Ela, Para Ele e Para Casais são percursos de descoberta; as categorias de produto mantêm-se organizadas por tipo.</p></div></div>
+ <div className="retail-audience-grid">
+ {audiences.map((c,i)=>{
+    const count=catalog.products.filter(p=>matchesCategory(p,c.slug)).length;
+    return <Link className={"retail-audience-card retail-audience-"+c.tone} href={"/categoria/"+c.slug} key={c.slug}>
+      <span className="retail-audience-index">SELEÇÃO {String(i+1).padStart(2,"0")}</span>
+      <strong>{c.name}</strong><small>{c.short}</small>
+      <span className="retail-audience-bottom"><b>{count} {count===1?"artigo":"artigos"}</b><span aria-hidden="true">↗</span></span>
+    </Link>;
+ })}
+ </div></div></section>
  <section className="retail-featured"><div className="shell retail-section"><div className="retail-section-head"><div><span>CATÁLOGO OFICIAL DIVERSUAL</span><h2>Produtos em <em>destaque.</em></h2><p>Seleção de produtos reais disponíveis no catálogo do parceiro.</p></div><Link href="/catalogo">VER CATÁLOGO COMPLETO ↗</Link></div>
  {featured.length?<div className="real-product-grid retail-featured-grid">{featured.map(p=><ProductCard key={p.id} product={p}/>)}</div>:<div className="retail-no-products">O catálogo está em atualização. Mostramos apenas artigos de parceiros autorizados.</div>}
  <p className="catalog-disclaimer">Links de afiliado. Preços finais, disponibilidade e envio são sempre confirmados na loja parceira.</p></div></section>
