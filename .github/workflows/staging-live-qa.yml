@@ -55,10 +55,29 @@ jobs:
                 }));
                 assert.equal(homepageSections.removed,0,"crossed-out module not fully removed: "+view.name);
                 assert.equal(homepageSections.next,"categorias","homepage gap left after removing marked block: "+view.name);
-                assert.deepEqual(homepageSections.buttons,["EXPLORAR SEX SHOP ↗","ESCOLHER CATEGORIA ↓"],"hero action buttons changed: "+view.name);
+                assert.deepEqual(homepageSections.buttons,["Explorar produtos ↗","Ver categorias ↓"],"hero action buttons changed: "+view.name);
                 assert.equal(homepageSections.categories,10,"real category cards changed: "+view.name);
-                assert.ok(homepageSections.featured>0,"other featured products section was removed: "+view.name);
+                assert.equal(homepageSections.featured,4,"homepage should show four focused product picks: "+view.name);
                 report.checks.push("crossed-out section removed, other hero and category content preserved "+view.name+": PASS");
+
+                const simplified=await page.evaluate(()=>({
+                  extraMenuBars:document.querySelectorAll(".category-strip").length,
+                  numberedBadges:document.querySelectorAll("#categorias .retail-photo-badge").length,
+                  affiliateChips:document.querySelectorAll(".real-product-card .product-chip").length,
+                  repeatedCardActions:[...document.querySelectorAll(".retail-featured .product-card-actions")].some(el=>el.children.length!==1),
+                  helpLinks:document.querySelectorAll(".retail-help a[href='/guias']").length,
+                  duplicatePromo:document.querySelectorAll(".retail-bottom").length,
+                  primaryNavLinks:document.querySelectorAll(".desktop-nav a[href^='/categoria/']").length
+                }));
+                assert.equal(simplified.extraMenuBars,0,"duplicated category menu still present: "+view.name);
+                assert.equal(simplified.numberedBadges,0,"category labels still clutter cards: "+view.name);
+                assert.equal(simplified.affiliateChips,0,"redundant merchant chips still present: "+view.name);
+                assert.equal(simplified.repeatedCardActions,false,"more than one CTA per featured product: "+view.name);
+                assert.equal(simplified.helpLinks,1,"guides should have one clear homepage entry: "+view.name);
+                assert.equal(simplified.duplicatePromo,0,"repeated full-width sale banner still present: "+view.name);
+                assert.equal(simplified.primaryNavLinks,4,"desktop header must have four quick category links: "+view.name);
+                report.checks.push("clean hierarchy, single navigation and focused product cards "+view.name+": PASS");
+                console.log("CLEAN_SEVELORA_LAYOUT_"+view.name.toUpperCase()+"=PASS");
 
                 const burgundyPalette=await page.evaluate(()=>{
                   const sample=(sel)=>{const el=document.querySelector(sel);if(!el)return null;const x=getComputedStyle(el);return {bg:x.backgroundColor,gradient:x.backgroundImage,color:x.color,border:x.borderColor}};
@@ -66,7 +85,7 @@ jobs:
                 });
                 assert.equal(burgundyPalette.body?.bg,"rgb(40, 10, 28)","site body must be dark burgundy");
                 assert.equal(burgundyPalette.main?.bg,"rgb(40, 10, 28)","site main must be burgundy");
-                assert.equal(burgundyPalette.categoryStrip?.bg,"rgb(54, 17, 38)","category navigation must not be white");
+                assert.equal(burgundyPalette.categoryStrip,null,"redundant category strip should be removed");
                 assert.equal(burgundyPalette.featured?.bg,"rgb(44, 12, 32)","product feature section must not be white");
                 assert.ok(burgundyPalette.card?.gradient.includes("linear-gradient"),"category cards need wine gradient");
                 assert.equal(burgundyPalette.cta?.bg,"rgb(255, 208, 227)","primary hero button should be blush pink");
@@ -251,6 +270,12 @@ jobs:
               await page.screenshot({path:"qa/categories-desktop.png",fullPage:false});
               const desktopCols=await page.$eval(".retail-category-gallery",el=>getComputedStyle(el).gridTemplateColumns.split(/\s+/).length);
               assert.equal(desktopCols,5,"desktop must show five category cards per row");
+
+              const badgeCount=await page.$eval("#categorias .retail-photo-badge",els=>els.length);
+              assert.equal(badgeCount,0,"numbered category tags must be absent on desktop");
+              const metaCount=await page.$eval("#categorias .retail-photo-meta",els=>els.length);
+              assert.equal(metaCount,10,"each category must show one discreet item count");
+              report.checks.push("compact category cards without numbered labels: PASS");
               assert.equal(await page.$$eval(".retail-photo-card",els=>els.length),10,"expected ten actual product categories");
               assert.equal(await page.$$eval(".retail-audiences",els=>els.length),0,"removed home module must stay deleted");
               assert.ok(!(await page.evaluate(()=>document.body.innerText)).includes("Explora à tua maneira"),"removed heading still appears");
