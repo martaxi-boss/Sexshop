@@ -88,6 +88,17 @@ jobs:
                   const cards=await page.$$eval(".retail-photo-card",els=>els.map(el=>({text:el.querySelector("h3")?.textContent?.trim(),image:el.querySelector("img")?.getAttribute("src"),fit:el.querySelector("img")?getComputedStyle(el.querySelector("img")).objectFit:null})));
                   assert.equal(cards.length,10,"expected ten available disjoint product categories");
                   assert.ok(cards.every(c=>c.image&&c.fit==="contain"),"category cover must use a real, uncropped supplier image");
+
+                  const galleryImgs=await page.$eval("#categorias .retail-photo-card img",imgs=>imgs.map(img=>({
+                    eager:img.loading==="eager",loaded:img.complete&&img.naturalWidth>0,
+                    width:img.naturalWidth
+                  })));
+                  assert.equal(galleryImgs.length,10,"ten category images expected");
+                  assert.ok(galleryImgs.every(i=>i.eager),"category photos must be eager loaded on mobile");
+                  assert.ok(galleryImgs.every(i=>i.loaded),"all ten category photos must be visible without scrolling");
+                  report.checks.push("ten supplier category photos loaded without delay: PASS");
+                  console.log("CATEGORY_PHOTOS_MOBILE_EAGER=PASS");
+
                   assert.equal(new Set(cards.map(c=>c.image)).size,cards.length,"category cards must have distinct, curated cover photos");
                   assert.equal(await page.$$eval(".retail-audience-card,.retail-audiences",els=>els.length),0,"removed promotional selection module is still rendered");
                   assert.equal(await page.$$eval('a[href^="/categoria/para-"]',els=>els.length),0,"removed audience options remain in mobile menu, header or footer");
