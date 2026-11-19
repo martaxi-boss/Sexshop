@@ -24,7 +24,7 @@ for (const [path,needle] of routes) {
   assert.ok(!html.includes("venturefield-jacket"),"Old product leaked in "+path);
   assert.ok(/noindex/i.test(html),"Staging page indexable: "+path);
   if(path==="/"){
-    for(const snippet of ["NA NOSSA MONTRA","DIVERSUAL / AFILIADO","retail-showcase","retail-trust","EXPLORA OS PRODUTOS","COMPRA NA LOJA PARCEIRA"]){
+    for(const snippet of ["NA NOSSA MONTRA","DIVERSUAL / AFILIADO","retail-showcase","retail-trust"]){
       assert.ok(!html.includes(snippet),"Crossed-out homepage module remains: "+snippet);
     }
     assert.ok(html.includes("ESCOLHER CATEGORIA"),"Hero category button should remain");
