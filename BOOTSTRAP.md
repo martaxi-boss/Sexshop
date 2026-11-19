@@ -25,3 +25,11 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 - Screenshots 390px e 1366px, sem overflow, revistas visualmente antes de afirmar que o design cumpre a encomenda.
 - Verificar site ativo, SHA implantado e isolamento de Low Cost Europa.
 - Não confundir sucesso técnico com aprovação visual/comercial. Declarar pendências de forma objetiva.
+
+## Contrato de idioma e categorias — 19/11/2026
+- Tudo o que aparece na montra, catálogo, fichas e menus deve estar em português de Portugal, salvo nomes comerciais próprios.
+- Traduções e categorias identificadas por aw_product_id em scripts/diversual-ptpt-*.mjs; não inferir palavras-chave no texto promocional ou misturar lubrificantes com vibradores.
+- O feed oficial não distingue categorias de produtos (151 entradas com categoria genérica); manter curadoria individual e subcategorias exatas.
+- Ocultar categorias sem produtos no menu e embalagens de expedição sem valor comercial para o cliente final.
+- Novos IDs exigem revisão editorial. Atualizações do feed não devem regressar ao espanhol, nem destruir dados e releases anteriores.
+- Não acrescentar uma nova branch nem instalar serviços ou modelos de tradução na VPS.

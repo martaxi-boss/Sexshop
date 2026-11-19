@@ -22,3 +22,14 @@ Use the existing pinned VPS SSH transport in martaxi-boss/VPS, with the existing
 Validation: node scripts/catalog-test.mjs, pnpm --dir apps/ecommerce-shop-demo build, scripts/smoke.mjs against the built site, then public browser tests for product counts, categories/search, detail/affiliate CTA, image loading and desktop/mobile layout. A successful redirect is not proof of a future commission; actual commission requires a valid sale and advertiser approval.
 
 Image delivery uses the official Awin productserve URL when supplied, validating its feed ID and original Diversual image. This avoids broken direct merchant images in restricted browser networks. No arbitrary image-proxy endpoint is exposed.
+
+## Português de Portugal e classificação comercial — 2026-11-19
+
+- Os 151 produtos do feed Diversual foram revistos individualmente para nome, descrição resumida fiel ao fornecedor, categoria e subcategoria em português de Portugal.
+- A origem só fornece "Juguetes eróticos" como merchant_category para os 151 produtos; não suporta uma árvore de categorias de sex shop. A classificação a partir de palavras de descrição provocava erros de navegação.
+- Fonte editorial por ID: scripts/diversual-ptpt-01.mjs + scripts/diversual-ptpt-02.mjs, verificada por scripts/diversual-ptpt.mjs. Nunca classificar por palavras soltas.
+- Das 151 entradas, três são embalagens de envio Diversual, não produtos sexuais de consumo; ficam fora do catálogo público, mantendo-se 148 artigos comerciais quando o feed não mudar. Este número não é expansão do feed.
+- Novos IDs ficam temporariamente fora do site e surgem no contador unreviewedProducts até classificação e tradução aprovadas; URLs e dados de fornecedor continuam verificados.
+- Categorias sem produtos não aparecem na navegação da loja. Subcategorias são filtradas pelo identificador curado, não por pesquisa textual.
+- Descrições são adaptações PT de 1 a 2 frases com factos confirmados no texto original; o detalhe integral e as especificações finais continuam na Diversual. Nunca inventar materiais, propriedades médicas, preços ou disponibilidade.
+- A atualização do feed mantém o mecanismo de validação individual de preços EUR e o rastreio Awin aprovados.

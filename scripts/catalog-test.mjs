@@ -1,21 +1,42 @@
 import assert from 'node:assert/strict';
 import {normalize,parseCsv,classify,extractMerchantEurPrice,verifyMerchantEuroPrices} from './sync-diversual.mjs';
+import {curatedProducts} from './diversual-ptpt.mjs';
+assert.equal(curatedProducts.size,151);
+assert.equal([...curatedProducts.values()].filter(x=>x.hidden).length,3);
+assert.ok([...curatedProducts.values()].every(x=>x.name&&x.description&&Array.isArray(x.categories)));
 assert.deepEqual(parseCsv('a,b\r\n"x,y","one\n""two"""\r\n'),[{a:'x,y',b:'one\n"two"'}]);
 assert.throws(()=>parseCsv('a,b\n"bad'));
-const r={merchant_id:'37722',data_feed_id:'78949',aw_product_id:'123',product_name:'Produto de teste',description:'<b>Informação</b>',aw_deep_link:'https://www.awin1.com/pclick.php?p=123&a=3157353&m=37722',merchant_image_url:'https://www.diversual.com/test.jpg',search_price:'12.90',currency:'EUR',in_stock:'1'};
-assert.equal(normalize([r]).products[0].price,12.9);
+const id='34454438089';
+const r={merchant_id:'37722',data_feed_id:'78949',aw_product_id:id,product_name:'Lubricante Orgánico Base Agua 150 ml',description:'<b>Disfruta tus relaciones</b>',aw_deep_link:'https://www.awin1.com/pclick.php?p='+id+'&a=3157353&m=37722',merchant_image_url:'https://www.diversual.com/test.jpg',search_price:'12.90',currency:'EUR',in_stock:'1'};
+const normalized=normalize([r]);
+assert.equal(normalized.products[0].price,12.9);
+assert.equal(normalized.products[0].name,'Lubrificante Orgânico à Base de Água 150 ml');
+assert.ok(normalized.products[0].description.includes('Lubrificante'));
+assert.ok(!normalized.products[0].description.includes('Disfruta'));
+assert.deepEqual(normalized.products[0].categories,['bem-estar']);
+assert.deepEqual(normalized.products[0].subcategories,['lubrificantes']);
 assert.equal(normalize([{...r,currency:'GBP'}]).products[0].price,null);
-assert.throws(()=>normalize([{...r,aw_deep_link:r.aw_deep_link.replace('3157353','999')} ]));
+assert.throws(()=>normalize([{...r,aw_deep_link:r.aw_deep_link.replace('3157353','999')}] ));
 assert.throws(()=>normalize([{...r,merchant_id:'999'}]));
 assert.throws(()=>normalize([r,r]));
 assert.equal(normalize([{...r,in_stock:'0'}]).products[0].inStock,false);
-assert.ok(classify({product_name:'Lubricante',description:''}).includes('bem-estar'));
-assert.ok(!normalize([r]).products[0].description.includes('<b>'));
-assert.ok(classify({product_name:'Kit BDSM Bondage',description:''}).includes('bdsm'));
-assert.ok(classify({product_name:'Plug Anal',description:''}).includes('anal'));
-
-// GBP-labelled figures are NEVER converted or relabelled without checking the
-// corresponding official merchant product page and a real EUR structured offer.
+const unreviewed={...r,aw_product_id:'999000999',aw_deep_link:'https://www.awin1.com/pclick.php?p=999000999&a=3157353&m=37722'};
+const withUnknown=normalize([r,unreviewed]);
+assert.equal(withUnknown.products.length,1);
+assert.equal(withUnknown.unreviewedProducts,1);
+assert.equal(withUnknown.sourceProducts,2);
+const shipping={...r,aw_product_id:'44061009941',aw_deep_link:'https://www.awin1.com/pclick.php?p=44061009941&a=3157353&m=37722'};
+const withShipping=normalize([r,shipping]);
+assert.equal(withShipping.products.length,1);
+assert.equal(withShipping.excludedNonRetail,1);
+assert.deepEqual(classify({aw_product_id:'43582237884'}),['anal']);
+assert.ok(classify({aw_product_id:'44625061400'}).includes('bdsm'));
+assert.ok(!classify({aw_product_id:'43156229237'}).includes('bdsm'));
+assert.deepEqual(classify({aw_product_id:'34454438087'}),['jogos-acessorios']);
+assert.deepEqual(classify({aw_product_id:'34454438089'}),['bem-estar']);
+assert.deepEqual(classify({aw_product_id:'46419192555'}),['anal','bem-estar']);
+assert.deepEqual(classify({aw_product_id:'39294900359'}),['feromonas']);
+assert.deepEqual(classify({product_name:'cualquier juguete sexual',description:'vibrador anal masajeador'}),[]);
 const official='https://www.diversual.com/es/produto-teste-123.html';
 const body='<script type="application/ld+json">'+JSON.stringify({'@type':'Product',name:'Produto de teste',offers:{'@type':'Offer',priceCurrency:'EUR',url:official,price:'12.90'}})+'</script>';
 assert.equal(extractMerchantEurPrice(body,official),12.9);
@@ -25,12 +46,11 @@ assert.equal(extractMerchantEurPrice(body.replace('12.90','0'),official),null);
 const gbp={...r,currency:'GBP',merchant_deep_link:official};
 assert.equal(normalize([gbp]).products[0].price,null);
 const checked=await verifyMerchantEuroPrices([gbp],async(url,opts)=>{
-  assert.equal(url,official);assert.equal(opts.redirect,'error');
-  return new Response(body,{status:200,headers:{'content-type':'text/html; charset=utf-8'}});
+ assert.equal(url,official);assert.equal(opts.redirect,'error');
+ return new Response(body,{status:200,headers:{'content-type':'text/html; charset=utf-8'}});
 });
 assert.equal(checked.checked,1);
 assert.equal(checked.identical,1);
 assert.equal(normalize([gbp],new Date(),checked.verified).products[0].price,12.9);
 assert.equal(normalize([{...gbp,currency:'USD'}],new Date(),checked.verified).products[0].price,null);
-
-console.log('CATALOG_VALIDATION_TESTS=PASS');
+console.log('CATALOG_VALIDATION_TESTS=PASS curated='+curatedProducts.size);
