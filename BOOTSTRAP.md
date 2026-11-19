@@ -60,3 +60,11 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 - Fotografia original de produto: área interna branca neutra para não destacar retângulos brancos da imagem do fornecedor, SEM tornar brancos os fundos das secções/catálogo/cartões.
 - Cabeçalho, barra de categorias, página inicial, catálogo, filtros, páginas de categoria/produto, guias, afiliação e rodapé partilham a identidade vinho escuro; preservar preços, rotas, artigos, noindex e links Awin.
 - Verificar visualmente 390px e 1366px; legibilidade, contraste e ausência de scroll horizontal; não chamar aprovação estética ao PASS de código.
+
+## Limpeza visual e hierarquia — 19/11/2026
+- O proprietário aprovou a paleta bordô e os botões rosa, mas considerou a interface demasiado confusa. Não alterar as cores principais.
+- Um único menu desktop com quatro famílias principais e acesso ao catálogo; menu móvel inclui todas as categorias. Retirar a segunda barra redundante de categorias, preservando os links no catálogo e a navegação móvel.
+- Na home, cartões de categorias sem etiquetas numeradas nem descrições longas: imagem oficial, nome e número de artigos. Duas filas de cinco no desktop, duas colunas no mobile.
+- Reduzir destaques iniciais de oito para quatro produtos; nos cartões de produto retirar avisos "Diversual/Afiliado", marca e indicação repetitiva de stock, mantendo fotografia, nome, preço e UM botão para a loja parceira. Fotografia e nome conduzem à ficha interna.
+- Guia de compra na home como uma faixa discreta com um único acesso. Evitar rodapé promocional extra/repetições de CTAs. As páginas de guias, catálogo e afiliação continuam acessíveis.
+- Simplificar rótulos duplicados dos filtros e hierarquia tipográfica; não alterar dados, preços, catálogo, contratos Awin, serviços, SEO staging ou projeto alheio. Validar desktop, Android/mobile, contraste e barras de deslocamento.
