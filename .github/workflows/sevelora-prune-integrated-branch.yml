@@ -1,0 +1,27 @@
+name: Sevelora - remover branch de integracao ja consolidada
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/sevelora-prune-integrated-branch.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  prune-integrated-branch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Validar merge e SHA; eliminar apenas a antiga branch da Sevelora
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED: aa1d51ab25aa2164685cb9f844324596310ec6bc
+          BRANCH: integration/sevelora-nuvi-v1
+        run: |
+          set -euo pipefail
+          merged=$(gh api "repos/$GITHUB_REPOSITORY/pulls/1" --jq '.merged')
+          test "$merged" = true
+          head=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$BRANCH" --jq '.object.sha')
+          test "$head" = "$EXPECTED"
+          gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/$BRANCH"
+          echo 'SEVELORA_INTEGRATION_BRANCH_REMOVED=PASS'
