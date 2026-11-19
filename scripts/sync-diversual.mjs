@@ -111,7 +111,7 @@ export function normalize(rows, now=new Date(), verifiedEuros=new Map()){
     const price=nativeEur??(r.currency==='GBP'&&Number.isFinite(verified)&&verified>0?verified:null);
     if(price===null)suppressedPrices++;
     products.push({id,name:editorial.name,description:editorial.description,image:image.href,affiliateUrl:link.href,
-      categories:[...editorial.categories],subcategories:[...editorial.subcategories],
+      categories:[...editorial.categories],audiences:[...editorial.audiences],subcategories:[...editorial.subcategories],
       price,currency:price===null?null:'EUR',inStock:r.in_stock==='1',brand:plain(r.brand_name)||'Diversual'});
   }
   if(!products.length)throw Error('empty_curated_catalog');

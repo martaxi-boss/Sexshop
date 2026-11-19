@@ -1,17 +1,44 @@
 import batch01 from './diversual-ptpt-01.mjs';
 import batch02 from './diversual-ptpt-02.mjs';
 
-// Cada registo foi revisto a partir do título e da descrição do feed Diversual.
-// Nunca usar descrição inteira ou palavras promocionais para inferir categorias.
-const allowedCategories=new Set(['para-ela','para-ele','para-casais','estimuladores','anal','bdsm','lingerie','bem-estar','massagem','jogos-acessorios','feromonas']);
+// Fonte editorial por aw_product_id. UMA categoria de produto principal por artigo.
+// "Para Ela/Ele/Casais" são percursos de descoberta (audiences), não categorias de produto.
+// Em particular, não classificar por palavras-chave genéricas da descrição promocional.
+export const primaryCategoryByType=Object.freeze({
+  'rabbits':'estimuladores','vibradores':'estimuladores','vibradores-compactos':'estimuladores',
+  'sugadores':'estimuladores','dildos':'estimuladores','ovos':'estimuladores',
+  'estimulacao-oral':'estimuladores','masturbadores':'masturbadores','aneis':'aneis',
+  'prostata':'anal','plugs':'anal','bolas-anais':'anal',
+  'vibradores-anais':'anal','higiene-anal':'anal','kits-anal':'anal',
+  'arneses':'casais','strap-ons':'casais','vibradores-casais':'casais',
+  'kits-bdsm':'bdsm',
+  'lubrificantes':'bem-estar','higiene':'bem-estar','kegel':'bem-estar',
+  'geis-estimulantes':'bem-estar','cosmetica':'bem-estar','desempenho':'bem-estar',
+  'velas':'massagem','oleos':'massagem','kits-massagem':'massagem',
+  'kits':'jogos-acessorios','arrumacao':'jogos-acessorios',
+  'carregadores':'jogos-acessorios','livros':'jogos-acessorios',
+  'perfumes':'feromonas','incensos':'feromonas','aromas':'feromonas'
+});
+const allowedAudiences=Object.freeze({
+  'para-ela':new Set(['rabbits','vibradores','vibradores-compactos','sugadores',
+    'ovos','estimulacao-oral','kegel']),
+  'para-ele':new Set(['masturbadores','aneis','prostata','desempenho']),
+  'para-casais':new Set(['arneses','strap-ons','vibradores-casais','ovos',
+    'aneis','kits','kits-massagem','kits-bdsm'])
+});
 const map=new Map();
 for(const entry of [...batch01,...batch02]){
   if(!Array.isArray(entry)||entry.length!==5)throw Error('invalid_curated_entry');
-  const [id,name,description,slugs,type]=entry;
+  const [id,name,description,oldSlugs,type]=entry;
   if(!/^\d+$/.test(id)||map.has(id)||!name||!description||!type)throw Error('invalid_curated_product');
-  const categories=slugs?slugs.split(','):[];
-  if(categories.some(slug=>!allowedCategories.has(slug)))throw Error('unknown_curated_category:'+id);
-  map.set(id,{id,name,description,categories,subcategories:categories.length?[type]:[],hidden:categories.length===0});
+  const hidden=type==='embalagem';
+  const primary=primaryCategoryByType[type];
+  if(!hidden&&!primary)throw Error('type_without_primary_category:'+id+':'+type);
+  const previous=oldSlugs?oldSlugs.split(','):[];
+  if(hidden&&previous.length)throw Error('shipping_package_visible:'+id);
+  const audiences=hidden?[]:previous.filter(slug=>allowedAudiences[slug]?.has(type));
+  map.set(id,{id,name,description,primaryCategory:hidden?null:primary,
+    categories:hidden?[]:[primary],audiences,subcategories:hidden?[]:[type],hidden});
 }
 if(map.size!==151)throw Error('expected_151_curated_products');
 export const curatedProducts=map;
