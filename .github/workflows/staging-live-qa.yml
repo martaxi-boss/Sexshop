@@ -89,7 +89,7 @@ jobs:
                   assert.equal(cards.length,10,"expected ten available disjoint product categories");
                   assert.ok(cards.every(c=>c.image&&c.fit==="contain"),"category cover must use a real, uncropped supplier image");
 
-                  const galleryImgs=await page.$eval("#categorias .retail-photo-card img",imgs=>imgs.map(img=>({
+                  const galleryImgs=await page.$$eval("#categorias .retail-photo-card img",imgs=>imgs.map(img=>({
                     eager:img.loading==="eager",loaded:img.complete&&img.naturalWidth>0,
                     width:img.naturalWidth
                   })));
