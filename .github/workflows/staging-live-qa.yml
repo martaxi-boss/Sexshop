@@ -105,7 +105,7 @@ jobs:
               await page.select('select[aria-label="Filtrar por tipo"]',"plugs");
               await new Promise(r=>setTimeout(r,260));
               const visiblePlugs=await page.$eval("article.real-product-card h3",nodes=>nodes.map(x=>x.textContent.trim()));
-              assert.ok(visiblePlugs.length>=4&&visiblePlugs.every(x=>/plug|baccus/i.test(x)),"anal plug filter includes unrelated products");
+              assert.ok(visiblePlugs.length===9&&visiblePlugs.every(x=>/plug|baccus|taoh/i.test(x)),"anal plug filter includes unrelated products");
               report.checks.push("accurate anal subcategory filtering: PASS");
               resp=await page.goto(process.env.TARGET+"/categoria/bdsm",{waitUntil:"networkidle2"});
               assert.equal(resp.status(),200);
