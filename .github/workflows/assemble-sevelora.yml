@@ -1,23 +1,31 @@
-name: Sevelora - montagem e verificacao do Nuvi MIT
+name: Sevelora - verificacao da branch principal
 on:
   push:
-    branches: ["integration/sevelora-nuvi-v1"]
-    paths: [".github/workflows/assemble-sevelora.yml", "overrides/**", "scripts/**", "BOOTSTRAP.md"]
+    branches: [main]
+    paths:
+      - ".github/workflows/assemble-sevelora.yml"
+      - "apps/**"
+      - "overrides/**"
+      - "scripts/**"
+      - "packages/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "next.config.*"
   pull_request:
-    branches: ["main"]
-    paths: [".github/workflows/assemble-sevelora.yml", "overrides/**", "scripts/**", "BOOTSTRAP.md"]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: sevelora-assembly
-  cancel-in-progress: false
+  group: sevelora-main-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  assemble-and-verify:
-    runs-on: ubuntu-latest
+  test-and-build:
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
       NEXT_TELEMETRY_DISABLED: "1"
@@ -26,14 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true
-          ref: integration/sevelora-nuvi-v1
-      - name: Verificar que nao importamos conteudo proprietario
-        run: |
-          test -f overrides/apps/ecommerce-shop-demo/src/app/page.tsx
-          test -f scripts/assemble-nuvi.sh
-      - name: Descarregar codigo MIT pinado e aplicar Sevelora
-        run: bash scripts/assemble-nuvi.sh
+          persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
           version: "12.14.0"
@@ -42,47 +43,22 @@ jobs:
           node-version: "26"
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-      - name: Dependencias do projeto (runner efemero)
-        run: pnpm install --frozen-lockfile
-      - name: Testar validade dos precos, ligacoes Awin e importador
+      - name: Validar catalogo e integracao editorial
         run: node scripts/catalog-test.mjs
-      - name: Build Next.js real
+      - name: Instalar dependencias isoladas do projeto
+        run: pnpm install --frozen-lockfile
+      - name: Compilar loja Next.js
         run: pnpm --dir apps/ecommerce-shop-demo build
-      - name: Smoke test HTTP das nove paginas e SEO de testes
+      - name: Verificar HTTP, canonico e indexabilidade
         run: |
-          pnpm --dir apps/ecommerce-shop-demo exec next start --port 3001 --hostname 127.0.0.1 > /tmp/sevelora-app.log 2>&1 &
-          echo $! > /tmp/sevelora.pid
-          trap 'kill "$(cat /tmp/sevelora.pid)" || true' EXIT
+          set -euo pipefail
+          pnpm --dir apps/ecommerce-shop-demo exec next start --port 3001 --hostname 127.0.0.1 >/tmp/sevelora-next.log 2>&1 &
+          child=$!
+          trap 'kill "$child" 2>/dev/null || true' EXIT
+          ready=0
           for i in $(seq 1 45); do
-            if curl -fsS http://127.0.0.1:3001/ -o /dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:3001/ -o /dev/null; then ready=1; break; fi
             sleep 1
           done
+          test "$ready" = 1
           node scripts/smoke.mjs
-          mkdir -p qa docs/previews
-          cp /tmp/sevelora-app.log qa/server.log
-          if command -v google-chrome >/dev/null; then
-            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1366,900 --screenshot=docs/previews/home-desktop.png http://127.0.0.1:3001/ || true
-            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=docs/previews/home-mobile.png http://127.0.0.1:3001/ || true
-            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1366,900 --screenshot=docs/previews/catalogo-desktop.png http://127.0.0.1:3001/catalogo || true
-            google-chrome --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=docs/previews/catalogo-mobile.png http://127.0.0.1:3001/catalogo || true
-          fi
-      - name: Guardar evidencias do build
-        uses: actions/upload-artifact@v4
-        with:
-          name: sevelora-qa
-          path: qa/
-          if-no-files-found: warn
-      - name: Guardar codigo fonte no repo (so apos testes)
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A apps packages package.json pnpm-workspace.yaml pnpm-lock.yaml LICENSE.upstream docs/previews
-          for file in turbo.json .npmrc .node-version .gitignore; do
-            if [ -e "$file" ]; then git add -- "$file"; fi
-          done
-          if git diff --cached --quiet; then
-            echo "SEVELORA_ALREADY_ASSEMBLED"
-          else
-            git commit -m "feat: importar DemoShop Nuvi MIT e montar Sevelora"
-            git push origin HEAD:integration/sevelora-nuvi-v1
-          fi
