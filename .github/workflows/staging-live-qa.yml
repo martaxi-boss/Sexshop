@@ -210,9 +210,9 @@ jobs:
               report.checks.push("mobile category filter: PASS");
               await page.select('select[aria-label="Filtrar por categoria"]',"anal");
               await new Promise(r=>setTimeout(r,240));
-              const plugs=await page.$$eval('select[aria-label="Filtrar por tipo"]',el=>Array.from(el.options).some(x=>x.value==="plugs"));
+              const plugs=await page.$eval('select[aria-label="Filtrar por tipo"]',el=>Array.from(el.options).some(x=>x.value==="plugs"));
               assert.ok(plugs,"anal category missing exact plugs subcategory");
-              assert.equal(await page.$eval('select[aria-label="Filtrar por tipo"]',els=>els.length),1,"anal category must expose specific subtype filter");
+              assert.equal(await page.$$eval('select[aria-label="Filtrar por tipo"]',els=>els.length),1,"anal category must expose specific subtype filter");
               await page.select('select[aria-label="Filtrar por tipo"]',"plugs");
               await new Promise(r=>setTimeout(r,260));
               const visiblePlugs=await page.$$eval("article.real-product-card h3",nodes=>nodes.map(x=>x.textContent.trim()));
