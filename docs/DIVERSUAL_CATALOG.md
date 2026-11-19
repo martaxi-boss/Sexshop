@@ -1,6 +1,6 @@
 # Diversual catalog integration
 
-Sevelora is isolated in martaxi-boss/Sexshop and /srv/projects/Sexshop. Source is maintained on integration/sevelora-nuvi-v1; main is not the application branch. Every app override is mirrored in overrides/apps so the assembly workflow preserves it.
+Sevelora is isolated in martaxi-boss/Sexshop and /srv/projects/Sexshop. Source is maintained on the main branch after consolidation; VPS deploys use a pinned, tested commit SHA from main. Every app override is mirrored in overrides/apps so the assembly workflow preserves it.
 
 Approved Awin program: Diversual ES 37722. Publisher: 3157353. Feed: 78949, Feed productos marca Diversual. The first export on 2026-11-18 contains 151 products. The feed represents only the supplier's Awin selection, not its full store. There is no checkout in Sevelora. Awin pclick URLs retain the publisher, merchant and product IDs supplied by the feed. Links are labelled affiliate and sponsored/nofollow, with the existing standard referrer policy preserved.
 
@@ -17,7 +17,7 @@ Approved Awin program: Diversual ES 37722. Publisher: 3157353. Feed: 78949, Feed
 
 ## Deployment and rollback
 
-Use the existing pinned VPS SSH transport in martaxi-boss/VPS, with the existing secret, host fingerprint and project-only release directories. Build standalone off-host. Activate a new /srv/projects/Sexshop/releases/SHA/app using the current symlink and restart only sexshop.service; retain the previous symlink target for rollback. No runtime dependencies are installed globally on the VPS and no other sites are changed. Existing staging noindex remains until a separate launch decision.
+Use the existing pinned VPS SSH transport in martaxi-boss/VPS, with the existing secret, host fingerprint and project-only release directories. Build standalone off-host. Activate a new /srv/projects/Sexshop/releases/SHA/app using the current symlink and restart only sexshop.service; retain the previous symlink target for rollback. No runtime dependencies are installed globally on the VPS and no other sites are changed. The production domain sevelora.eu uses index/follow; the public robots.txt and sitemap.xml were validated in the 2026-11-19 deployment (162 sitemap URLs). Google Search Console indexing remains a separate external verification.
 
 Validation: node scripts/catalog-test.mjs, pnpm --dir apps/ecommerce-shop-demo build, scripts/smoke.mjs against the built site, then public browser tests for product counts, categories/search, detail/affiliate CTA, image loading and desktop/mobile layout. A successful redirect is not proof of a future commission; actual commission requires a valid sale and advertiser approval.
 
