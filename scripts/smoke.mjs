@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 const base = process.env.BASE_URL ?? "http://127.0.0.1:3001";
 const routes = [
   ["/","O TEU PRAZER."],
-  ["/catalogo","Encontra o que procuras"],
+  ["/catalogo","Todos os produtos"],
   ["/categoria/estimuladores","Vibradores"],
   ["/categoria/masturbadores","Masturbadores"],
   ["/categoria/aneis","Anéis Penianos"],
@@ -27,9 +27,11 @@ for (const [path,needle] of routes) {
     for(const snippet of ["NA NOSSA MONTRA","DIVERSUAL / AFILIADO","retail-showcase","retail-trust"]){
       assert.ok(!html.includes(snippet),"Crossed-out homepage module remains: "+snippet);
     }
-    assert.ok(html.includes("ESCOLHER CATEGORIA"),"Hero category button should remain");
-    assert.ok(html.includes("EXPLORA POR TIPO DE PRODUTO"),"Category section should remain");
-    assert.ok(html.includes("CATÁLOGO OFICIAL DIVERSUAL"),"Other product section should remain");
+    assert.ok(html.includes("Ver categorias"),"Hero category button should remain");
+    assert.ok(html.includes("Escolhe uma categoria"),"Category section should remain");
+    assert.ok(html.includes("Em destaque"),"Other product section should remain");
+    assert.ok(!html.includes("category-strip"),"Redundant category strip must be absent");
+    assert.ok(!html.includes("product-chip"),"Repetitive affiliate chips must be removed");
   }
   if(path==="/"||path==="/catalogo"){
     for(const label of ["Explora à tua maneira","Para Ela","Para Ele","Para Casais"]){
