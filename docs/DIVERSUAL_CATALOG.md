@@ -33,3 +33,6 @@ Image delivery uses the official Awin productserve URL when supplied, validating
 - Categorias sem produtos não aparecem na navegação da loja. Subcategorias são filtradas pelo identificador curado, não por pesquisa textual.
 - Descrições são adaptações PT de 1 a 2 frases com factos confirmados no texto original; o detalhe integral e as especificações finais continuam na Diversual. Nunca inventar materiais, propriedades médicas, preços ou disponibilidade.
 - A atualização do feed mantém o mecanismo de validação individual de preços EUR e o rastreio Awin aprovados.
+
+## Navegação sem mistura de categorias
+A taxonomia publicada anteriormente permitia que o mesmo produto participasse em várias categorias principais. Foi revista para um único tipo principal por SKU. As seleções por destinatário foram separadas do catálogo de tipos e estão claramente identificadas na interface; não são novas famílias de produto. O total dos cartões por família deve somar o total de 148 artigos sem duplicações. As fotografias de categoria passam a usar produtos selecionados pelo ID dentro da família correta, com escala proporcional e fundo neutro, em vez da primeira fotografia aleatória do feed.

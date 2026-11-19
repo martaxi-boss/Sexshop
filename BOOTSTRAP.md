@@ -33,3 +33,11 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 - Ocultar categorias sem produtos no menu e embalagens de expedição sem valor comercial para o cliente final.
 - Novos IDs exigem revisão editorial. Atualizações do feed não devem regressar ao espanhol, nem destruir dados e releases anteriores.
 - Não acrescentar uma nova branch nem instalar serviços ou modelos de tradução na VPS.
+
+## Correção de categorias e fotografias — 19/11/2026, segunda ronda
+- Cada produto tem UM tipo e UMA categoria principal. scripts/diversual-ptpt.mjs determina a categoria por tipo e a sincronização grava products[].categories com exatamente um elemento.
+- products[].audiences contém exclusivamente as seleções para-ela, para-ele e para-casais. São atalhos de descoberta e podem conter produtos de tipos diferentes, pelo que NÃO são apresentados como categorias de artigo.
+- Vibradores & Dildos, Prazer Anal, Masturbadores, Anéis Penianos, Brinquedos a Dois, BDSM, Lubrificantes & Cuidados, Massagem, Kits & Acessórios, Perfumes & Feromonas são famílias exclusivas. Lingerie só aparece quando tiver catálogo aprovado.
+- As fotografias de categorias vêm de produtos expressamente associados a cada família (coverIds em sevelora-data.ts), com object-fit: contain, sem recortar, distorcer ou tapar com degradês.
+- Nenhuma alteração pode criar duplicação nos totais das famílias, trocar a imagem de um tipo por outro, ou transformar as seleções por público em categorias de produto.
+- Garantir pt-PT, preços EUR verificados, links Awin, mobile e rollback da VPS intactos.
