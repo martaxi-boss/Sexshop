@@ -21,8 +21,8 @@ jobs:
     timeout-minutes: 25
     env:
       NEXT_TELEMETRY_DISABLED: "1"
-      NEXT_PUBLIC_SITE_URL: "https://sexy-shop.duckdns.org"
-      NEXT_PUBLIC_LAUNCH: "false"
+      NEXT_PUBLIC_SITE_URL: "https://sevelora.eu"
+      NEXT_PUBLIC_LAUNCH: "true"
     steps:
       - uses: actions/checkout@v4
         with:

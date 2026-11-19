@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { guides } from "@/lib/sevelora-data";
-export const metadata: Metadata={title:"Guias de compra",description:"Guias introdutórios para explorar o bem-estar íntimo com informação e discrição."};
+export const metadata: Metadata={alternates:{canonical:"/guias"},title:"Guias de compra",description:"Guias introdutórios para explorar o bem-estar íntimo com informação e discrição."};
 export default function GuiasPage(){return <><div className="breadcrumb shell"><Link href="/">Início</Link><span>/</span><strong>Guias</strong></div><section className="shell guide-page"><span className="eyebrow">CONHECER É ESCOLHER MELHOR</span><h1>Descobrir é natural.</h1><p className="page-lede">Encontra respostas simples e pontos a verificar antes de escolher os artigos certos para ti.</p><div className="guides-long">
   <article id={guides[0].slug}><span>GUIA 01 · {guides[0].read}</span><h2>{guides[0].title}</h2><p>Começa pela finalidade e pelo teu conforto. Lê as características indicadas pelo fabricante, verifica as dimensões e os materiais e confirma as instruções de utilização e limpeza na loja parceira.</p><p>Não precisas de comprar por impulso. Compara opções e escolhe ao teu ritmo.</p></article>
   <article id={guides[1].slug}><span>GUIA 02 · {guides[1].read}</span><h2>{guides[1].title}</h2><p>Antes de escolher, consulta a composição, as instruções de manutenção, possíveis sensibilidades e a informação de segurança fornecida pelo fabricante. Em caso de dúvidas relacionadas com saúde, procura aconselhamento profissional.</p></article>

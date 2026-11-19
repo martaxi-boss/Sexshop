@@ -68,3 +68,10 @@ Construir uma SEX SHOP portuguesa para adultos +18, com apresentação comercial
 - Reduzir destaques iniciais de oito para quatro produtos; nos cartões de produto retirar avisos "Diversual/Afiliado", marca e indicação repetitiva de stock, mantendo fotografia, nome, preço e UM botão para a loja parceira. Fotografia e nome conduzem à ficha interna.
 - Guia de compra na home como uma faixa discreta com um único acesso. Evitar rodapé promocional extra/repetições de CTAs. As páginas de guias, catálogo e afiliação continuam acessíveis.
 - Simplificar rótulos duplicados dos filtros e hierarquia tipográfica; não alterar dados, preços, catálogo, contratos Awin, serviços, SEO staging ou projeto alheio. Validar desktop, Android/mobile, contraste e barras de deslocamento.
+
+## Domínio definitivo autorizado — 19/11/2026
+- O proprietário registou sevelora.eu e autorizou substituir sexy-shop.duckdns.org, atualizar o espaço promocional Awin e preparar indexação Google.
+- Canónico HTTPS sem www: https://sevelora.eu. www e domínio de teste redirecionam 301 preservando caminho e query.
+- Publicação no domínio definitivo permite index/follow; sitemap inclui páginas, categorias com artigos e produtos do catálogo aprovado.
+- Contacto geral@sevelora.eu encaminha para o Gmail já verificado do proprietário; preservar a função durante mudanças DNS.
+- Low Cost Europa, comparador e restantes projetos permanecem inalterados.

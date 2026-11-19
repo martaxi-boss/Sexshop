@@ -6,7 +6,7 @@ import {categoryBySlug,subcategoryLabels} from "@/lib/sevelora-data";
 import {euro} from "@/lib/sevelora-products";
 export async function generateMetadata({params}:{params:Promise<{id:string}>}):Promise<Metadata>{
  const {id}=await params;const c=await getCatalog(),p=c.products.find(p=>p.id===id);
- return {title:p?p.name+" · Sevelora":"Produto Diversual",description:p?.description};
+ return {alternates:{canonical:"/produto/"+encodeURIComponent(id)},title:p?p.name+" · Sevelora":"Produto Diversual",description:p?.description};
 }
 export default async function ProductPage({params}:{params:Promise<{id:string}>}){
  const {id}=await params;const catalog=await getCatalog();const p=catalog.products.find(p=>p.id===id);if(!p)notFound();

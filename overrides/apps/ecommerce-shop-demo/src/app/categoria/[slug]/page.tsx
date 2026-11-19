@@ -7,7 +7,7 @@ import {matchesCategory} from "@/lib/sevelora-products";
 import {categoryBySlug} from "@/lib/sevelora-data";
 export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{
  const {slug}=await params,c=categoryBySlug(slug);
- return {title:c?c.name+" · Sex Shop":"Categoria",description:c?.line};
+ return {alternates:{canonical:"/categoria/"+encodeURIComponent(slug)},title:c?c.name+" · Sex Shop":"Categoria",description:c?.line};
 }
 export default async function CategoryPage({params}:{params:Promise<{slug:string}>}){
  const {slug}=await params,c=categoryBySlug(slug);if(!c)notFound();

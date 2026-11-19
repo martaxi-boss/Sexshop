@@ -4,6 +4,8 @@ import {productCategories} from "@/lib/sevelora-data";
 import {matchesCategory} from "@/lib/sevelora-products";
 import {ProductCard} from "@/components/sevelora-product-card";
 
+export const metadata={alternates:{canonical:"/"}};
+
 export default async function Home(){
  const catalog=await getCatalog();
  const available=catalog.products.filter(p=>p.inStock);
