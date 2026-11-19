@@ -1,70 +1,41 @@
-> Atualização 18/11/2026: integração do catálogo oficial Diversual ES aprovada. Fonte da aplicação: `integration/sevelora-nuvi-v1`; operação e limitações de preços em [docs/DIVERSUAL_CATALOG.md](docs/DIVERSUAL_CATALOG.md). O catálogo usa fotografias oficiais e links Awin. A moeda não confirmada do feed é omitida até o fornecedor a corrigir.
+# Sevelora — sex shop de afiliação para Portugal
 
-# Sexshop — projeto de loja de afiliados
+**Domínio comercial canónico:** https://sevelora.eu (HTTPS, sem \`www\`). A versão \`www\` redireciona por 301 para a versão canónica. O antigo domínio de testes foi retirado e não faz parte da publicação.
 
-> Estado: **prototipo tecnicamente montado numa branch de integracao**, com identidade Sevelora e catalogo editorial. Ainda nao foi publicado na VPS nem tem ofertas reais. Nome de trabalho aceite em 16-11-2026; uso comercial depende de verificacao de marca e dominio.
-> Este repositorio e publico. Nao guardar segredos, tokens Awin, credenciais VPS ou dados pessoais.
+**Modelo:** montra editorial de produtos para adultos (+18), com compra, pagamento, transporte e devoluções no fornecedor parceiro; não há carrinho, checkout ou pagamentos próprios.
 
-## Objetivo
+## Fonte de verdade e operação
 
-Criar uma loja profissional de **afiliacao** para publico adulto em Portugal, com expansao posterior para Espanha.
-A loja apresenta informacao propria sobre produtos de bem-estar intimo e liga o visitante
-as lojas parceiras aprovadas. A compra, o pagamento, a entrega e as devolucoes decorrem no fornecedor.
+- Repositório do site: \`martaxi-boss/Sexshop\`, branch principal \`main\`. Não desenvolver nem publicar a partir de branches antigas.
+- Base técnica: [DemoShop Nuvi](https://github.com/sajanv88/nextjs-ecommerce-shop-demo) sob licença MIT, preservada em \`LICENSE.upstream\`. Não reutilizar fotografias ou textos de demonstração sem autorização.
+- Fonte de interface: \`overrides/apps/ecommerce-shop-demo/src\`. Espelho para build: \`apps/ecommerce-shop-demo/src\`. O assembler \`scripts/assemble-nuvi.sh\` mantém ambos equivalentes.
+- Deploy isolado na VPS: \`/srv/projects/Sexshop\`; serviço \`sexshop.service\`; proxy Nginx; Node privado do projeto. Não tocar nos outros projetos.
+- Orquestração de publicação: [workflow da VPS](https://github.com/martaxi-boss/VPS/blob/main/.github/workflows/sexshop-catalog-deploy-20261118.yml), que usa **SHA fixo do código aprovado**. Atualizar esse SHA quando se quiser publicar um novo commit de \`main\`; nunca confiar no mero nome da branch.
+- A ativação utiliza \`releases/<SHA>\`, symlink \`current\` e referência à release anterior para rollback. Preservar sempre a release ativa, uma release de recuperação, dados sincronizados, configuração e credenciais privadas.
 
-- Sem dropshipping, sem pagamentos locais e sem carrinho ou checkout proprio.
-- Sem publicar promessas de entrega, preco ou stock nao verificados.
-- Sem catalogos, fotografias, marcas ou links de afiliado sem autorizacao do parceiro.
-- Proposta de fornecedores a validar na Awin: Diversual, EasyToys e Kiiroo.
-- Desenvolvimento e teste em `sexy-shop.duckdns.org`; dominio comercial por decidir.
-- Projeto independente dos outros repositorios; VPS com pasta `Sexshop`.
-- GitHub publico, segredos apenas no cofre autorizado da VPS.
+## Catálogo e Awin
 
-## Base de design escolhida
+- Fornecedor autorizado: Diversual ES, programa Awin 37722; feed selecionado 78949. Links de afiliação identificados como patrocinados, com preços EUR individuais validados e informação em português de Portugal.
+- Catálogo dinâmico privado: \`/srv/projects/Sexshop/data/catalog.json\`; atualização agendada por \`sexshop-catalog-sync.timer\`.
+- Credencial do feed: \`/srv/projects/Sexshop/.private/diversual-feed-url\` com permissões restritas. Nunca a expor em commits, logs, HTML ou outputs públicos.
+- A quantidade de produtos e a disponibilidade variam com o feed. Referência do deploy de 19/11/2026: 147 artigos aprovados para a montra.
+- A descrição comercial não substitui a informação de preço final, portes, stock e condições no checkout do parceiro.
 
-[DemoShop Nuvi](https://github.com/sajanv88/nextjs-ecommerce-shop-demo)
-— Next.js, layout de boutique, catalogo, filtros, pesquisa e elementos de SEO.
-Licenca de codigo [MIT](https://github.com/sajanv88/nextjs-ecommerce-shop-demo/blob/main/LICENSE).
-**A licenca do codigo nao inclui automaticamente todas as fotografias e textos de demonstracao.**
-Nao importar esses conteudos para uma publicacao comercial.
+## SEO e indexação
 
-## Adaptacao prevista
+- Origem canónica: \`https://sevelora.eu\`; páginas e links internos em pt-PT.
+- Publicação oficial com \`NEXT_PUBLIC_SITE_URL=https://sevelora.eu\` e \`NEXT_PUBLIC_LAUNCH=true\`, com \`index, follow\`, \`robots.txt\` e \`sitemap.xml\`.
+- O deploy de 19/11/2026 validou externamente **162 URLs no sitemap**, incluindo produtos, categorias com artigos e páginas institucionais. A inexistência de \`noindex\` foi validada em QA mobile/desktop.
+- **A indexação efetiva e o estado de submissão do sitemap só podem ser confirmados na propriedade \`sevelora.eu\` do Google Search Console.** Um sitemap válido não garante indexação nem ranking.
+- O domínio de teste foi descontinuado; não o restaurar nem inserir como canonical, sitemap ou redirect.
 
-1. Substituir a marca e o tema grafico por uma identidade original de bem-estar intimo.
-2. Substituir a navegacao e as colecoes do modelo de vestuario.
-3. Remover checkout, carrinho, contas de clientes, depoimentos ficticios e dados de exemplo.
-4. Implementar catalogo normalizado com artigos autorizados, preco EUR e atualizacao do feed.
-5. Adicionar redirecionamento seguro para **links oficiais de afiliado Awin**, com contagem de cliques.
-6. Criar paginas de produto e guias com informacao original, SEO em pt-PT; es-ES numa segunda fase.
-7. Informar claramente que a compra se realiza no parceiro e incluir identificacao de publicidade/afiliacao.
-8. Nao publicar o catalogo ate aos programas dos anunciantes aprovarem a parceria.
-9. Validar em telemovel, acessibilidade, links, seguranca e deployment em isolamento.
+## Testes e qualidade
 
-## Identidade e referencias
+- Verificação de catálogo: \`node scripts/catalog-test.mjs\`.
+- Build: \`pnpm install --frozen-lockfile\` e \`pnpm --dir apps/ecommerce-shop-demo build\`.
+- Smoke HTTP: \`node scripts/smoke.mjs\`; QA publicada em 390px e 1366px, pesquisa, filtros, categorias, produtos, 404, links Awin, favicon e design bordô.
+- [CI do projeto](https://github.com/martaxi-boss/Sexshop/actions) · [deploy de domínio e sitemap](https://github.com/martaxi-boss/VPS/actions/runs/44554020362).
 
-- **Sevelora**: nome de trabalho aprovado para preparar o prototipo, ainda nao validado comercialmente.
-- **Alerta**: [SELEVORA](https://selevora.com/) ja opera no segmento de beleza. Existe semelhanca relevante; consultar [EUIPO/TMview](https://www.euipo.europa.eu/pt/trade-marks/before-applying/availability) e INPI antes de escolher ou comprar dominio definitivo.
-- Analise concreta de UX/estrutura de duas lojas portuguesas: [Cupido Shop e Afrodisia](docs/REFERENCIAS_CUPIDO_AFRODISIA.md).
+## Limites de higiene
 
-## Estado real
-
-- [x] Repositorio publico existente
-- [x] Dominio DuckDNS indicado pelo titular
-- [x] Modelo de afiliacao e base de design escolhidos
-- [x] Nome de trabalho Sevelora aprovado pelo titular
-- [ ] Disponibilidade da marca e dominio definitivo verificados
-- [x] Codigo DemoShop Nuvi MIT importado na branch de integracao e adaptado com paginas originais (fonte pinada 6edcafc)
-- [x] Pipeline configura build Next.js e testes HTTP/noindex antes de publicar o commit importado
-- [ ] Inspecao visual final das capturas desktop/mobile
-- [ ] Build e testes de seguranca concluidos
-- [ ] Parcerias Awin e catalogos autorizados
-- [x] Publicacao isolada na VPS / HTTPS testados (VPS Actions #43888022254)
-- [x] Validacao no browser real da homepage mobile/desktop, menu movel, pesquisa, filtros, rotas e erros JS (Actions #43888691025)
-- [ ] Publicacao dos produtos e links de afiliado apos aprovacoes Awin
-
-A versao de testes esta **publicada na VPS** em https://sexy-shop.duckdns.org/, na pasta /srv/projects/Sexshop, com Node privado, Nginx HTTPS e systemd. O GitHub Actions [#43888022254](https://github.com/martaxi-boss/VPS/actions/runs/43888022254) registou HTTPS e rotas publicas PASS, confirmando tambem que o servico Low Cost Europa se manteve ativo. Fonte implantada: commit \`ee600b7538799ef26c7cfe4270514f460b1a1d8c\`. Continua em staging e **nao** tem pagamentos, catalogos de fornecedores aprovados ou links Awin ativos.
-
-[Branch de integracao](https://github.com/martaxi-boss/Sexshop/tree/integration/sevelora-nuvi-v1) · [PR de revisao](https://github.com/martaxi-boss/Sexshop/pull/1) · [Workflow de montagem](https://github.com/martaxi-boss/Sexshop/actions/workflows/assemble-sevelora.yml).
-
-## Prova de navegacao no dominio publico
-
-Em 16-11-2026 o GitHub Actions [#43888691025](https://github.com/martaxi-boss/Sexshop/actions/runs/43888691025) executou Chromium/Puppeteer sobre o site real, com ecras 390px e 1366px: homepage, menu movel, pesquisa por "massagem", filtro Para Ela, pagina Para Casais e zero erros de runtime JavaScript. Os screenshots e o report.json estao no [artefacto](https://github.com/martaxi-boss/Sexshop/actions/runs/43888691025/artifacts/14234744145) (retencao limitada). Estao em staging, com noindex.
+Este repositório é público: apenas código, documentação, material licenciado e envelope de feed cifrado podem ser versionados. Não apagar catálogos privados, segredos, logs necessários a diagnóstico ou a release anterior para «limpar» o projeto. Não reescrever o histórico remoto sem uma necessidade concreta de segurança.
