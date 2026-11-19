@@ -609,3 +609,105 @@ body,main{background:var(--sevelora-bg);color:var(--sevelora-ink)}
   .catalog-toolbar{border-radius:7px}
   .retail-bottom .retail-cta,.info-page .button{width:100%}
 }
+
+
+/* SEVELORA | EDITORIAL CLEANUP V1 — menos ruido, mesma identidade bordô */
+.topbar{justify-content:center;padding-block:7px;font-size:10px;letter-spacing:.10em}
+.header{box-shadow:none}
+.header-inner{gap:24px;padding-top:16px;padding-bottom:16px}
+.desktop-nav{gap:clamp(14px,2vw,27px)}
+.desktop-nav a{font-size:12px;letter-spacing:0}
+.category-strip{display:none}
+.retail-hero{background:linear-gradient(110deg,#42142f 0%,#2d0b21 64%,#280a1c 100%)}
+.retail-hero-inner{min-height:0;padding-top:clamp(43px,5vw,66px);padding-bottom:clamp(45px,5.5vw,72px)}
+.retail-copy{max-width:980px}
+.retail-eyebrow{font-size:10px;letter-spacing:.12em}
+.retail-copy h1{font-size:clamp(43px,5.3vw,74px);line-height:1.04;letter-spacing:-.045em;margin:17px 0 19px}
+.retail-copy h1 strong{color:#ff9ec8}
+.retail-copy p{font-size:16px;line-height:1.65;max-width:650px;color:#efd0de;margin:0}
+.retail-actions{gap:12px;margin-top:26px}
+.retail-cta,.retail-cta-ghost{font-size:13px;font-weight:850;letter-spacing:0;padding:13px 19px;min-height:47px;box-shadow:none;border-radius:8px}
+.retail-section{padding-top:54px;padding-bottom:56px}
+.retail-section-head{margin-bottom:23px;align-items:center;gap:18px}
+.retail-section-head h2{font-size:clamp(30px,3.2vw,42px);line-height:1.12;letter-spacing:-.035em;margin:0 0 8px}
+.retail-section-head p{line-height:1.55;font-size:14px;color:#dfb7ca}
+.retail-section-head>a{font-size:12px;letter-spacing:0;text-transform:none;border-bottom:1px solid #d68cab;padding-bottom:5px}
+.retail-category-gallery{gap:14px}
+.retail-photo-card{border-color:#78425f;box-shadow:none;border-radius:9px}
+.retail-photo-card:hover{box-shadow:0 12px 26px #13040f60}
+.retail-photo-panel{height:160px;padding:12px 14px 11px;border-bottom:1px solid #69334f;box-shadow:none}
+.retail-photo-panel img{max-height:137px}
+.retail-photo-details{min-height:90px;padding:13px 13px 14px;gap:8px}
+.retail-photo-details h3{font-size:17px;line-height:1.18;letter-spacing:-.015em;min-height:0;margin:0}
+.retail-photo-meta{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-top:auto;color:#e2b5cb;font-weight:650;font-size:11px}
+.retail-photo-meta>span:last-child{color:#ffd0e3;font-size:20px;line-height:1}
+.retail-featured{background:#300e23;border-top:1px solid #663a54}
+.retail-featured .retail-section{padding-top:52px;padding-bottom:52px}
+.real-product-grid{gap:16px}
+.real-product-card{background:#41162e;border:1px solid #754260;border-radius:9px;box-shadow:none}
+.real-product-card:hover{box-shadow:0 12px 28px #16061055}
+.real-product-copy{padding:16px;gap:9px}
+.real-product-copy h3{font-size:15px;line-height:1.4;min-height:43px;margin:0}
+.product-price{font-size:20px;color:#ffd0e3;font-weight:900;margin:0}
+.product-card-actions{display:block;margin-top:auto}
+.real-product-copy .button{display:flex;width:100%;border-radius:7px;min-height:43px;padding:11px 10px;font-size:12px;font-weight:850;box-shadow:none}
+.real-product-image{border-bottom-color:#754260}
+.catalog-disclaimer{font-size:11px;color:#d6b5c6;line-height:1.6;margin-top:21px}
+.retail-help{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-top:40px;padding-bottom:43px;border-top:1px solid #5d304a}
+.retail-help>div{max-width:690px}
+.retail-help>div>span{display:block;font-size:10px;letter-spacing:.13em;font-weight:800;color:#ffa8cc;margin-bottom:7px}
+.retail-help h2{font-family:var(--sans);font-size:clamp(25px,2.9vw,36px);letter-spacing:-.025em;line-height:1.17;color:#fff0f6;margin:0 0 8px}
+.retail-help p{font-size:14px;color:#dfbacb;line-height:1.6;margin:0}
+.retail-help .retail-cta{flex-shrink:0}
+.catalog-layout{gap:30px;padding-top:38px;padding-bottom:63px}
+.filter-sidebar h2{font-size:22px;margin-bottom:12px}
+.filter-sidebar button{padding-top:10px;padding-bottom:10px;font-size:12px}
+.subfilter-panel{margin-top:17px;padding-top:15px}
+.subfilter-panel h3{font-size:11px;letter-spacing:0;margin-bottom:9px}
+.catalog-intro h1{font-size:clamp(31px,3.8vw,46px);margin:0 0 11px}
+.catalog-intro p{font-size:14px;max-width:530px;line-height:1.55}
+.catalog-toolbar{border-top:0;padding:12px}
+.catalog-bottom{margin-top:25px}
+@media(max-width:950px){
+ .desktop-nav{gap:12px}
+ .retail-photo-panel{height:165px}
+ .retail-photo-panel img{max-height:140px}
+}
+@media(max-width:700px){
+ .topbar{padding-block:6px;font-size:9px;letter-spacing:.08em}
+ .header-inner{padding-top:12px;padding-bottom:12px}
+ .retail-hero-inner{padding-top:37px;padding-bottom:42px}
+ .retail-eyebrow{font-size:9px}
+ .retail-copy h1{font-size:clamp(40px,10.8vw,54px);line-height:1.06;letter-spacing:-.045em;margin:14px 0 17px}
+ .retail-copy p{font-size:14px;line-height:1.65}
+ .retail-actions{gap:9px;margin-top:21px}
+ .retail-cta,.retail-cta-ghost{font-size:12px;min-height:45px;padding:12px 13px}
+ .retail-section{padding-top:38px;padding-bottom:42px}
+ .retail-section-head{gap:9px;margin-bottom:20px}
+ .retail-section-head h2{font-size:30px;line-height:1.13;margin-bottom:7px}
+ .retail-section-head p{font-size:12px}
+ .retail-section-head>a{font-size:12px}
+ .retail-category-gallery{gap:11px}
+ .retail-photo-panel{height:144px;padding:12px}
+ .retail-photo-panel img{max-height:120px}
+ .retail-photo-details{min-height:87px;padding:12px 11px 12px;gap:6px}
+ .retail-photo-details h3{font-size:15px;line-height:1.22}
+ .retail-photo-meta{font-size:10px}
+ .retail-photo-meta>span:last-child{font-size:19px}
+ .retail-featured .retail-section{padding-top:40px;padding-bottom:41px}
+ .real-product-grid{gap:11px}
+ .real-product-copy{padding:11px;gap:8px}
+ .real-product-copy h3{font-size:14px;min-height:40px}
+ .product-price{font-size:17px}
+ .real-product-copy .button{font-size:11px;padding:10px 6px}
+ .catalog-disclaimer{font-size:10px}
+ .retail-help{flex-direction:column;align-items:stretch;gap:18px;padding-top:34px;padding-bottom:37px}
+ .retail-help h2{font-size:27px}
+ .retail-help p{font-size:13px}
+ .retail-help .retail-cta{width:100%}
+ .catalog-layout{padding-top:25px;padding-bottom:43px}
+ .catalog-intro h1{font-size:31px}
+ .catalog-intro p{font-size:12px}
+ .catalog-toolbar{padding:10px}
+ .footer-main{padding-top:35px;padding-bottom:35px}
+}
