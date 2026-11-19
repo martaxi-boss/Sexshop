@@ -86,7 +86,7 @@ jobs:
                 assert.equal(burgundyPalette.body?.bg,"rgb(40, 10, 28)","site body must be dark burgundy");
                 assert.equal(burgundyPalette.main?.bg,"rgb(40, 10, 28)","site main must be burgundy");
                 assert.equal(burgundyPalette.categoryStrip,null,"redundant category strip should be removed");
-                assert.equal(burgundyPalette.featured?.bg,"rgb(44, 12, 32)","product feature section must not be white");
+                assert.equal(burgundyPalette.featured?.bg,"rgb(48, 14, 35)","featured section must preserve the wine background");
                 assert.ok(burgundyPalette.card?.gradient.includes("linear-gradient"),"category cards need wine gradient");
                 assert.equal(burgundyPalette.cta?.bg,"rgb(255, 208, 227)","primary hero button should be blush pink");
                 assert.equal(burgundyPalette.cta?.color,"rgb(57, 16, 36)","light-pink CTA must use dark contrast text");
