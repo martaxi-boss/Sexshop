@@ -5,14 +5,16 @@ import {categories,subcategoryLabels} from "@/lib/sevelora-data";
 import {matchesCategory} from "@/lib/sevelora-products";
 import type {ProductCatalog} from "@/lib/sevelora-products";
 import {ProductCard} from "./sevelora-product-card";
+import {catalogueHref,pageSize} from "@/lib/sevelora-pagination";
 
 const fold=(s:string)=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-PT");
-export default function Catalogue({catalog,initialCategory="todos",initialQuery="",initialType=""}:{catalog:ProductCatalog;initialCategory?:string;initialQuery?:string;initialType?:string}){
+export default function Catalogue({catalog,initialCategory="todos",initialQuery="",initialType="",initialPage=1}:{catalog:ProductCatalog;initialCategory?:string;initialQuery?:string;initialType?:string;initialPage?:number}){
   const [query,setQuery]=useState(initialQuery);
   const [category,setCategory]=useState(initialCategory);
   const [type,setType]=useState(initialType);
   const [sort,setSort]=useState("original");
-  const [limit,setLimit]=useState(24);
+  const [limit,setLimit]=useState(pageSize);
+  const [offset,setOffset]=useState((initialPage-1)*pageSize);
   const choices=categories.filter(c=>catalog.products.some(p=>matchesCategory(p,c.slug))||c.slug===category);
   const typeChoices=useMemo(()=>{
     const options=new Map<string,number>();
@@ -33,9 +35,9 @@ export default function Catalogue({catalog,initialCategory="todos",initialQuery=
     if(sort==="price")items=[...items].sort((a,b)=>(a.price??Infinity)-(b.price??Infinity));
     return items;
   },[catalog.products,category,type,query,sort]);
-  const chooseCategory=(slug:string)=>{setCategory(slug);setType("");setLimit(24);};
-  const chooseType=(slug:string)=>{setType(slug);setLimit(24);};
-  const reset=()=>{setQuery("");setCategory("todos");setType("");setLimit(24);};
+  const chooseCategory=(slug:string)=>{setCategory(slug);setType("");setLimit(pageSize);setOffset(0);};
+  const chooseType=(slug:string)=>{setType(slug);setLimit(pageSize);setOffset(0);};
+  const reset=()=>{setQuery("");setCategory("todos");setType("");setLimit(pageSize);setOffset(0);};
   return <div className="shell catalog-layout">
     <aside className="filter-sidebar" aria-label="Categorias e filtros">
       <h2>Categorias</h2>
@@ -47,11 +49,11 @@ export default function Catalogue({catalog,initialCategory="todos",initialQuery=
     </aside>
     <section className="catalog-content" aria-label="Produtos do catálogo">
       {initialCategory==="todos"&&<div className="catalog-intro"><h1 id="catalog-title">Todos os produtos</h1><p>Pesquisa ou escolhe uma categoria para encontrares o que procuras.</p></div>}
-      <div className="catalog-toolbar"><label className="searchbox"><span aria-hidden="true">⌕</span><input type="search" aria-label="Pesquisar produtos" placeholder="Vibrador, sugador, massajador..." value={query} onChange={e=>{setQuery(e.target.value);setLimit(24);}}/></label><label className="sortbox">Ordenar <select aria-label="Ordenar produtos" value={sort} onChange={e=>setSort(e.target.value)}><option value="original">Ordem do catálogo</option><option value="az">Nome A–Z</option>{catalog.products.some(p=>p.price!==null)&&<option value="price">Menor preço</option>}</select></label></div>
+      <div className="catalog-toolbar"><label className="searchbox"><span aria-hidden="true">⌕</span><input type="search" aria-label="Pesquisar produtos" placeholder="Vibrador, sugador, massajador..." value={query} onChange={e=>{setQuery(e.target.value);setLimit(pageSize);setOffset(0);}}/></label><label className="sortbox">Ordenar <select aria-label="Ordenar produtos" value={sort} onChange={e=>{setSort(e.target.value);setOffset(0);setLimit(pageSize);}}><option value="original">Ordem do catálogo</option><option value="az">Nome A–Z</option>{catalog.products.some(p=>p.price!==null)&&<option value="price">Menor preço</option>}</select></label></div>
       <div className="mobile-filters"><label>ESCOLHER CATEGORIA <select aria-label="Filtrar por categoria" value={category} onChange={e=>chooseCategory(e.target.value)}><option value="todos">Todos os produtos</option><optgroup label="Por tipo de produto">{choices.filter(c=>c.kind==="product").map(c=><option value={c.slug} key={c.slug}>{c.name}</option>)}</optgroup></select></label>{category!=="todos"&&typeChoices.length>1&&<label>TIPO DE PRODUTO <select aria-label="Filtrar por tipo" value={type} onChange={e=>chooseType(e.target.value)}><option value="">Todos os tipos</option>{typeChoices.map(t=><option key={t.id} value={t.id}>{t.label} ({t.count})</option>)}</select></label>}</div>
       {(query||category!=="todos"||type)&&<div className="retail-filter-active"><span>{category==="todos"?"Pesquisa":categories.find(c=>c.slug===category)?.name||"Categoria"}{type&&" · "+(subcategoryLabels[type]||type)}{query&&" · "+query}</span><button type="button" onClick={reset}>Limpar filtros ×</button></div>}
-      <p className="results-label" role="status">{filtered.length} {filtered.length===1?"produto encontrado":"produtos encontrados"}{filtered.length>limit?" · a mostrar "+limit:""}</p>
-      {catalog.stale?<div className="no-results"><h2>Catálogo em atualização.</h2><p>Aguardamos a sincronização do parceiro.</p></div>:filtered.length?<><div className="real-product-grid">{filtered.slice(0,limit).map(p=><ProductCard key={p.id} product={p}/>)}</div>{filtered.length>limit&&<button className="retail-more" type="button" onClick={()=>setLimit(n=>n+24)}>Mostrar mais produtos ({filtered.length-limit}) ↓</button>}</>:<div className="no-results"><h2>Não há artigos nesta seleção.</h2><p>Experimenta outro tipo ou uma categoria com produtos disponíveis.</p><button type="button" className="button button-dark" onClick={reset}>VER TODOS OS PRODUTOS</button></div>}
+      <p className="results-label" role="status">{filtered.length} {filtered.length===1?"produto encontrado":"produtos encontrados"}{offset?" · a mostrar "+(offset+1)+"–"+Math.min(offset+limit,filtered.length):filtered.length>limit?" · a mostrar "+limit:""}</p>
+      {catalog.stale?<div className="no-results"><h2>Catálogo em atualização.</h2><p>Aguardamos a sincronização do parceiro.</p></div>:filtered.length?<><div className="real-product-grid">{filtered.slice(offset,offset+limit).map(p=><ProductCard key={p.id} product={p}/>)}</div>{offset>0&&<Link className="retail-more" style={{width:"fit-content"}} href={catalogueHref(offset/pageSize,category,query,type)} prefetch={false}>← Página anterior</Link>}{filtered.length>offset+limit&&<a className="retail-more" style={{width:"fit-content"}} href={catalogueHref(Math.floor((offset+limit)/pageSize)+1,category,query,type)} onClick={e=>{if(e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey){e.preventDefault();setLimit(n=>n+pageSize);}}}>Mostrar mais produtos ({filtered.length-offset-limit}) ↓</a>}</>:<div className="no-results"><h2>Não há artigos nesta seleção.</h2><p>Experimenta outro tipo ou uma categoria com produtos disponíveis.</p><button type="button" className="button button-dark" onClick={reset}>VER TODOS OS PRODUTOS</button></div>}
       <div className="catalog-bottom"><p>{catalog.updatedAt&&<>Catálogo atualizado em {new Date(catalog.updatedAt).toLocaleString("pt-PT",{timeZone:"Europe/Lisbon",dateStyle:"short",timeStyle:"short"})}. </>}Nomes e resumos adaptados para português de Portugal a partir dos dados oficiais da Diversual. Confirma preços, envio e especificações antes de comprar.</p><Link href="/afiliacao">INFORMAÇÃO DE AFILIAÇÃO ↗</Link></div>
     </section>
   </div>;

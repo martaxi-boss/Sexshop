@@ -49,6 +49,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Compilar loja Next.js
         run: pnpm --dir apps/ecommerce-shop-demo build
+      - name: Rastrear todas as paginas sem clicar em JavaScript
+        run: node scripts/pagination-smoke.mjs
       - name: Verificar HTTP, canonico e indexabilidade
         run: |
           set -euo pipefail
