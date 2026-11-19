@@ -1,0 +1,19 @@
+[Unit]
+Description=Sevelora Diversual catalog synchronization
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/srv/projects/Sexshop
+ExecStart=/srv/projects/Sexshop/runtimes/node26/node /srv/projects/Sexshop/infra/sync-diversual.mjs
+Environment=CATALOG_PATH=/srv/projects/Sexshop/data/catalog.json
+Environment=DIVERSUAL_URL_FILE=/srv/projects/Sexshop/.private/diversual-feed-url
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/projects/Sexshop/data
+UMask=0027
+TimeoutStartSec=120
