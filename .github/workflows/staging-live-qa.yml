@@ -138,8 +138,8 @@ jobs:
               await page.setViewport({width:390,height:844,isMobile:true,deviceScaleFactor:1});
               let resp=await page.goto(process.env.TARGET+"/catalogo",{waitUntil:"networkidle2"});
               assert.equal(resp.status(),200);
-              assert.equal(await page.$eval('.mobile-filters select[aria-label="Filtrar por tipo"]',els=>els.length),0,"global catalog must not flood mobile with all subtype filters");
-              assert.equal(await page.$eval(".subfilter-panel",els=>els.length),0,"global catalog sidebar must not flood users with all subtype filters");
+              assert.equal(await page.$$eval('.mobile-filters select[aria-label="Filtrar por tipo"]',els=>els.length),0,"global catalog must not flood mobile with all subtype filters");
+              assert.equal(await page.$$eval(".subfilter-panel",els=>els.length),0,"global catalog sidebar must not flood users with all subtype filters");
               report.checks.push("global catalog simplified: subtype filters shown only after choosing a category: PASS");
               const total=await page.$eval(".filter-sidebar button:first-of-type span",e=>Number(e.textContent.trim()));
               assert.ok(total>0,"public catalog is empty");
@@ -210,7 +210,7 @@ jobs:
               report.checks.push("mobile category filter: PASS");
               await page.select('select[aria-label="Filtrar por categoria"]',"anal");
               await new Promise(r=>setTimeout(r,240));
-              const plugs=await page.$eval('select[aria-label="Filtrar por tipo"]',el=>Array.from(el.options).some(x=>x.value==="plugs"));
+              const plugs=await page.$$eval('select[aria-label="Filtrar por tipo"]',el=>Array.from(el.options).some(x=>x.value==="plugs"));
               assert.ok(plugs,"anal category missing exact plugs subcategory");
               assert.equal(await page.$eval('select[aria-label="Filtrar por tipo"]',els=>els.length),1,"anal category must expose specific subtype filter");
               await page.select('select[aria-label="Filtrar por tipo"]',"plugs");
