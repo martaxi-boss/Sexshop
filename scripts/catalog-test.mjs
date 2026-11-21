@@ -2,7 +2,9 @@ import assert from 'node:assert/strict';
 import {normalize,parseCsv,classify,extractMerchantEurPrice,verifyMerchantEuroPrices} from './sync-diversual.mjs';
 import {curatedProducts} from './diversual-ptpt.mjs';
 assert.equal(curatedProducts.size,151);
-assert.equal([...curatedProducts.values()].filter(x=>x.hidden).length,3);
+assert.equal([...curatedProducts.values()].filter(x=>x.hidden).length,6);
+assert.equal([...curatedProducts.values()].filter(x=>x.hiddenReason==='nonretail').length,3);
+assert.equal([...curatedProducts.values()].filter(x=>x.hiddenReason==='owner_request').length,3);
 assert.ok([...curatedProducts.values()].every(x=>x.name&&x.description&&Array.isArray(x.categories)));
 assert.deepEqual(parseCsv('a,b\r\n"x,y","one\n""two"""\r\n'),[{a:'x,y',b:'one\n"two"'}]);
 assert.throws(()=>parseCsv('a,b\n"bad'));
@@ -29,6 +31,21 @@ const shipping={...r,aw_product_id:'44061009941',aw_deep_link:'https://www.awin1
 const withShipping=normalize([r,shipping]);
 assert.equal(withShipping.products.length,1);
 assert.equal(withShipping.excludedNonRetail,1);
+assert.equal(withShipping.excludedByOwner,0);
+const retiredChargerIds=['43597976280','43597976281','43597976282'];
+const withRetiredChargers=normalize([r,shipping,...retiredChargerIds.map(id=>({...r,aw_product_id:id,aw_deep_link:r.aw_deep_link.replace('p='+r.aw_product_id,'p='+id)}))]);
+assert.equal(withRetiredChargers.products.length,1,'cabos não aparecem no catálogo');
+assert.equal(withRetiredChargers.excludedNonRetail,1);
+assert.equal(withRetiredChargers.excludedByOwner,3);
+assert.equal(withRetiredChargers.unreviewedProducts,0);
+for(const id of retiredChargerIds){
+  const product=curatedProducts.get(id);
+  assert.equal(product?.hidden,true);
+  assert.equal(product?.hiddenReason,'owner_request');
+  assert.deepEqual(classify({aw_product_id:id}),[],'carregador excluído da montra');
+  assert.deepEqual(product.categories,[]);
+  assert.deepEqual(product.subcategories,[]);
+}
 assert.deepEqual(classify({aw_product_id:'43582237884'}),['anal']);
 assert.deepEqual(classify({aw_product_id:'44625061400'}),['jogos-acessorios']);
 assert.deepEqual(curatedProducts.get('44625061400').subcategories,['kits']);
@@ -61,13 +78,14 @@ assert.equal(normalize([gbp],new Date(),checked.verified).products[0].price,12.9
 assert.equal(normalize([{...gbp,currency:'USD'}],new Date(),checked.verified).products[0].price,null);
 
 const visibleCurated=[...curatedProducts.values()].filter(p=>!p.hidden);
-assert.equal(visibleCurated.length,148);
+assert.equal(visibleCurated.length,145);
 assert.ok(visibleCurated.every(p=>p.categories.length===1),'exactly one principal category');
 assert.ok(visibleCurated.every(p=>p.primaryCategory===p.categories[0]),'primary category matches');
 assert.ok(visibleCurated.every(p=>p.subcategories.length===1),'exactly one audited product type');
 assert.ok(visibleCurated.every(p=>p.audiences.every(x=>['para-ela','para-ele','para-casais'].includes(x))), 'audience is not a product category');
 const byCategory=Object.fromEntries([...new Set(visibleCurated.map(p=>p.primaryCategory))].map(cat=>[cat,visibleCurated.filter(p=>p.primaryCategory===cat).length]));
-assert.equal(Object.values(byCategory).reduce((sum,n)=>sum+n,0),148,'no duplicated products between category counts');
+assert.equal(Object.values(byCategory).reduce((sum,n)=>sum+n,0),145,'no duplicated products between category counts');
+assert.ok(visibleCurated.every(p=>!p.subcategories.includes('carregadores')),'nenhum carregador pode aparecer na montra');
 assert.ok(!byCategory.bdsm,'BDSM category retired; its kit belongs to Kits & Accessories');
 assert.equal(byCategory.anal,visibleCurated.filter(p=>['plugs','bolas-anais','prostata','vibradores-anais','higiene-anal','kits-anal'].includes(p.subcategories[0])).length);
 assert.ok(!curatedProducts.get('34454438095').categories.includes('anal'),'anal lubricant stays with lubricants');

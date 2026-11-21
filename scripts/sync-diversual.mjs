@@ -89,7 +89,7 @@ export async function verifyMerchantEuroPrices(rows, fetcher=fetch) {
 
 export function normalize(rows, now=new Date(), verifiedEuros=new Map()){
   if(!rows.length||rows.length>20000)throw Error('feed_size');
-  const ids=new Set();let suppressedPrices=0,notCurated=0,nonRetail=0;
+  const ids=new Set();let suppressedPrices=0,notCurated=0,nonRetail=0,ownerExcluded=0;
   const products=[];
   for(const r of rows){
     if(r.merchant_id!=='37722'||r.data_feed_id!=='78949')throw Error('wrong_supplier');
@@ -103,7 +103,12 @@ export function normalize(rows, now=new Date(), verifiedEuros=new Map()){
     if(awImage&&(awImage.searchParams.get('feedId')!=='78949'||awImage.searchParams.get('url')!=='ssl:'+directImage.host+directImage.pathname))throw Error('invalid_awin_image');
     const editorial=curatedProducts.get(id);
     if(!editorial){notCurated++;continue;}
-    if(editorial.hidden){nonRetail++;continue;}
+    if(editorial.hidden){
+      if(editorial.hiddenReason==='owner_request')ownerExcluded++;
+      else if(editorial.hiddenReason==='nonretail')nonRetail++;
+      else throw Error('unknown_hidden_reason:'+id);
+      continue;
+    }
     const image=awImage||directImage;
     const amount=Number(r.search_price);
     const nativeEur=r.currency==='EUR'&&Number.isFinite(amount)&&amount>0?amount:null;
@@ -116,7 +121,7 @@ export function normalize(rows, now=new Date(), verifiedEuros=new Map()){
   }
   if(!products.length)throw Error('empty_curated_catalog');
   return {version:1,merchantId:'37722',feedId:'78949',updatedAt:now.toISOString(),suppressedPrices,
-    sourceProducts:rows.length,unreviewedProducts:notCurated,excludedNonRetail:nonRetail,products};
+    sourceProducts:rows.length,unreviewedProducts:notCurated,excludedNonRetail:nonRetail,excludedByOwner:ownerExcluded,products};
 }
 
 export async function sync() {
@@ -136,6 +141,6 @@ export async function sync() {
   const catalog=normalize(rows,new Date(),merchantPrices.verified);
   await mkdir(dirname(out),{recursive:true});const temp=out+'.tmp';
   await writeFile(temp,JSON.stringify(catalog),{mode:0o640});await rename(temp,out);
-  console.log(JSON.stringify({status:'updated',products:catalog.products.length,suppressedPrices:catalog.suppressedPrices,unreviewedProducts:catalog.unreviewedProducts,excludedNonRetail:catalog.excludedNonRetail,verifiedEuroPrices:merchantPrices.checked,merchantPriceMatches:merchantPrices.identical,merchantPriceDifferences:merchantPrices.different,merchantPriceFailures:merchantPrices.failed,updatedAt:catalog.updatedAt}));
+  console.log(JSON.stringify({status:'updated',products:catalog.products.length,suppressedPrices:catalog.suppressedPrices,unreviewedProducts:catalog.unreviewedProducts,excludedNonRetail:catalog.excludedNonRetail,excludedByOwner:catalog.excludedByOwner,verifiedEuroPrices:merchantPrices.checked,merchantPriceMatches:merchantPrices.identical,merchantPriceDifferences:merchantPrices.different,merchantPriceFailures:merchantPrices.failed,updatedAt:catalog.updatedAt}));
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)sync().catch(()=>{console.error('CATALOG_SYNC_FAILED: previous catalog preserved; inspect provider configuration privately.');process.exitCode=1;});

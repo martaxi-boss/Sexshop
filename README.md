@@ -19,6 +19,7 @@
 - Catálogo dinâmico privado: `/srv/projects/Sexshop/data/catalog.json`; atualização agendada por `sexshop-catalog-sync.timer`.
 - Credencial do feed: `/srv/projects/Sexshop/.private/diversual-feed-url` com permissões restritas. Nunca a expor em commits, logs, HTML ou outputs públicos.
 - A quantidade de produtos e a disponibilidade variam com o feed. Referência do deploy de 19/11/2026: 147 artigos aprovados para a montra.
+- Em 21/11/2026, a curadoria retirou também da montra os três cabos magnéticos M1/M2/M3, por pedido do proprietário; exclusão persistente por ID com contador próprio (`excludedByOwner`).
 - A descrição comercial não substitui a informação de preço final, portes, stock e condições no checkout do parceiro.
 
 ## SEO e indexação

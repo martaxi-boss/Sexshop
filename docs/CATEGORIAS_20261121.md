@@ -36,3 +36,10 @@ independente pelo anfitrião. Não se afirma certificação desse corpo pelo Fer
 - Nome, descrição, fotografia, preço e ligação Awin continuam a ser fornecidos como antes; não eliminar o artigo do catálogo.
 - A categoria Massagem Erótica mantém as velas e os óleos, sem filtro de kits vazio.
 - Garantia por teste: categoria exclusiva `jogos-acessorios` e tipo `kits` para este ID em sincronizações futuras.
+
+## Exclusão dos cabos magnéticos — 21/11/2026
+
+- Por decisão do proprietário, os carregadores magnéticos USB Diversual M1 (43597976280), M2 (43597976281) e M3 (43597976282) deixam de aparecer no catálogo completo, nos resultados de pesquisa, na categoria Kits & Acessórios, nas fichas e no sitemap.
+- A exclusão está fixada por ID na curadoria (`hiddenReason: owner_request`), sem alterar ou eliminar outros produtos, e mantém-se após a atualização automática do feed.
+- O menu Kits & Acessórios deixa de anunciar carregadores; seguem válidos os kits, bolsas e livros.
+- O contador `excludedByOwner` distingue as três exclusões editoriais das três embalagens de expedição (`excludedNonRetail`), permitindo conferir os totais sem perdas indevidas.

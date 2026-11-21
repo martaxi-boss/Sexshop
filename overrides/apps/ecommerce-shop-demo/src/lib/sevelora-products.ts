@@ -5,7 +5,7 @@ export type Product={
 };
 export type ProductCatalog={
  version:1;merchantId:string;feedId:string;updatedAt:string|null;suppressedPrices:number;
- sourceProducts?:number;unreviewedProducts?:number;excludedNonRetail?:number;
+ sourceProducts?:number;unreviewedProducts?:number;excludedNonRetail?:number;excludedByOwner?:number;
  products:Product[];stale:boolean
 };
 export const matchesCategory=(p:Product,slug:string)=>slug==='todos'||p.categories.includes(slug);

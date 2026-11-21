@@ -8,7 +8,7 @@ export const categories=[
  {slug:"casais",kind:"product",name:"Brinquedos a Dois",short:"Vibradores para casais e strap-ons",line:"Brinquedos especificamente concebidos para utilização a dois, incluindo arneses e strap-ons.",tone:"wine",coverIds:["43396308152","37160044645"],filters:[{label:"Vibradores para casais",type:"vibradores-casais"},{label:"Arneses",type:"arneses"},{label:"Strap-ons",type:"strap-ons"}]},
  {slug:"bem-estar",kind:"product",name:"Lubrificantes & Cuidados",short:"Lubrificantes, higiene e cosmética",line:"Lubrificantes, géis, limpeza e outros cuidados íntimos.",tone:"sage",coverIds:["34454438089","42283692111"],filters:[{label:"Lubrificantes",type:"lubrificantes"},{label:"Higiene íntima",type:"higiene"},{label:"Géis",type:"geis-estimulantes"},{label:"Cosmética",type:"cosmetica"},{label:"Bolas de Kegel",type:"kegel"},{label:"Desempenho",type:"desempenho"}]},
  {slug:"massagem",kind:"product",name:"Massagem Erótica",short:"Velas e óleos de massagem",line:"Velas e óleos perfumados para momentos de massagem.",tone:"blue",coverIds:["41451884990","38688672239"],filters:[{label:"Velas de massagem",type:"velas"},{label:"Óleos",type:"oleos"}]},
- {slug:"jogos-acessorios",kind:"product",name:"Kits & Acessórios",short:"Kits, bolsas e carregadores",line:"Kits eróticos, acessórios, bolsas e carregadores próprios.",tone:"stone",coverIds:["45803252805","40468132346"],filters:[{label:"Kits eróticos",type:"kits"},{label:"Bolsas de arrumação",type:"arrumacao"},{label:"Carregadores",type:"carregadores"},{label:"Livros",type:"livros"}]},
+ {slug:"jogos-acessorios",kind:"product",name:"Kits & Acessórios",short:"Kits, bolsas e acessórios",line:"Kits eróticos, bolsas e outros acessórios selecionados.",tone:"stone",coverIds:["45803252805","40468132346"],filters:[{label:"Kits eróticos",type:"kits"},{label:"Bolsas de arrumação",type:"arrumacao"},{label:"Livros",type:"livros"}]},
  {slug:"feromonas",kind:"product",name:"Perfumes & Feromonas",short:"Perfumes, incensos e fragrâncias",line:"Perfumes, incensos e fragrâncias da gama Diversual.",tone:"peach",coverIds:["40344902043","39294900359"],filters:[{label:"Perfumes",type:"perfumes"},{label:"Incensos",type:"incensos"},{label:"Aromas",type:"aromas"}]},
  {slug:"lingerie",kind:"product",name:"Lingerie Sexy",short:"Moda íntima e conjuntos",line:"Aparecerá na montra quando houver produtos autorizados desta categoria.",tone:"rose",coverIds:[],filters:[{label:"Lingerie",type:"lingerie"}]}
 ] as const;
@@ -27,7 +27,7 @@ export const subcategoryLabels:Record<string,string>={
 "vibradores-casais":"Vibradores para casais","masturbadores":"Masturbadores",
 "kits":"Kits eróticos","sugadores":"Sugadores","strap-ons":"Strap-ons",
 "perfumes":"Perfumes","incensos":"Incensos","aromas":"Aromas","oleos":"Óleos de massagem",
-"kits-massagem":"Kits de massagem","carregadores":"Carregadores","livros":"Livros",
+"kits-massagem":"Kits de massagem","livros":"Livros",
 "desempenho":"Produtos de desempenho","cosmetica":"Cosmética íntima",
 "kits-anal":"Kits anais","vibradores-anais":"Vibradores anais",
 "estimulacao-oral":"Estimulação oral","rabbits":"Vibradores tipo coelhinho"

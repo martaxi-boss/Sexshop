@@ -36,3 +36,9 @@ Image delivery uses the official Awin productserve URL when supplied, validating
 
 ## Navegação sem mistura de categorias
 A taxonomia publicada anteriormente permitia que o mesmo produto participasse em várias categorias principais. Foi revista para um único tipo principal por SKU. As seleções por destinatário foram separadas do catálogo de tipos e estão claramente identificadas na interface; não são novas famílias de produto. O total dos cartões por família deve somar o total de 148 artigos sem duplicações. As fotografias de categoria passam a usar produtos selecionados pelo ID dentro da família correta, com escala proporcional e fundo neutro, em vez da primeira fotografia aleatória do feed.
+
+## Exclusão editorial solicitada pelo proprietário — 2026-11-21
+
+- Os cabos de carga magnética Diversual M1, M2 e M3 (IDs 43597976280, 43597976281, 43597976282) não são relevantes para a montra e foram suprimidos individualmente por ID.
+- Não eliminar as entradas do controlo editorial: `hiddenReason=owner_request` assegura exclusão permanente durante sincronizações, mesmo que os três continuem no feed; os restantes produtos e links mantêm-se.
+- `excludedByOwner` é contabilizado separadamente das três embalagens (`excludedNonRetail`). Com 151 entradas editoriais, 145 podem ser exibidas; o feed efetivo poderá disponibilizar um número menor, consoante a seleção Awin.
