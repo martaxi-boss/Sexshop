@@ -11,10 +11,10 @@ export const primaryCategoryByType=Object.freeze({
   'prostata':'anal','plugs':'anal','bolas-anais':'anal',
   'vibradores-anais':'anal','higiene-anal':'anal','kits-anal':'anal',
   'arneses':'casais','strap-ons':'casais','vibradores-casais':'casais',
-  'lubrificantes':'bem-estar','higiene':'bem-estar','kegel':'bem-estar',
+  'lubrificantes':'bem-estar','higiene':'bem-estar',
   'geis-estimulantes':'bem-estar','cosmetica':'bem-estar','desempenho':'bem-estar',
   'velas':'massagem','oleos':'massagem','kits-massagem':'massagem',
-  'kits':'jogos-acessorios','arrumacao':'jogos-acessorios',
+  'kits':'jogos-acessorios','arrumacao':'jogos-acessorios','kegel':'jogos-acessorios',
   'livros':'jogos-acessorios',
   'perfumes':'feromonas','incensos':'feromonas','aromas':'feromonas'
 });
