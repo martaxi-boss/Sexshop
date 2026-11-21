@@ -6,7 +6,6 @@ export const categories=[
  {slug:"masturbadores",kind:"product",name:"Masturbadores",short:"Modelos manuais e automáticos",line:"Masturbadores masculinos manuais e automáticos, sem produtos de outras famílias.",tone:"stone",coverIds:["43582237885","40148294052"],filters:[{label:"Masturbadores masculinos",type:"masturbadores"}]},
  {slug:"aneis",kind:"product",name:"Anéis Penianos",short:"Anéis vibratórios e ajustáveis",line:"Anéis penianos e anéis de estimulação a dois.",tone:"peach",coverIds:["45520166949","42519444179"],filters:[{label:"Anéis penianos",type:"aneis"}]},
  {slug:"casais",kind:"product",name:"Brinquedos a Dois",short:"Vibradores para casais e strap-ons",line:"Brinquedos especificamente concebidos para utilização a dois, incluindo arneses e strap-ons.",tone:"wine",coverIds:["43396308152","37160044645"],filters:[{label:"Vibradores para casais",type:"vibradores-casais"},{label:"Arneses",type:"arneses"},{label:"Strap-ons",type:"strap-ons"}]},
- {slug:"bdsm",kind:"product",name:"BDSM & Fetiche",short:"Kits e acessórios BDSM",line:"Somente produtos BDSM confirmados no catálogo do parceiro.",tone:"wine",coverIds:["44625061400"],filters:[{label:"Kits BDSM",type:"kits-bdsm"}]},
  {slug:"bem-estar",kind:"product",name:"Lubrificantes & Cuidados",short:"Lubrificantes, higiene e cosmética",line:"Lubrificantes, géis, limpeza e outros cuidados íntimos.",tone:"sage",coverIds:["34454438089","42283692111"],filters:[{label:"Lubrificantes",type:"lubrificantes"},{label:"Higiene íntima",type:"higiene"},{label:"Géis",type:"geis-estimulantes"},{label:"Cosmética",type:"cosmetica"},{label:"Bolas de Kegel",type:"kegel"},{label:"Desempenho",type:"desempenho"}]},
  {slug:"massagem",kind:"product",name:"Massagem Erótica",short:"Velas, óleos e kits de massagem",line:"Artigos de massagem com fragrância, óleos e kits específicos.",tone:"blue",coverIds:["41451884990","38688672239"],filters:[{label:"Velas de massagem",type:"velas"},{label:"Óleos",type:"oleos"},{label:"Kits",type:"kits-massagem"}]},
  {slug:"jogos-acessorios",kind:"product",name:"Kits & Acessórios",short:"Kits, bolsas e carregadores",line:"Kits eróticos, acessórios, bolsas e carregadores próprios.",tone:"stone",coverIds:["45803252805","40468132346"],filters:[{label:"Kits eróticos",type:"kits"},{label:"Bolsas de arrumação",type:"arrumacao"},{label:"Carregadores",type:"carregadores"},{label:"Livros",type:"livros"}]},
@@ -29,7 +28,7 @@ export const subcategoryLabels:Record<string,string>={
 "kits":"Kits eróticos","sugadores":"Sugadores","strap-ons":"Strap-ons",
 "perfumes":"Perfumes","incensos":"Incensos","aromas":"Aromas","oleos":"Óleos de massagem",
 "kits-massagem":"Kits de massagem","carregadores":"Carregadores","livros":"Livros",
-"desempenho":"Produtos de desempenho","cosmetica":"Cosmética íntima","kits-bdsm":"Kits BDSM",
+"desempenho":"Produtos de desempenho","cosmetica":"Cosmética íntima",
 "kits-anal":"Kits anais","vibradores-anais":"Vibradores anais",
 "estimulacao-oral":"Estimulação oral","rabbits":"Vibradores tipo coelhinho"
 };

@@ -6,7 +6,7 @@ import {matchesCategory} from "@/lib/sevelora-products";
 import "./sevelora.css";
 const canonical=process.env.NEXT_PUBLIC_SITE_URL??"https://sevelora.eu";
 const launch=process.env.NEXT_PUBLIC_LAUNCH==="true";
-export const metadata:Metadata={metadataBase:new URL(canonical),title:{default:"Sex Shop Online em Portugal | Sevelora",template:"%s | Sevelora"},description:"Sex shop para adultos em Portugal. Explora vibradores, sugadores, masturbadores, brinquedos a dois, BDSM e cuidados íntimos.",applicationName:"Sevelora",openGraph:{type:"website",locale:"pt_PT",siteName:"Sevelora"},robots:{index:launch,follow:launch},referrer:"strict-origin-when-cross-origin"};
+export const metadata:Metadata={metadataBase:new URL(canonical),title:{default:"Sex Shop Online em Portugal | Sevelora",template:"%s | Sevelora"},description:"Sex shop para adultos em Portugal. Explora vibradores, sugadores, masturbadores, brinquedos a dois, kits e cuidados íntimos.",applicationName:"Sevelora",openGraph:{type:"website",locale:"pt_PT",siteName:"Sevelora"},robots:{index:launch,follow:launch},referrer:"strict-origin-when-cross-origin"};
 export const viewport:Viewport={width:"device-width",initialScale:1,themeColor:"#280a1c"};
 const navSlugs=["estimuladores","anal","masturbadores","bem-estar"];
 export default async function RootLayout({children}:Readonly<{children:React.ReactNode}>){
@@ -27,7 +27,7 @@ export default async function RootLayout({children}:Readonly<{children:React.Rea
   <footer className="footer"><div className="footer-main">
     <div><Link href="/" className="footer-brand">SEVELORA ✦</Link><p>Uma sex shop para explorar sem tabus. Produtos reais de fornecedores parceiros aprovados, para maiores de 18 anos.</p><span className="footer-note">Montra de afiliação: não vendemos nem enviamos artigos diretamente.</span></div>
     <div><h3>SEX SHOP</h3><Link href="/catalogo">Todos os produtos</Link><Link href="/categoria/estimuladores">Vibradores & Dildos</Link><Link href="/categoria/masturbadores">Masturbadores</Link><Link href="/categoria/aneis">Anéis Penianos</Link><Link href="/categoria/casais">Brinquedos a Dois</Link></div>
-    <div><h3>DESCOBRIR</h3><Link href="/categoria/anal">Prazer Anal</Link><Link href="/categoria/bdsm">BDSM & Fetiche</Link>{shownProducts.some(c=>c.slug==="feromonas")&&<Link href="/categoria/feromonas">Perfumes & Feromonas</Link>}<Link href="/categoria/bem-estar">Lubrificantes & Cuidados</Link><Link href="/guias">Guias</Link></div>
+    <div><h3>DESCOBRIR</h3><Link href="/categoria/anal">Prazer Anal</Link><Link href="/categoria/jogos-acessorios">Kits & Acessórios</Link>{shownProducts.some(c=>c.slug==="feromonas")&&<Link href="/categoria/feromonas">Perfumes & Feromonas</Link>}<Link href="/categoria/bem-estar">Lubrificantes & Cuidados</Link><Link href="/guias">Guias</Link></div>
     <div><h3>INFORMAÇÃO</h3><a href="mailto:geral@sevelora.eu">geral@sevelora.eu</a><Link href="/sobre">Sobre a Sevelora</Link><Link href="/afiliacao">Como funciona a afiliação</Link><p>Preços finais, disponibilidade, portes e entregas são confirmados na loja parceira.</p></div>
   </div><div className="footer-bottom"><span>© {new Date().getFullYear()} Sevelora · Sex shop online em Portugal</span><span>+18 · Compra no parceiro · <Link href="/afiliacao">Transparência</Link></span></div></footer>
   </body></html>;

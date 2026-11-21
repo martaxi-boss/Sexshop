@@ -5,6 +5,9 @@ const config: NextConfig={
   reactStrictMode:true,
   typedRoutes:false,
   images:{formats:["image/webp"],unoptimized:true},
+  async redirects(){
+    return [{source:"/categoria/bdsm",destination:"/categoria/jogos-acessorios",permanent:true}];
+  },
   async headers(){
     return [{source:"/:path*",headers:[
       {key:"X-Content-Type-Options",value:"nosniff"},

@@ -9,7 +9,7 @@ const routes = [
   ["/categoria/masturbadores","Masturbadores"],
   ["/categoria/aneis","Anéis Penianos"],
   ["/categoria/casais","Brinquedos a Dois"],
-  ["/categoria/bdsm","BDSM"],
+  ["/categoria/jogos-acessorios","Kits &amp; Acessórios"],
   ["/categoria/anal","Prazer Anal"],
   ["/categoria/bem-estar","Lubrificantes"],
   ["/guias","Descobrir é natural"],
@@ -39,6 +39,7 @@ for (const [path,needle] of routes) {
     assert.ok(!html.includes("product-chip"),"Repetitive affiliate chips must be removed");
   }
   if(path==="/"||path==="/catalogo"){
+    assert.ok(!html.includes('/categoria/bdsm'),"Retired BDSM category remains in navigation");
     for(const label of ["Explora à tua maneira","Para Ela","Para Ele","Para Casais"]){
       assert.ok(!html.includes(label),"Removed selection is still rendered: "+label);
     }
@@ -51,6 +52,10 @@ for(const slug of ["para-ela","para-ele","para-casais"]){
   assert.equal(gone.status,404,"Removed selection route must return 404: "+slug);
 }
 console.log("PASS three removed selection routes return 404");
+const retiredBdsm=await fetch(base+"/categoria/bdsm",{redirect:"manual"});
+assert.equal(retiredBdsm.status,308,"Retired BDSM category redirects permanently to Kits");
+assert.equal(new URL(retiredBdsm.headers.get("location"),base).pathname,"/categoria/jogos-acessorios");
+console.log("PASS retired BDSM category redirects to Kits");
 const r404=await fetch(base+"/categorias/nao-existe");
 assert.equal(r404.status,404);
 console.log("PASS 404 invalid route");
@@ -61,6 +66,7 @@ if(launch){
  const xml=await (await fetch(base+"/sitemap.xml")).text();
  assert.ok(xml.includes(siteUrl+"/catalogo"),"Sitemap lacks canonical routes");
  assert.ok(!xml.includes("duckdns.org"),"Staging domain in production sitemap");
+ assert.ok(!xml.includes("/categoria/bdsm"),"Retired BDSM category remains in sitemap");
  const textMap=await fetch(base+"/sitemap.txt");
  assert.equal(textMap.status,200);
  assert.match(textMap.headers.get("content-type"),/^text\/plain; charset=utf-8$/i);

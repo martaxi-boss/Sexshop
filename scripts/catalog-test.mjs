@@ -30,7 +30,8 @@ const withShipping=normalize([r,shipping]);
 assert.equal(withShipping.products.length,1);
 assert.equal(withShipping.excludedNonRetail,1);
 assert.deepEqual(classify({aw_product_id:'43582237884'}),['anal']);
-assert.ok(classify({aw_product_id:'44625061400'}).includes('bdsm'));
+assert.deepEqual(classify({aw_product_id:'44625061400'}),['jogos-acessorios']);
+assert.deepEqual(curatedProducts.get('44625061400').subcategories,['kits']);
 assert.ok(!classify({aw_product_id:'43156229237'}).includes('bdsm'));
 assert.deepEqual(classify({aw_product_id:'34454438087'}),['jogos-acessorios']);
 assert.deepEqual(classify({aw_product_id:'34454438089'}),['bem-estar']);
@@ -64,7 +65,7 @@ assert.ok(visibleCurated.every(p=>p.subcategories.length===1),'exactly one audit
 assert.ok(visibleCurated.every(p=>p.audiences.every(x=>['para-ela','para-ele','para-casais'].includes(x))), 'audience is not a product category');
 const byCategory=Object.fromEntries([...new Set(visibleCurated.map(p=>p.primaryCategory))].map(cat=>[cat,visibleCurated.filter(p=>p.primaryCategory===cat).length]));
 assert.equal(Object.values(byCategory).reduce((sum,n)=>sum+n,0),148,'no duplicated products between category counts');
-assert.equal(byCategory.bdsm,1,'BDSM should contain only its specific kit');
+assert.ok(!byCategory.bdsm,'BDSM category retired; its kit belongs to Kits & Accessories');
 assert.equal(byCategory.anal,visibleCurated.filter(p=>['plugs','bolas-anais','prostata','vibradores-anais','higiene-anal','kits-anal'].includes(p.subcategories[0])).length);
 assert.ok(!curatedProducts.get('34454438095').categories.includes('anal'),'anal lubricant stays with lubricants');
 assert.ok(!curatedProducts.get('41402726495').audiences.includes('para-casais'),'generic dildo not automatically in couples');

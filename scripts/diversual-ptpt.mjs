@@ -11,7 +11,6 @@ export const primaryCategoryByType=Object.freeze({
   'prostata':'anal','plugs':'anal','bolas-anais':'anal',
   'vibradores-anais':'anal','higiene-anal':'anal','kits-anal':'anal',
   'arneses':'casais','strap-ons':'casais','vibradores-casais':'casais',
-  'kits-bdsm':'bdsm',
   'lubrificantes':'bem-estar','higiene':'bem-estar','kegel':'bem-estar',
   'geis-estimulantes':'bem-estar','cosmetica':'bem-estar','desempenho':'bem-estar',
   'velas':'massagem','oleos':'massagem','kits-massagem':'massagem',
@@ -24,7 +23,7 @@ const allowedAudiences=Object.freeze({
     'ovos','estimulacao-oral','kegel']),
   'para-ele':new Set(['masturbadores','aneis','prostata','desempenho']),
   'para-casais':new Set(['arneses','strap-ons','vibradores-casais','ovos',
-    'aneis','kits','kits-massagem','kits-bdsm'])
+    'aneis','kits','kits-massagem'])
 });
 const map=new Map();
 for(const entry of [...batch01,...batch02]){

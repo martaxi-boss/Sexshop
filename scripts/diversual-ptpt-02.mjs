@@ -69,7 +69,7 @@ export default [
 ["43933602616","Feroz Perfume em Óleo com Feromonas para Homem","Perfume em óleo da linha Feroz, com feromonas e aroma sensual.","feromonas","perfumes"],
 ["44463896505","Velora Massajador Rotativo","Massajador com cabeça flexível e rotativa, para estimulação da vulva, clitóris e outras zonas erógenas.","para-ela,estimuladores","vibradores"],
 ["44489000440","Jaranna Sucção e Ponto G","Estimulador de sucção da linha Diversual x Satisfyer, concebido para diferentes anatomias.","para-ela,estimuladores","sugadores"],
-["44625061400","Kit BDSM Fantasy","Conjunto de acessórios para práticas de BDSM, indicado para diferentes níveis de experiência.","bdsm,para-casais,jogos-acessorios","kits-bdsm"],
+["44625061400","Kit BDSM Fantasy","Conjunto de acessórios para práticas de BDSM, indicado para diferentes níveis de experiência.","para-casais,jogos-acessorios","kits"],
 ["45290035823","Camy Coelhinho Insuflável","Vibrador tipo coelhinho insuflável, concebido para dupla estimulação.","para-ela,estimuladores","rabbits"],
 ["45279704380","Race One Masturbador com Sucção e Movimento","Masturbador masculino automatizado, com funções de sucção e movimento.","para-ele","masturbadores"]
 ];
