@@ -43,7 +43,7 @@ export default [
 ["41733845159","Lolah com Movimento Flapping","Vibrador tipo coelhinho, com movimento de língua na zona G e rotação na estimulação do clitóris.","para-ela,estimuladores","rabbits"],
 ["41724542324","Glove Enema Anal 224 ml","Dispositivo de higiene anal de maior capacidade, para preparação e limpeza íntima.","anal,bem-estar","higiene-anal"],
 ["41740287404","Óleo de Massagem com Feromonas Goma Cereja","Óleo de massagem com fragrância de goma de cereja, apresentado pelo fornecedor como comestível.","massagem,feromonas","oleos"],
-["41817469190","Kit Massage Experience com Feromonas","Kit de massagem erótica com fragrâncias e produtos para momentos de relaxamento a dois.","massagem,para-casais","kits-massagem"],
+["41817469190","Kit Massage Experience com Feromonas","Kit de massagem erótica com fragrâncias e produtos para momentos de relaxamento a dois.","para-casais,jogos-acessorios","kits"],
 ["44061009941","Bolsa de Envio Diversual Grande","Bolsa de embalagem destinada a expedições da Diversual; não é um brinquedo ou acessório íntimo de utilização.","","embalagem"],
 ["44061009942","Bolsa de Envio Diversual Pequena","Bolsa de embalagem destinada a expedições da Diversual; não é um brinquedo ou acessório íntimo de utilização.","","embalagem"],
 ["44061009943","Bolsa de Envio Diversual Média","Bolsa de embalagem destinada a expedições da Diversual; não é um brinquedo ou acessório íntimo de utilização.","","embalagem"],

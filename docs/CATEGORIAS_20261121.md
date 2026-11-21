@@ -29,3 +29,10 @@ fetch redirecionado. A captura final confirma home, Kits, sitemap e apresentaç�
 mobile (390 × 844). O corpo da ficha do produto ficou ausente nessa captura;
 a categoria e o link de afiliação da ficha foram confirmados por HTTP público
 independente pelo anfitrião. Não se afirma certificação desse corpo pelo Ferrari.
+
+## Correção da categoria Massagem Erótica — 21/11/2026
+
+- Kit Massage Experience com Feromonas, ID público 41817469190: transferido de Massagem Erótica para Kits & Acessórios / Kits eróticos na curadoria editorial do feed.
+- Nome, descrição, fotografia, preço e ligação Awin continuam a ser fornecidos como antes; não eliminar o artigo do catálogo.
+- A categoria Massagem Erótica mantém as velas e os óleos, sem filtro de kits vazio.
+- Garantia por teste: categoria exclusiva `jogos-acessorios` e tipo `kits` para este ID em sincronizações futuras.
