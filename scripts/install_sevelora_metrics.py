@@ -24,8 +24,15 @@ def main():
     for service in ['sexshop.service', 'lowcost-europa.service', 'nginx']:
         run('systemctl', 'is-active', '--quiet', service)
     active = run('nginx', '-T').stdout
-    if str(CONFIG) not in active:
-        raise ValueError('project_nginx_config_not_active')
+    sections = re.findall(r'# configuration file ([^\n]+):\n(.*?)(?=\n# configuration file |\Z)', active, re.S)
+    candidates = [Path(name).resolve() for name, body in sections
+                  if re.search(r'\bserver_name\s+sevelora\.eu\s*;', body)]
+    if len(candidates) != 1:
+        raise ValueError('canonical_nginx_config_not_unique')
+    config = candidates[0]
+    if not (config.is_relative_to(ROOT) or config.is_relative_to('/etc/nginx')) or not config.is_file():
+        raise ValueError('unexpected_active_config_location')
+    print('SEVELORA_ACTIVE_CONFIG=' + str(config))
     if METRICS.is_symlink():
         raise ValueError('unsafe_metrics_directory')
     METRICS.mkdir(mode=0o700, exist_ok=True)
@@ -41,7 +48,7 @@ def main():
     os.close(fd)
     os.chown(raw_log, pwd.getpwnam('www-data').pw_uid, grp.getgrnam('adm').gr_gid)
     os.chmod(raw_log, 0o640)
-    before = CONFIG.read_text()
+    before = config.read_text()
     if DIRECTIVE not in before:
         matches = list(re.finditer(r'(?m)^(\s*)server_name\s+sevelora\.eu\s*;', before))
         if len(matches) != 1 or 'access_log' in before:
@@ -53,13 +60,13 @@ def main():
             backup.write_text(before)
             os.chmod(backup, 0o600)
         try:
-            CONFIG.write_text(after)
+            config.write_text(after)
             run('nginx', '-t')
             run('systemctl', 'reload', 'nginx')
             if DIRECTIVE not in run('nginx', '-T').stdout:
                 raise ValueError('dedicated_log_not_active')
         except Exception:
-            CONFIG.write_text(before)
+            config.write_text(before)
             run('nginx', '-t')
             run('systemctl', 'reload', 'nginx')
             raise
