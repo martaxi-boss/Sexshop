@@ -19,3 +19,13 @@ e colocar esse artigo nos kits.
 - Testes existentes atualizados: curadoria, smokeHTTP, redirecionamento e sitemap.
   A paginação continua a expor todos148artigos da fixture editorial; produção tem147.
 - Build/TypeScript, smoke, paginação e publicação real concluídos com êxito.
+
+## Verificação final
+
+[Equipa Ferrari concluída e revista](https://github.com/martaxi-boss/VPS/actions/runs/44857342589).
+ZIP e estados report/team verificados como completed; tarefa kits-public aprovada.
+A captura inicial falhou e foi recuperada com seletor único do cartão e sem o
+fetch redirecionado. A captura final confirma home, Kits, sitemap e apresentação
+mobile (390 × 844). O corpo da ficha do produto ficou ausente nessa captura;
+a categoria e o link de afiliação da ficha foram confirmados por HTTP público
+independente pelo anfitrião. Não se afirma certificação desse corpo pelo Ferrari.
