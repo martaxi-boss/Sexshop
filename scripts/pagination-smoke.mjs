@@ -55,7 +55,9 @@ try{
   const txt=await txtResponse.text(),txtUrls=txt.trimEnd().split("\n");
   assert.ok(!txt.startsWith("\uFEFF"),"Text sitemap must not contain a BOM");
   assert.deepEqual(txtUrls,xmlUrls,"XML and TXT must expose the same live URLs in the same order");
-  assert.equal(new Set(txtUrls).size,products.length+15,"Every public fixture URL appears once");
+  const categoryCount=new Set(products.map(p=>p.categories[0])).size;
+  assert.equal(new Set(txtUrls).size,products.length+5+categoryCount,"Every product, active category and institutional URL appears once");
+  assert.ok(!txtUrls.some(url=>url.endsWith('/categoria/bdsm')),"Retired category must not appear in sitemap");
   assert.ok(txtUrls.every(url=>url===origin||url.startsWith(origin+"/")),"Only canonical public URLs");
   const txtHead=await fetch(base+"/sitemap.txt",{method:"HEAD"});
   assert.equal(txtHead.status,200);assert.equal(await txtHead.text(),"");
