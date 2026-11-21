@@ -66,3 +66,11 @@ catálogo, credenciais, DNS ou o código publicado da Sevelora.
 
 O processamento do índice é decisão externa do Google. Não existe confirmação
 de indexação de todo o catálogo nesta verificação.
+
+## Fecho verificado
+
+Equipa concluída no [run 44854716850](https://github.com/martaxi-boss/VPS/actions/runs/44854716850).
+ZIP exterior e response.zip descarregados e verificados; report.json e estado
+Ruflo completed, tarefa crawlability approved, duas chamadas reais de ferramenta
+e duas revisões (uma com correções pedidas, outra aprovada). A conclusão é da
+auditoria técnica e das ações possíveis no painel; não da indexação do catálogo.
