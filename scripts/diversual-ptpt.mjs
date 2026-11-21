@@ -7,14 +7,14 @@ import batch02 from './diversual-ptpt-02.mjs';
 export const primaryCategoryByType=Object.freeze({
   'rabbits':'estimuladores','vibradores':'estimuladores','vibradores-compactos':'estimuladores',
   'sugadores':'estimuladores','dildos':'estimuladores','ovos':'estimuladores',
-  'estimulacao-oral':'estimuladores','masturbadores':'masturbadores','aneis':'aneis',
+  'estimulacao-oral':'estimuladores','kegel':'estimuladores','masturbadores':'masturbadores','aneis':'aneis',
   'prostata':'anal','plugs':'anal','bolas-anais':'anal',
   'vibradores-anais':'anal','higiene-anal':'anal','kits-anal':'anal',
   'arneses':'casais','strap-ons':'casais','vibradores-casais':'casais',
   'lubrificantes':'bem-estar','higiene':'bem-estar',
   'geis-estimulantes':'bem-estar','cosmetica':'bem-estar','desempenho':'bem-estar',
   'velas':'massagem','oleos':'massagem','kits-massagem':'massagem',
-  'kits':'jogos-acessorios','arrumacao':'jogos-acessorios','kegel':'jogos-acessorios',
+  'kits':'jogos-acessorios','arrumacao':'jogos-acessorios',
   'livros':'jogos-acessorios',
   'perfumes':'feromonas','incensos':'feromonas','aromas':'feromonas'
 });

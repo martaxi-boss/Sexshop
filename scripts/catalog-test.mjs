@@ -58,10 +58,12 @@ const pelvicProducts=[...curatedProducts.values()].filter(p=>!p.hidden&&p.subcat
 assert.deepEqual(pelvicProducts.map(p=>p.id).sort(),[...pelvicIds].sort(),'exactly four pelvic exercise products');
 for(const pelvicId of pelvicIds){
   const p=curatedProducts.get(pelvicId);
-  assert.deepEqual(classify({aw_product_id:pelvicId}),['jogos-acessorios']);
-  assert.deepEqual(p.categories,['jogos-acessorios']);
+  assert.deepEqual(classify({aw_product_id:pelvicId}),['estimuladores']);
+  assert.deepEqual(p.categories,['estimuladores']);
   assert.deepEqual(p.subcategories,['kegel']);
   assert.ok(!p.categories.includes('bem-estar'),'pelvic exercisers must not be listed under lubricants');
+  assert.ok(!p.categories.includes('jogos-acessorios'),'pelvic exercisers are not kits');
+  assert.ok(!p.categories.includes('anal'),'pelvic exercisers are vaginal, not anal products');
 }
 const pelvicFeedRows=pelvicIds.map(pelvicId=>({
   ...r,aw_product_id:pelvicId,
@@ -69,7 +71,7 @@ const pelvicFeedRows=pelvicIds.map(pelvicId=>({
 }));
 const pelvicNormalized=normalize(pelvicFeedRows);
 assert.equal(pelvicNormalized.products.length,4);
-assert.ok(pelvicNormalized.products.every(p=>p.categories.join(',')==='jogos-acessorios'&&p.subcategories.join(',')==='kegel'));
+assert.ok(pelvicNormalized.products.every(p=>p.categories.join(',')==='estimuladores'&&p.subcategories.join(',')==='kegel'));
 assert.ok(pelvicNormalized.products.every(p=>p.price===12.9&&p.affiliateUrl.includes('a=3157353')),'preserve feed EUR price and affiliate link');
 assert.ok(!classify({aw_product_id:'43156229237'}).includes('bdsm'));
 assert.deepEqual(classify({aw_product_id:'34454438087'}),['jogos-acessorios']);
@@ -105,7 +107,8 @@ assert.ok(visibleCurated.every(p=>p.audiences.every(x=>['para-ela','para-ele','p
 const byCategory=Object.fromEntries([...new Set(visibleCurated.map(p=>p.primaryCategory))].map(cat=>[cat,visibleCurated.filter(p=>p.primaryCategory===cat).length]));
 assert.equal(Object.values(byCategory).reduce((sum,n)=>sum+n,0),145,'no duplicated products between category counts');
 assert.ok(visibleCurated.every(p=>!p.subcategories.includes('carregadores')),'nenhum carregador pode aparecer na montra');
-assert.equal(byCategory['jogos-acessorios'],14,'kits and accessories now includes four pelvic exercisers');
+assert.equal(byCategory['jogos-acessorios'],10,'kits and accessories must not include pelvic exercisers');
+assert.equal(byCategory.estimuladores,53,'vibrators and dildos must include four vaginal pelvic exercisers');
 assert.equal(byCategory['bem-estar'],19,'lubricants and care no longer contains the four pelvic exercisers');
 assert.ok(!byCategory.bdsm,'BDSM category retired; its kit belongs to Kits & Accessories');
 assert.equal(byCategory.anal,visibleCurated.filter(p=>['plugs','bolas-anais','prostata','vibradores-anais','higiene-anal','kits-anal'].includes(p.subcategories[0])).length);

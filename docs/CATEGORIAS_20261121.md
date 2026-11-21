@@ -48,6 +48,6 @@ independente pelo anfitrião. Não se afirma certificação desse corpo pelo Fer
 
 - Produtos verificados no catálogo Diversual «Suelo Pélvico»: Gemini Kegel Turquesa (`34454438111`), Gemini Kegel Cereja (`34454438113`), PelviCare Cereja (`46419192558`) e PelviCare Turquesa (`46419192559`).
 - Os Gemini são conjuntos de bolas Kegel em duas cores. PelviCare é um estimulador vaginal associado a treino pélvico, em duas cores. Não são lubrificantes, géis ou cosmética.
-- Por decisão do proprietário, os quatro artigos foram reclassificados de `bem-estar` (Lubrificantes & Cuidados) para `jogos-acessorios` (Kits & Acessórios), no filtro «Exercitadores pélvicos» (`kegel`), sem criar uma categoria principal nova.
+- Correção final após esclarecimento do proprietário: os quatro artigos saem de `bem-estar` (Lubrificantes & Cuidados) e ficam em `estimuladores` (Vibradores & Dildos), sob o filtro «Exercitadores pélvicos» (`kegel`). A proposta inicial de os colocar em Kits & Acessórios foi rejeitada **antes da publicação** e não deve ser recuperada.
 - Conservam-se IDs, nomes, descrições, imagens, stock, preços verificados e URLs Awin; as fichas continuam nas mesmas URLs e no sitemap. Apenas categoria principal e rótulo da subcategoria foram alterados.
-- A regra `primaryCategoryByType` garante a classificação nas sincronizações seguintes. Testes impedem reaparição em Lubrificantes & Cuidados e comprovam que só quatro IDs usam o tipo `kegel`.
+- A regra `primaryCategoryByType` garante a classificação nas sincronizações seguintes. Testes impedem reaparição tanto em Lubrificantes & Cuidados como em Kits & Acessórios ou Prazer Anal; apenas os quatro IDs pertencem ao tipo `kegel`.
