@@ -1,0 +1,44 @@
+name: Sevelora - real Awin redirect in Firefox and Safari engine
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/sevelora-real-merchant-redirect.yml']
+permissions:
+  contents: read
+jobs:
+  real-merchant:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [firefox, webkit]
+    env:
+      TEST_ENGINE: ${{ matrix.engine }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install temporary browser engine
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/merchant-qa" playwright@1.56.1 --ignore-scripts --no-audit --no-fund
+          echo "PLAYWRIGHT_MODULE=$RUNNER_TEMP/merchant-qa/node_modules/playwright" >> "$GITHUB_ENV"
+          if [ "$TEST_ENGINE" = webkit ]; then
+            "$RUNNER_TEMP/merchant-qa/node_modules/.bin/playwright" install --with-deps webkit
+          else
+            "$RUNNER_TEMP/merchant-qa/node_modules/.bin/playwright" install firefox
+          fi
+      - name: Click real affiliate URL once and verify actual Diversual arrival
+        run: node .github/qa/sevelora-real-merchant-redirect.cjs
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sevelora-merchant-redirect-${{ matrix.engine }}-${{ github.run_id }}
+          path: merchant-evidence/
+          if-no-files-found: warn
+          retention-days: 7
