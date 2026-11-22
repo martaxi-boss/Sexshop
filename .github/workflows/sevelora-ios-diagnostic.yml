@@ -1,0 +1,24 @@
+name: Sevelora - iPhone iOS Simulator availability
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/sevelora-ios-diagnostic.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  apple-ios:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - name: Check real Apple simulator availability
+        shell: bash
+        run: |
+          set -euo pipefail
+          uname -m
+          xcodebuild -version
+          xcrun simctl list runtimes
+          xcrun simctl list devices available
+          xcrun --sdk iphonesimulator --show-sdk-path
+          xcrun swiftc --version
+          echo APPLE_IOS_SIMULATOR_INSPECTION_COMPLETE
