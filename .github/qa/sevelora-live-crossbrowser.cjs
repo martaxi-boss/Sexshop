@@ -47,6 +47,8 @@ async function main(){
    insist(links.length>=1,'No live affiliate links');
    for(const l of links){checkAwin(l.href);insist(!l.target||l.target==='_self','Unexpected target '+l.target);insist(l.rel.includes('sponsored')&&l.rel.includes('nofollow'),'Missing affiliate rel')}
    add(profile.name+' real catalog Awin links',{visibleCards:total,validatedLinks:links.length});
+   await page.waitForLoadState('networkidle',{timeout:12000}).catch(()=>{});
+   await page.waitForTimeout(1000); // allow Next.js hydration on slower engines
    const search=page.locator('input[aria-label="Pesquisar produtos"]');
    await search.fill('naoexistexyz987654321');
    await page.locator('.results-label').filter({hasText:/0 produtos encontrados|0 produto encontrado/}).waitFor({timeout:10000});
@@ -82,10 +84,10 @@ async function main(){
      // ONE live external redirect: no form submission or purchase. Keep separate from mocked tests.
      await external.click({timeout:15000,noWaitAfter:true});
      await sleep(10000);
-     outbound.finalUrl=externalPage.url().slice(0,500);
+     outbound.finalUrl=new URL(externalPage.url()).origin+new URL(externalPage.url()).pathname;
      outbound.host=new URL(externalPage.url()).hostname;
      outbound.navigationStatus=outbound.host==='www.diversual.com'||outbound.host==='diversual.com'?'merchant_reached':outbound.host==='www.awin1.com'?'awin_reached':'other';
-    }catch(e){outbound.error=String(e).slice(0,300);outbound.finalUrl=externalPage.url().slice(0,500)}
+    }catch(e){outbound.error=String(e).slice(0,300);try{const u=new URL(externalPage.url());outbound.finalUrl=u.origin+u.pathname}catch{outbound.finalUrl='unavailable'}}
     report.realMerchantTest=outbound;
     console.log('OBSERVE real merchant redirect '+JSON.stringify(outbound));
     await externalContext.close();

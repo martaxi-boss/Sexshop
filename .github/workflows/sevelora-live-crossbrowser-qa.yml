@@ -37,7 +37,11 @@ jobs:
             echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
             "$CHROME_BIN" --version
           else
-            "$RUNNER_TEMP/sevelora-browserqa/node_modules/.bin/playwright" install "$TEST_ENGINE"
+            if [ "$TEST_ENGINE" = webkit ]; then
+              "$RUNNER_TEMP/sevelora-browserqa/node_modules/.bin/playwright" install --with-deps webkit
+            else
+              "$RUNNER_TEMP/sevelora-browserqa/node_modules/.bin/playwright" install firefox
+            fi
           fi
       - name: Test real production pages, navigation, and Awin purchase clicks
         run: node .github/qa/sevelora-live-crossbrowser.cjs
