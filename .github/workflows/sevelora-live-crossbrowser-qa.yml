@@ -1,0 +1,51 @@
+name: Sevelora - real cross-browser production QA
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/sevelora-live-crossbrowser-qa.yml', '.github/qa/sevelora-live-crossbrowser.cjs']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
+    env:
+      TEST_ENGINE: ${{ matrix.engine }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install temporary test driver
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/sevelora-browserqa" --no-audit --no-fund --ignore-scripts playwright@1.56.1
+          echo "PLAYWRIGHT_MODULE=$RUNNER_TEMP/sevelora-browserqa/node_modules/playwright" >> "$GITHUB_ENV"
+      - name: Prepare actual browser executable
+        run: |
+          set -euo pipefail
+          if [ "$TEST_ENGINE" = chromium ]; then
+            CHROME_BIN="$(command -v google-chrome || command -v chromium)"
+            test -x "$CHROME_BIN"
+            echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
+            "$CHROME_BIN" --version
+          else
+            "$RUNNER_TEMP/sevelora-browserqa/node_modules/.bin/playwright" install "$TEST_ENGINE"
+          fi
+      - name: Test real production pages, navigation, and Awin purchase clicks
+        run: node .github/qa/sevelora-live-crossbrowser.cjs
+      - name: Preserve real evidence and reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sevelora-real-browser-${{ matrix.engine }}-${{ github.run_id }}
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 7
