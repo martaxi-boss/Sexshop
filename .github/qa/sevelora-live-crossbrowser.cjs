@@ -71,7 +71,8 @@ async function main(){
    add(profile.name+' actual browser click and same-tab navigation',{newWindows:0,destination:'www.awin1.com',externalCall:'intercepted for test'});
    insist(pageErrors.length===0,'JavaScript runtime error: '+pageErrors.join('; '));
    if(engine==='chromium' && profile.name==='desktop'){
-    const externalPage=await context.newPage();
+    const externalContext=await browser.newContext({locale:'pt-PT',viewport:profile.viewport});
+    const externalPage=await externalContext.newPage();
     const outbound={clicked:false,finalUrl:null,navigationStatus:null,error:null,host:null};
     try{
      await externalPage.goto(origin+product,{waitUntil:'domcontentloaded',timeout:25000});
@@ -87,7 +88,7 @@ async function main(){
     }catch(e){outbound.error=String(e).slice(0,300);outbound.finalUrl=externalPage.url().slice(0,500)}
     report.realMerchantTest=outbound;
     console.log('OBSERVE real merchant redirect '+JSON.stringify(outbound));
-    await externalPage.close();
+    await externalContext.close();
    }
   }finally{await context.close()}
  }
