@@ -57,7 +57,7 @@ jobs:
           <key>MinimumOSVersion</key><string>17.0</string>
           </dict></plist>
           PLIST
-          xcrun swiftc -sdk "$(xcrun --sdk iphonesimulator --show-sdk-path)" \
+          xcrun swiftc -parse-as-library -sdk "$(xcrun --sdk iphonesimulator --show-sdk-path)" \
              -target "$(uname -m)-apple-ios17.0-simulator" \
              -framework UIKit -framework WebKit -o "$APP/SeveloraProbe" \
              .github/qa/sevelora-native-ios-probe.swift
