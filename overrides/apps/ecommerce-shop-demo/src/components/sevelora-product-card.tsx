@@ -12,7 +12,7 @@ export function ProductCard({product:p,priority=false}:{product:Product;priority
      <p className="product-price">{p.price!==null?euro(p.price):"Consultar preço na loja"}</p>
      {!p.inStock&&<p className="product-stock">Indisponível no parceiro</p>}
      <div className="product-card-actions">{p.inStock?
-       <a className="button button-dark" href={p.affiliateUrl} rel="sponsored nofollow noopener" target="_blank" aria-label={"Ver "+p.name+" na Diversual, abre nova janela"}>Ver na loja ↗</a>:
+       <a className="button button-dark" href={p.affiliateUrl} rel="sponsored nofollow noopener" aria-label={"Ver "+p.name+" na Diversual, no mesmo separador"}>Ver na loja ↗</a>:
        <Link className="product-detail-link" href={"/produto/"+p.id}>Ver ficha ↗</Link>}
      </div>
    </div>

@@ -44,7 +44,7 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
       - name: Validar catalogo e integracao editorial
-        run: node scripts/catalog-test.mjs
+        run: |\n          node scripts/catalog-test.mjs\n          node scripts/affiliate-navigation-smoke.mjs
       - name: Instalar dependencias isoladas do projeto
         run: pnpm install --frozen-lockfile
       - name: Compilar loja Next.js

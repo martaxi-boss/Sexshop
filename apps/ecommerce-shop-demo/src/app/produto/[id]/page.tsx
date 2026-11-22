@@ -20,7 +20,7 @@ export default async function ProductPage({params}:{params:Promise<{id:string}>}
  <p className="detail-translation-note">Descrição em português de Portugal adaptada à informação oficial do fornecedor.</p>
  {p.subcategories?.length>0&&<p className="detail-type-label"><strong>Tipo:</strong> {p.subcategories.map(s=>subcategoryLabels[s]||s).join(", ")}</p>}
  {cats.length>0&&<nav className="detail-category-links" aria-label="Categoria principal deste produto"><strong>Categoria:</strong>{cats.map(c=><Link key={c.slug} href={"/categoria/"+c.slug}>{c.name} ↗</Link>)}</nav>}
- {p.inStock&&<p><a className="button button-dark" href={p.affiliateUrl} rel="sponsored nofollow noopener" target="_blank">VER PREÇO E COMPRAR NA DIVERSUAL ↗</a></p>}
+ {p.inStock&&<p><a className="button button-dark" href={p.affiliateUrl} rel="sponsored nofollow noopener">VER PREÇO E COMPRAR NA DIVERSUAL ↗</a></p>}
  <p>Compra e pagamento realizados na Diversual. Confirma o preço final, envio para Portugal, portes, especificações e condições de devolução antes de comprar.</p><Link href="/afiliacao" className="text-link">Informação de afiliação ↗</Link>
  </div></section></>;
 }
